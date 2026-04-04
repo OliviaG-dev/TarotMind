@@ -1,0 +1,95 @@
+.profile-page {
+  max-width: 520px;
+  margin: 0 auto;
+  padding-top: 28px;
+}
+
+.profile-page__intro {
+  margin-bottom: 28px;
+}
+
+.profile-page__title {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  letter-spacing: -0.03em;
+  margin: 0 0 10px;
+}
+
+.profile-page__subtitle {
+  margin: 0;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.profile-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.profile-page__field {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.profile-page__field legend {
+  font-weight: 600;
+  color: var(--text-h);
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 1rem;
+}
+
+.profile-page__field select {
+  width: 100%;
+  max-width: 100%;
+  font-family: var(--sans);
+  font-size: 1rem;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.profile-page__field select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.profile-page__hint {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 0 0 12px;
+  line-height: 1.45;
+}
+
+.profile-page__goals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.profile-page__goal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--text-h);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.profile-page__goal:has(input:checked) {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
+
+.profile-page__goal input {
+  accent-color: var(--accent);
+}
