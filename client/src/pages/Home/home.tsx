@@ -4,8 +4,8 @@ import './home.css'
 const FEATURES = [
   {
     to: '/tirage',
-    title: 'Tirage intelligent',
-    text: '1 carte, passé / présent / futur, croix, thèmes amour, carrière, décision — interprétation adaptée au profil et au ton (spirituel, psychologique, direct).',
+    title: 'Tirage & schéma',
+    text: 'Tu tires avec ton jeu physique ; l’app affiche le schéma (1 carte, 3 temps, croix, thèmes…) pour que tu saisisses chaque arcane. L’IA interprète ensuite selon ton profil et le ton choisi.',
     emoji: '🔮',
   },
   {

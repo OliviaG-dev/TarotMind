@@ -27,11 +27,18 @@ export type WorkSituation =
 
 export type GoalId = 'love' | 'money' | 'wellbeing'
 
+/** Jeu utilisé pour les tirages (listes déroulantes + interprétations). */
+export type DeckPreference =
+  | 'majors_only'
+  | 'majors_and_minors'
+  | 'minors_only'
+
 export interface UserProfile {
   relationshipStatus: RelationshipStatus
   gender: Gender
   workSituation: WorkSituation
   goals: GoalId[]
+  deckPreference: DeckPreference
 }
 
 export interface TarotCard {

@@ -1,0 +1,29 @@
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nav__link {
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.nav__link:hover {
+  color: var(--text-h);
+  background: var(--social-bg);
+}
+
+.nav__link.active {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}

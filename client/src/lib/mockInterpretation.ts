@@ -12,7 +12,11 @@ const TONE_INTRO: Record<Tone, string> = {
 
 function cardLine(p: PlacedCard): string {
   const orient = p.reversed ? ' (à l’envers — intensité ou blocage possible)' : ''
-  return `**${p.positionLabel}** — ${p.card.nameFr}${orient} : mots-clés ${p.card.keywords.join(', ')}.`
+  const kw =
+    p.card.keywords.length > 0
+      ? p.card.keywords.join(', ')
+      : 'lecture à préciser selon la couleur'
+  return `**${p.positionLabel}** — ${p.card.nameFr}${orient} : mots-clés ${kw}.`
 }
 
 const CHANGE_IDS = new Set(['10', '12', '13', '16'])

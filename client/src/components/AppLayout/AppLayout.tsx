@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
+import Nav from '../Nav/Nav'
 import './appLayout.css'
 
 export function AppLayout() {
@@ -11,23 +12,7 @@ export function AppLayout() {
         <NavLink to="/" className="shell__brand" end>
           TarotMind
         </NavLink>
-        <nav className="shell__nav" aria-label="Navigation principale">
-          <NavLink to="/" className="shell__link" end>
-            Accueil
-          </NavLink>
-          <NavLink to="/tirage" className="shell__link">
-            Tirage
-          </NavLink>
-          <NavLink to="/profil" className="shell__link">
-            Profil
-          </NavLink>
-          <NavLink to="/historique" className="shell__link">
-            Historique
-          </NavLink>
-          <NavLink to="/connexion" className="shell__link">
-            Connexion
-          </NavLink>
-        </nav>
+        <Nav />
         <div className="shell__account" aria-live="polite">
           {loading ? (
             <span className="shell__account-muted">…</span>

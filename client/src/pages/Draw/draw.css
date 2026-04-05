@@ -1,5 +1,5 @@
 .draw {
-  max-width: 640px;
+  max-width: 720px;
   margin: 0 auto;
   padding-top: 28px;
 }
@@ -172,6 +172,16 @@
 .draw__primary:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+.draw__primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.draw__primary:disabled:hover {
+  filter: none;
 }
 
 .draw__meta {

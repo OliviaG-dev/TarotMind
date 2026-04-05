@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import type { UserProfile } from '../types/tarot'
+import type { DeckPreference, UserProfile } from '../types/tarot'
 
 const STORAGE_KEY = 'tarotmind.profile.v1'
 
@@ -16,6 +16,7 @@ export const DEFAULT_PROFILE: UserProfile = {
   gender: 'prefer_not',
   workSituation: 'other',
   goals: [],
+  deckPreference: 'majors_only',
 }
 
 function loadProfile(): UserProfile {
@@ -24,12 +25,20 @@ function loadProfile(): UserProfile {
     if (!raw) return DEFAULT_PROFILE
     const parsed = JSON.parse(raw) as UserProfile
     if (!parsed || typeof parsed !== 'object') return DEFAULT_PROFILE
+    const deckOk = (v: unknown): v is DeckPreference =>
+      v === 'majors_only' ||
+      v === 'majors_and_minors' ||
+      v === 'minors_only'
+
     return {
       relationshipStatus:
         parsed.relationshipStatus ?? DEFAULT_PROFILE.relationshipStatus,
       gender: parsed.gender ?? DEFAULT_PROFILE.gender,
       workSituation: parsed.workSituation ?? DEFAULT_PROFILE.workSituation,
       goals: Array.isArray(parsed.goals) ? parsed.goals : [],
+      deckPreference: deckOk(parsed.deckPreference)
+        ? parsed.deckPreference
+        : DEFAULT_PROFILE.deckPreference,
     }
   } catch {
     return DEFAULT_PROFILE
