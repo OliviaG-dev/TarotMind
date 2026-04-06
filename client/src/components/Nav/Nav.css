@@ -1,0 +1,27 @@
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nav__link {
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  border: none;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.nav__link:hover {
+  color: var(--text-h);
+  background: var(--social-bg);
+}
+
+.nav__link.active {
+  color: var(--accent);
+  background: var(--accent-bg);
+}

@@ -1,12 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { InterpretationText } from '../../components/InterpretationText'
 import { useHistory } from '../../context/HistoryContext'
 import { useProfile } from '../../context/ProfileContext'
 import { SPREADS, getSpread } from '../../data/spreads'
-import { drawCards, placeCards } from '../../data/tarotDeck'
+import { getCardById, getDeckCards } from '../../data/tarotDeck'
 import { buildMockInterpretation } from '../../lib/mockInterpretation'
-import type { DrawRecord, SpreadId, Tone } from '../../types/tarot'
+import type { DrawRecord, PlacedCard, SpreadDefinition, SpreadId, Tone } from '../../types/tarot'
+import { SpreadSchema, type SlotState } from './SpreadSchema'
 import './draw.css'
 
 const TONES: { id: Tone; label: string; hint: string }[] = [
@@ -15,35 +16,88 @@ const TONES: { id: Tone; label: string; hint: string }[] = [
   { id: 'direct', label: 'Direct / conseil', hint: 'Clair, actionnable' },
 ]
 
+function emptySlots(def: SpreadDefinition): Record<string, SlotState> {
+  const o: Record<string, SlotState> = {}
+  for (const p of def.positions) {
+    o[p.key] = { cardId: null, reversed: false }
+  }
+  return o
+}
+
+function slotsToPlaced(
+  def: SpreadDefinition,
+  slots: Record<string, SlotState>,
+): PlacedCard[] | null {
+  const out: PlacedCard[] = []
+  for (const p of def.positions) {
+    const s = slots[p.key]
+    if (!s?.cardId) return null
+    const card = getCardById(s.cardId)
+    if (!card) return null
+    out.push({
+      positionKey: p.key,
+      positionLabel: p.label,
+      card,
+      reversed: s.reversed,
+    })
+  }
+  return out
+}
+
 export default function DrawPage() {
   const { profile } = useProfile()
   const { addDraw } = useHistory()
   const [spreadId, setSpreadId] = useState<SpreadId>('one')
   const [tone, setTone] = useState<Tone>('psychological')
+  const [slots, setSlots] = useState<Record<string, SlotState>>(() => {
+    const def = getSpread('one')
+    return def ? emptySlots(def) : {}
+  })
   const [result, setResult] = useState<DrawRecord | null>(null)
 
   const spread = useMemo(() => getSpread(spreadId), [spreadId])
 
-  function runDraw() {
+  const deckCards = useMemo(
+    () => getDeckCards(profile.deckPreference),
+    [profile.deckPreference],
+  )
+
+  useEffect(() => {
     const def = getSpread(spreadId)
-    if (!def) return
-    const n = def.positions.length
-    const drawn = drawCards(n)
-    const placed = placeCards(def.positions, drawn)
+    if (def) {
+      setSlots(emptySlots(def))
+      setResult(null)
+    }
+    // Seulement quand le type de jeu change : évite de doubler le reset au changement de spread (géré par les radios).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile.deckPreference])
+
+  const placedPreview = useMemo(() => {
+    if (!spread) return null
+    return slotsToPlaced(spread, slots)
+  }, [spread, slots])
+
+  function setSlot(key: string, next: SlotState) {
+    setSlots((prev) => ({ ...prev, [key]: next }))
+    setResult(null)
+  }
+
+  function generateInterpretation() {
+    if (!spread || !placedPreview) return
     const interpretation = buildMockInterpretation({
       profile,
       spreadId,
-      spreadLabel: def.label,
+      spreadLabel: spread.label,
       tone,
-      cards: placed,
+      cards: placedPreview,
     })
     const record: DrawRecord = {
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
       spreadId,
-      spreadLabel: def.label,
+      spreadLabel: spread.label,
       tone,
-      cards: placed,
+      cards: placedPreview,
       interpretation,
     }
     setResult(record)
@@ -53,20 +107,33 @@ export default function DrawPage() {
   return (
     <div className="draw">
       <header className="draw__intro">
-        <h1 className="draw__title">Tirage intelligent</h1>
+        <div className="page-heading draw__heading">
+          <img
+            src="/img/tirage.png"
+            alt=""
+            className="page-heading__icon"
+            width={56}
+            height={56}
+            decoding="async"
+          />
+          <h1 className="draw__title">Tirage</h1>
+        </div>
         <p className="draw__subtitle">
-          Choisis un type de tirage et un ton d’interprétation. Le texte s’adapte
-          à ton{' '}
+          Fais ton tirage <strong>avec ton jeu physique</strong> (ou comme tu en as
+          l’habitude). TarotMind affiche le <strong>schéma du tirage</strong> : tu
+          indiques toi-même chaque arcane tiré. L’
+          <strong>IA</strong> (ici un texte de démo) ne tire pas les cartes — elle sert
+          uniquement à <strong>interpréter</strong> la combinaison, selon ton{' '}
           <Link to="/profil" className="draw__inline-link">
             profil
           </Link>{' '}
-          (prototype local, sans appel serveur).
+          et le ton choisi.
         </p>
       </header>
 
       <section className="draw__panel" aria-labelledby="spreads-heading">
         <h2 id="spreads-heading" className="draw__h2">
-          Types de tirages
+          Type de tirage
         </h2>
         <ul className="draw__spread-list">
           {SPREADS.map((s) => (
@@ -81,7 +148,11 @@ export default function DrawPage() {
                   checked={spreadId === s.id}
                   onChange={() => {
                     setSpreadId(s.id)
-                    setResult(null)
+                    const def = getSpread(s.id)
+                    if (def) {
+                      setSlots(emptySlots(def))
+                      setResult(null)
+                    }
                   }}
                 />
                 <span className="draw__spread-emoji" aria-hidden>
@@ -96,6 +167,21 @@ export default function DrawPage() {
           ))}
         </ul>
       </section>
+
+      {spread && (
+        <section className="draw__panel" aria-labelledby="schema-heading">
+          <h2 id="schema-heading" className="draw__h2">
+            Schéma du tirage
+          </h2>
+          <SpreadSchema
+            spreadId={spreadId}
+            spread={spread}
+            deckCards={deckCards}
+            slots={slots}
+            onSlotChange={setSlot}
+          />
+        </section>
+      )}
 
       <section className="draw__panel" aria-labelledby="tone-heading">
         <h2 id="tone-heading" className="draw__h2">
@@ -125,20 +211,26 @@ export default function DrawPage() {
       </section>
 
       <div className="draw__actions">
-        <button type="button" className="draw__primary" onClick={runDraw}>
-          Tirer les cartes
+        <button
+          type="button"
+          className="draw__primary"
+          disabled={!placedPreview}
+          onClick={generateInterpretation}
+        >
+          Générer l’interprétation
         </button>
         {spread && (
           <p className="draw__meta">
-            {spread.positions.length} carte{spread.positions.length > 1 ? 's' : ''}{' '}
-            · positions : {spread.positions.map((p) => p.label).join(' → ')}
+            {spread.positions.length} position
+            {spread.positions.length > 1 ? 's' : ''} — remplis chaque arcane pour
+            activer le bouton.
           </p>
         )}
       </div>
 
       {result && (
         <section className="draw__result" aria-live="polite">
-          <h2 className="draw__h2">Cartes</h2>
+          <h2 className="draw__h2">Récapitulatif</h2>
           <ul className="draw__cards">
             {result.cards.map((c) => (
               <li key={c.positionKey} className="draw__card">
@@ -155,8 +247,8 @@ export default function DrawPage() {
             <InterpretationText text={result.interpretation} />
           </div>
           <p className="draw__footnote">
-            En production, ce texte serait produit par l’IA à partir du tirage,
-            du profil et de l’historique.
+            En production, ce texte serait produit par l’IA à partir des cartes que
+            tu as saisies, de ton profil et de ton historique.
           </p>
         </section>
       )}

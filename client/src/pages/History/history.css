@@ -8,6 +8,14 @@
   margin-bottom: 28px;
 }
 
+.history-page__heading {
+  margin-bottom: 10px;
+}
+
+.history-page__heading .history-page__title {
+  margin: 0;
+}
+
 .history-page__title {
   font-size: clamp(1.75rem, 4vw, 2.25rem);
   letter-spacing: -0.03em;

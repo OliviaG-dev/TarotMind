@@ -1,4 +1,5 @@
 import type {
+  DeckPreference,
   Gender,
   GoalId,
   RelationshipStatus,
@@ -38,6 +39,24 @@ const GOALS: { id: GoalId; label: string; emoji: string }[] = [
   { id: 'wellbeing', label: 'Bien-être', emoji: '🧘' },
 ]
 
+const DECK: { value: DeckPreference; label: string; hint: string }[] = [
+  {
+    value: 'majors_only',
+    label: 'Arcanes majeurs seulement',
+    hint: 'Les 22 lames du chemin initiatique (Mat → Monde).',
+  },
+  {
+    value: 'majors_and_minors',
+    label: 'Majeurs + mineurs',
+    hint: 'Jeu complet : grands archétypes et cartes du quotidien.',
+  },
+  {
+    value: 'minors_only',
+    label: 'Arcanes mineurs seulement',
+    hint: 'Coupes, Bâtons, Épées, Deniers — situations concrètes.',
+  },
+]
+
 export default function ProfilePage() {
   const { profile, updateProfile } = useProfile()
 
@@ -53,7 +72,17 @@ export default function ProfilePage() {
   return (
     <div className="profile-page">
       <header className="profile-page__intro">
-        <h1 className="profile-page__title">Profil utilisateur</h1>
+        <div className="page-heading profile-page__heading">
+          <img
+            src="/img/profil.png"
+            alt=""
+            className="page-heading__icon"
+            width={56}
+            height={56}
+            decoding="async"
+          />
+          <h1 className="profile-page__title">Profil utilisateur</h1>
+        </div>
         <p className="profile-page__subtitle">
           Ces informations servent à personnaliser les interprétations (ex. :
           « En tant que personne en séparation… »). Tout est stocké localement
@@ -118,6 +147,33 @@ export default function ProfilePage() {
               </option>
             ))}
           </select>
+        </fieldset>
+
+        <fieldset className="profile-page__field profile-page__field--deck">
+          <legend>Type de jeu (tarot)</legend>
+          <p className="profile-page__hint">
+            Les listes de cartes sur la page Tirage suivent ce réglage.
+          </p>
+          <div className="profile-page__deck">
+            {DECK.map((d) => (
+              <label
+                key={d.value}
+                className={`profile-page__deck-option ${profile.deckPreference === d.value ? 'profile-page__deck-option--on' : ''}`}
+              >
+                <input
+                  type="radio"
+                  name="deck"
+                  value={d.value}
+                  checked={profile.deckPreference === d.value}
+                  onChange={() =>
+                    updateProfile({ deckPreference: d.value })
+                  }
+                />
+                <span className="profile-page__deck-label">{d.label}</span>
+                <span className="profile-page__deck-hint">{d.hint}</span>
+              </label>
+            ))}
+          </div>
         </fieldset>
 
         <fieldset className="profile-page__field profile-page__field--goals">

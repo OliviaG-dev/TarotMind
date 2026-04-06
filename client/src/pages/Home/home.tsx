@@ -4,8 +4,8 @@ import './home.css'
 const FEATURES = [
   {
     to: '/tirage',
-    title: 'Tirage intelligent',
-    text: '1 carte, passé / présent / futur, croix, thèmes amour, carrière, décision — interprétation adaptée au profil et au ton (spirituel, psychologique, direct).',
+    title: 'Tirage & schéma',
+    text: 'Tu tires avec ton jeu physique ; l’app affiche le schéma (1 carte, 3 temps, croix, thèmes…) pour que tu saisisses chaque arcane. L’IA interprète ensuite selon ton profil et le ton choisi.',
     emoji: '🔮',
   },
   {
@@ -29,7 +29,17 @@ export default function Home() {
         <p className="home__tagline">
           L’intelligence artificielle au service de ton intuition
         </p>
-        <h1 className="home__title">TarotMind</h1>
+        <div className="page-heading home__heading">
+          <img
+            src="/img/accueil.png"
+            alt=""
+            className="page-heading__icon"
+            width={56}
+            height={56}
+            decoding="async"
+          />
+          <h1 className="home__title">TarotMind</h1>
+        </div>
         <p className="home__lead">
           Une application de nouvelle génération qui combine la sagesse
           ancestrale du tarot avec la puissance de l’intelligence artificielle —

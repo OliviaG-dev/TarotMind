@@ -1,4 +1,44 @@
-import type { DrawnCard, PlacedCard, TarotCard } from '../types/tarot'
+import type { DeckPreference, DrawnCard, PlacedCard, TarotCard } from '../types/tarot'
+
+const byId = new Map<string, TarotCard>()
+
+const MINOR_RANKS = [
+  'As',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  'Valet',
+  'Cavalier',
+  'Dame',
+  'Roi',
+] as const
+
+const MINOR_SUITS = [
+  { id: 'coupes', name: 'Coupes' },
+  { id: 'batons', name: 'Bâtons' },
+  { id: 'epees', name: 'Épées' },
+  { id: 'deniers', name: 'Deniers' },
+] as const
+
+function buildMinorArcana(): TarotCard[] {
+  const out: TarotCard[] = []
+  for (const suit of MINOR_SUITS) {
+    MINOR_RANKS.forEach((rank, i) => {
+      out.push({
+        id: `minor-${suit.id}-${i}`,
+        nameFr: `${rank} de ${suit.name}`,
+        keywords: ['mineur', suit.name.toLowerCase(), 'quotidien'],
+      })
+    })
+  }
+  return out
+}
 
 export const MAJOR_ARCANA: TarotCard[] = [
   { id: '0', nameFr: 'Le Mat', keywords: ['nouveau départ', 'liberté', 'innocence'] },
@@ -28,6 +68,36 @@ export const MAJOR_ARCANA: TarotCard[] = [
   { id: '20', nameFr: 'Le Jugement', keywords: ['réveil', 'appel', 'renaissance'] },
   { id: '21', nameFr: 'Le Monde', keywords: ['accomplissement', 'intégration', 'ouverture'] },
 ]
+
+export const MINOR_ARCANA: TarotCard[] = buildMinorArcana()
+
+const MAJOR_ID_SET = new Set(MAJOR_ARCANA.map((c) => c.id))
+
+for (const c of MAJOR_ARCANA) {
+  byId.set(c.id, c)
+}
+for (const c of MINOR_ARCANA) {
+  byId.set(c.id, c)
+}
+
+export function isMajorArcanum(card: TarotCard): boolean {
+  return MAJOR_ID_SET.has(card.id)
+}
+
+export function getDeckCards(preference: DeckPreference): TarotCard[] {
+  switch (preference) {
+    case 'majors_only':
+      return MAJOR_ARCANA
+    case 'minors_only':
+      return MINOR_ARCANA
+    case 'majors_and_minors':
+      return [...MAJOR_ARCANA, ...MINOR_ARCANA]
+  }
+}
+
+export function getCardById(id: string): TarotCard | undefined {
+  return byId.get(id)
+}
 
 function shuffle<T>(arr: T[]): T[] {
   const out = [...arr]
