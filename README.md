@@ -13,7 +13,6 @@
 
 [![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=nodedotjs&logoColor=fff)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4-000000?style=for-the-badge&logo=express&logoColor=fff)](https://expressjs.com/)
-[![SQLite](https://img.shields.io/badge/SQLite-better--sqlite3-003B57?style=for-the-badge&logo=sqlite&logoColor=fff)](https://www.sqlite.org/)
 [![npm workspaces](https://img.shields.io/badge/npm-workspaces-CB3837?style=for-the-badge&logo=npm&logoColor=fff)](https://docs.npmjs.com/cli/using-npm/workspaces)
 
 </div>
@@ -22,21 +21,21 @@
 
 ## Présentation
 
-TarotMind propose une expérience de **consultation guidée** : choix du tirage, cartes tirées selon les préférences, et suivi dans le temps. Le **profil** et l’**historique** peuvent être conservés **localement** dans le navigateur pour une utilisation immédiate, sans friction. Un **backend Express** et un paquet **TypeScript partagé** posent les bases d’évolutions futures (synchronisation, IA, comptes utilisateurs).
+TarotMind propose une expérience de **consultation guidée** : choix du tirage, cartes tirées selon les préférences, et suivi dans le temps. Le **profil** et l’**historique** peuvent être conservés **localement** dans le navigateur pour une utilisation immédiate, sans friction. Un **backend Express** et un paquet **TypeScript partagé** posent les bases d’évolutions futures (IA, synchronisation éventuelle).
 
 ## Fonctionnalités
 
 - Interface **responsive** (accueil, tirage, profil, historique).
 - **Profil** : préférences (jeu de cartes, objectifs, contexte) pour contextualiser les interprétations.
 - **Historique** des tirages conservé côté client selon la configuration actuelle.
-- **API REST** avec point de santé et socle d’**authentification** (JWT / Google) côté serveur pour extensions produit.
+- **API REST** avec point de santé (`/health`) ; les routes métier (ex. interprétation IA) s’ajoutent côté serveur sans authentification obligatoire pour l’instant.
 
 ## Architecture
 
 | Dossier | Rôle |
 |--------|------|
 | `client/` | SPA **React** + **React Router**, build **Vite**, typage **TypeScript**. |
-| `server/` | **Express**, **SQLite** (`better-sqlite3`), auth JWT, prêt pour la production. |
+| `server/` | **Express**, API REST minimale (santé), prêt pour l’ajout de routes (ex. Gemini). |
 | `packages/shared/` | Types et modules **TypeScript** partagés entre client et serveur. |
 
 En développement, le client Vite **proxy** le préfixe `/api` vers `http://localhost:4000` (voir `client/vite.config.ts`).
