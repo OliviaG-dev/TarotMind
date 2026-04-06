@@ -107,7 +107,17 @@ export default function DrawPage() {
   return (
     <div className="draw">
       <header className="draw__intro">
-        <h1 className="draw__title">Tirage</h1>
+        <div className="page-heading draw__heading">
+          <img
+            src="/img/tirage.png"
+            alt=""
+            className="page-heading__icon"
+            width={56}
+            height={56}
+            decoding="async"
+          />
+          <h1 className="draw__title">Tirage</h1>
+        </div>
         <p className="draw__subtitle">
           Fais ton tirage <strong>avec ton jeu physique</strong> (ou comme tu en as
           l’habitude). TarotMind affiche le <strong>schéma du tirage</strong> : tu

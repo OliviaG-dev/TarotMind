@@ -16,6 +16,9 @@
 }
 
 .shell__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--heading);
   font-weight: 600;
   font-size: 1.2rem;
@@ -24,45 +27,12 @@
   text-decoration: none;
 }
 
+.shell__brand-text {
+  line-height: 1;
+}
+
 .shell__brand:hover {
   color: var(--accent);
-}
-
-.shell__account {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
-}
-
-.shell__account-muted {
-  color: var(--text);
-}
-
-.shell__account-name {
-  max-width: 160px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--text-h);
-  font-weight: 500;
-}
-
-.shell__logout {
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-h);
-  cursor: pointer;
-}
-
-.shell__logout:hover {
-  border-color: var(--accent-border);
-  background: var(--accent-bg);
 }
 
 .shell__body {

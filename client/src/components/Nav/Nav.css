@@ -10,10 +10,9 @@
   border-radius: 8px;
   color: var(--text);
   text-decoration: none;
-  border: 1px solid transparent;
+  border: none;
   transition:
     background 0.15s,
-    border-color 0.15s,
     color 0.15s;
 }
 
@@ -24,6 +23,5 @@
 
 .nav__link.active {
   color: var(--accent);
-  border-color: var(--accent-border);
   background: var(--accent-bg);
 }

@@ -72,7 +72,17 @@ export default function ProfilePage() {
   return (
     <div className="profile-page">
       <header className="profile-page__intro">
-        <h1 className="profile-page__title">Profil utilisateur</h1>
+        <div className="page-heading profile-page__heading">
+          <img
+            src="/img/profil.png"
+            alt=""
+            className="page-heading__icon"
+            width={56}
+            height={56}
+            decoding="async"
+          />
+          <h1 className="profile-page__title">Profil utilisateur</h1>
+        </div>
         <p className="profile-page__subtitle">
           Ces informations servent à personnaliser les interprétations (ex. :
           « En tant que personne en séparation… »). Tout est stocké localement

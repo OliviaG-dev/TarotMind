@@ -29,7 +29,17 @@ export default function Home() {
         <p className="home__tagline">
           L’intelligence artificielle au service de ton intuition
         </p>
-        <h1 className="home__title">TarotMind</h1>
+        <div className="page-heading home__heading">
+          <img
+            src="/img/accueil.png"
+            alt=""
+            className="page-heading__icon"
+            width={56}
+            height={56}
+            decoding="async"
+          />
+          <h1 className="home__title">TarotMind</h1>
+        </div>
         <p className="home__lead">
           Une application de nouvelle génération qui combine la sagesse
           ancestrale du tarot avec la puissance de l’intelligence artificielle —

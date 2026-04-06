@@ -40,7 +40,17 @@ export default function HistoryPage() {
   return (
     <div className="history-page">
       <header className="history-page__intro">
-        <h1 className="history-page__title">Historique & évolution</h1>
+        <div className="page-heading history-page__heading">
+          <img
+            src="/img/historique.png"
+            alt=""
+            className="page-heading__icon"
+            width={56}
+            height={56}
+            decoding="async"
+          />
+          <h1 className="history-page__title">Historique & évolution</h1>
+        </div>
         <p className="history-page__subtitle">
           Timeline de tes tirages, comparaison rapide et aperçu d’analyse (règles
           locales — à remplacer par l’IA sur tes vraies données).

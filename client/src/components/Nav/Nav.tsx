@@ -16,9 +16,6 @@ export default function Nav() {
       <NavLink to="/historique" className="nav__link">
         Historique
       </NavLink>
-      <NavLink to="/connexion" className="nav__link">
-        Connexion
-      </NavLink>
     </nav>
   )
 }
