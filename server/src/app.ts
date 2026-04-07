@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import { interpretRouter } from './routes/interpret.js'
 
 export function createApp() {
   const app = express()
@@ -14,6 +15,8 @@ export function createApp() {
   app.get('/health', (_req, res) => {
     res.json({ ok: true })
   })
+
+  app.use(interpretRouter)
 
   app.use((_req, res) => {
     res.status(404).json({ error: 'Not found' })

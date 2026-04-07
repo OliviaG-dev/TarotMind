@@ -5,6 +5,7 @@ import { useHistory } from '../../context/HistoryContext'
 import { useProfile } from '../../context/ProfileContext'
 import { SPREADS, getSpread } from '../../data/spreads'
 import { getCardById, getDeckCards } from '../../data/tarotDeck'
+import { requestInterpretation } from '../../lib/interpretApi'
 import { buildMockInterpretation } from '../../lib/mockInterpretation'
 import type { DrawRecord, PlacedCard, SpreadDefinition, SpreadId, Tone } from '../../types/tarot'
 import { SpreadSchema, type SlotState } from './SpreadSchema'
@@ -54,6 +55,8 @@ export default function DrawPage() {
     return def ? emptySlots(def) : {}
   })
   const [result, setResult] = useState<DrawRecord | null>(null)
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [apiHint, setApiHint] = useState<string | null>(null)
 
   const spread = useMemo(() => getSpread(spreadId), [spreadId])
 
@@ -67,6 +70,7 @@ export default function DrawPage() {
     if (def) {
       setSlots(emptySlots(def))
       setResult(null)
+      setApiHint(null)
     }
     // Seulement quand le type de jeu change : évite de doubler le reset au changement de spread (géré par les radios).
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,17 +84,39 @@ export default function DrawPage() {
   function setSlot(key: string, next: SlotState) {
     setSlots((prev) => ({ ...prev, [key]: next }))
     setResult(null)
+    setApiHint(null)
   }
 
-  function generateInterpretation() {
+  async function generateInterpretation() {
     if (!spread || !placedPreview) return
-    const interpretation = buildMockInterpretation({
-      profile,
-      spreadId,
-      spreadLabel: spread.label,
-      tone,
-      cards: placedPreview,
-    })
+    setIsGenerating(true)
+    setApiHint(null)
+    let interpretation = ''
+    try {
+      interpretation = await requestInterpretation({
+        tone,
+        spreadLabel: spread.label,
+        profile,
+        cards: placedPreview,
+      })
+    } catch (error) {
+      const message = error instanceof Error ? error.message : ''
+      interpretation = buildMockInterpretation({
+        profile,
+        spreadId,
+        spreadLabel: spread.label,
+        tone,
+        cards: placedPreview,
+      })
+      setApiHint(
+        message
+          ? `Mode demo: ${message}. Texte local affiche.`
+          : "Mode demo: impossible de joindre l'API IA, texte local affiche.",
+      )
+    } finally {
+      setIsGenerating(false)
+    }
+
     const record: DrawRecord = {
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
@@ -152,6 +178,7 @@ export default function DrawPage() {
                     if (def) {
                       setSlots(emptySlots(def))
                       setResult(null)
+                      setApiHint(null)
                     }
                   }}
                 />
@@ -201,6 +228,7 @@ export default function DrawPage() {
                 onChange={() => {
                   setTone(t.id)
                   setResult(null)
+                  setApiHint(null)
                 }}
               />
               <span className="draw__tone-label">{t.label}</span>
@@ -214,10 +242,10 @@ export default function DrawPage() {
         <button
           type="button"
           className="draw__primary"
-          disabled={!placedPreview}
+          disabled={!placedPreview || isGenerating}
           onClick={generateInterpretation}
         >
-          Générer l’interprétation
+          {isGenerating ? 'Generation en cours...' : 'Generer l’interpretation'}
         </button>
         {spread && (
           <p className="draw__meta">
@@ -247,8 +275,8 @@ export default function DrawPage() {
             <InterpretationText text={result.interpretation} />
           </div>
           <p className="draw__footnote">
-            En production, ce texte serait produit par l’IA à partir des cartes que
-            tu as saisies, de ton profil et de ton historique.
+            {apiHint ??
+              'Texte genere par l’IA serveur a partir des cartes saisies et du profil.'}
           </p>
         </section>
       )}
