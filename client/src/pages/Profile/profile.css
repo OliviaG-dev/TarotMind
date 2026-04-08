@@ -1,5 +1,5 @@
 .profile-page {
-  max-width: 520px;
+  max-width: 1080px;
   margin: 0 auto;
   padding-top: 28px;
 }
@@ -17,8 +17,9 @@
 }
 
 .profile-page__title {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 4.5vw, 2.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   margin: 0 0 10px;
 }
 
@@ -29,17 +30,35 @@
 }
 
 .profile-page__form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
+}
+
+@media (max-width: 1120px) {
+  .profile-page__form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .profile-page__form {
+    grid-template-columns: 1fr;
+  }
 }
 
 .profile-page__field {
   margin: 0;
-  padding: 14px 14px 12px;
+  padding: 16px 16px 14px;
   border: 1px solid var(--border);
-  border-radius: 14px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  box-shadow: var(--shadow);
+}
+
+.profile-page__field--deck,
+.profile-page__field--goals {
+  grid-column: 1 / -1;
 }
 
 .profile-page__field legend {
@@ -92,12 +111,17 @@
   color: var(--text-h);
   transition:
     border-color 0.15s,
-    background 0.15s;
+    background 0.15s,
+    transform 0.15s;
 }
 
 .profile-page__goal:has(input:checked) {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+}
+
+.profile-page__goal:hover {
+  transform: translateY(-1px);
 }
 
 .profile-page__goal input {
@@ -125,6 +149,10 @@
   border: 1px solid var(--border);
   cursor: pointer;
   text-align: left;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    transform 0.15s;
 }
 
 .profile-page__deck-option input {
@@ -141,6 +169,10 @@
 .profile-page__deck-option--on {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+}
+
+.profile-page__deck-option:hover {
+  transform: translateY(-1px);
 }
 
 .profile-page__deck-label {

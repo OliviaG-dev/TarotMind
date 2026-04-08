@@ -1,5 +1,5 @@
 .draw {
-  max-width: 720px;
+  max-width: 1080px;
   margin: 0 auto;
   padding-top: 28px;
 }
@@ -17,8 +17,9 @@
 }
 
 .draw__title {
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
-  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 4.5vw, 2.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   margin: 0 0 10px;
 }
 
@@ -38,9 +39,10 @@
 .draw__panel {
   margin-bottom: 24px;
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px 16px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  border-radius: 18px;
+  padding: 20px 18px;
+  background: var(--bg-soft);
+  box-shadow: var(--shadow);
 }
 
 .draw__h2 {
@@ -57,9 +59,15 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+}
+
+@media (max-width: 980px) {
+  .draw__spread-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 .draw__spread-option {
@@ -72,7 +80,8 @@
   cursor: pointer;
   transition:
     border-color 0.15s,
-    background 0.15s;
+    background 0.15s,
+    transform 0.15s;
 }
 
 .draw__spread-option:has(input:focus-visible) {
@@ -88,6 +97,10 @@
 .draw__spread-option--on {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+}
+
+.draw__spread-option:hover {
+  transform: translateY(-1px);
 }
 
 .draw__spread-icon {
@@ -117,9 +130,15 @@
 }
 
 .draw__tones {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
+}
+
+@media (max-width: 980px) {
+  .draw__tones {
+    grid-template-columns: 1fr;
+  }
 }
 
 .draw__tone {
@@ -133,6 +152,10 @@
   border: 1px solid var(--border);
   cursor: pointer;
   text-align: left;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    transform 0.15s;
 }
 
 .draw__tone input {
@@ -149,6 +172,10 @@
 .draw__tone--on {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+}
+
+.draw__tone:hover {
+  transform: translateY(-1px);
 }
 
 .draw__tone-label {
@@ -174,14 +201,17 @@
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  color: #1b1023;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #ffffff;
+  background: var(--accent-strong);
   box-shadow: var(--shadow);
-  transition: filter 0.15s;
+  transition:
+    filter 0.15s,
+    background 0.15s;
 }
 
 .draw__primary:hover {
-  filter: brightness(1.05);
+  background: var(--accent);
+  filter: none;
 }
 
 .draw__primary:focus-visible {
@@ -207,9 +237,9 @@
 
 .draw__result {
   padding: 22px 20px;
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid var(--border);
-  background: var(--social-bg);
+  background: var(--bg-soft);
   box-shadow: var(--shadow);
 }
 

@@ -4,20 +4,20 @@ import './home.css'
 const FEATURES = [
   {
     to: '/tirage',
-    title: 'Tirage & schéma',
-    text: 'Tu tires avec ton jeu physique ; l’app affiche le schéma (1 carte, 3 temps, croix, thèmes…) pour que tu saisisses chaque arcane. L’IA interprète ensuite selon ton profil et le ton choisi.',
+    title: 'Tire tes cartes',
+    text: "Utilise ton propre jeu, choisis un type de tirage et laisse-toi guider. Tu places chaque carte toi-même — l'interprétation s'adapte à ton profil et à ce que tu traverses.",
     icon: '/icons/tirage-shema.png',
   },
   {
     to: '/profil',
-    title: 'Profil enrichi',
-    text: 'Statut amoureux, genre, situation pro, objectifs amour / argent / bien-être pour des conseils et un suivi plus personnalisés.',
+    title: 'Ton espace perso',
+    text: 'Dis-nous ce qui compte pour toi : amour, travail, bien-être… Plus ton profil est complet, plus les lectures deviennent justes et pertinentes.',
     icon: '/icons/profil-enrichi.png',
   },
   {
     to: '/historique',
-    title: 'Historique & évolution',
-    text: 'Timeline des tirages, comparaison entre deux tirages, aperçu d’analyse (motifs, thèmes) — prêt à être branché sur une vraie IA.',
+    title: 'Ton parcours',
+    text: 'Retrouve tes tirages passés, compare-les et observe comment les cartes évoluent avec toi au fil du temps.',
     icon: '/icons/historique.png',
   },
 ]
@@ -27,7 +27,7 @@ export default function Home() {
     <div className="home">
       <main className="home__main">
         <p className="home__tagline">
-          L’intelligence artificielle au service de ton intuition
+          Ton intuition, amplifiée
         </p>
         <div className="page-heading home__heading">
           <img
@@ -41,14 +41,14 @@ export default function Home() {
           <h1 className="home__title">TarotMind</h1>
         </div>
         <p className="home__lead">
-          Une application de nouvelle génération qui combine la sagesse
-          ancestrale du tarot avec la puissance de l’intelligence artificielle —
-          pour une expérience profondément personnelle.
+          Le tarot, c'est avant tout une conversation avec toi-même.
+          TarotMind t'accompagne dans cette exploration — avec douceur,
+          intelligence et une touche de magie.
         </p>
 
         <section className="home__features" aria-labelledby="features-heading">
           <h2 id="features-heading" className="home__features-title">
-            Fonctionnalités
+            Comment ça marche
           </h2>
           <ul className="home__feature-list">
             {FEATURES.map((f) => (
@@ -74,37 +74,35 @@ export default function Home() {
         </section>
 
         <section className="home__section" aria-labelledby="pitch-heading">
-          <h2 id="pitch-heading">Ce que propose TarotMind</h2>
+          <h2 id="pitch-heading">Pourquoi TarotMind ?</h2>
           <p>
-            Des tirages de cartes intelligents, capables de s’adapter au profil
-            unique de chaque utilisateur : situation amoureuse, parcours
-            professionnel, état émotionnel.
+            Chaque tirage est unique — comme toi. L'interprétation tient
+            compte de ta situation amoureuse, de ton parcours pro et de
+            ce qui te préoccupe en ce moment.
           </p>
           <p>
-            Grâce à une IA avancée, chaque interprétation va au-delà des
-            significations classiques : analyses précises, conseils concrets et
-            une guidance qui évolue dans le temps.
+            Pas de réponses toutes faites : des pistes de réflexion claires,
+            des conseils concrets et une guidance qui grandit avec toi.
           </p>
           <p>
-            Pour prendre une décision, comprendre une situation ou te
-            reconnecter à ton intuition — un guide moderne à la croisée de la
-            spiritualité et de la technologie.
+            Que tu cherches à y voir plus clair, à prendre une décision
+            ou simplement à te reconnecter à toi-même — TarotMind est là.
           </p>
         </section>
 
         <section className="home__section" aria-labelledby="deck-heading">
-          <h2 id="deck-heading">En une phrase</h2>
+          <h2 id="deck-heading">En un mot</h2>
           <blockquote className="home__quote">
-            TarotMind transforme le tarot traditionnel en une expérience
-            intelligente et personnalisée grâce à l’IA — une guidance sur
-            mesure, évolutive et accessible à tout moment.
+            Un compagnon de route qui mêle sagesse du tarot et intelligence
+            artificielle — pour t'offrir une lecture qui te ressemble,
+            à tout moment.
           </blockquote>
         </section>
 
       </main>
 
       <footer className="home__footer">
-        <span>TarotMind — prototype</span>
+        <span>TarotMind — fait avec soin</span>
       </footer>
     </div>
   )

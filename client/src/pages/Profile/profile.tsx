@@ -94,7 +94,7 @@ export default function ProfilePage() {
         className="profile-page__form"
         onSubmit={(e) => e.preventDefault()}
       >
-        <fieldset className="profile-page__field">
+        <fieldset className="profile-page__field profile-page__field--compact">
           <legend>Statut amoureux</legend>
           <select
             value={profile.relationshipStatus}
@@ -113,7 +113,7 @@ export default function ProfilePage() {
           </select>
         </fieldset>
 
-        <fieldset className="profile-page__field">
+        <fieldset className="profile-page__field profile-page__field--compact">
           <legend>Sexe / genre</legend>
           <select
             value={profile.gender}
@@ -130,7 +130,7 @@ export default function ProfilePage() {
           </select>
         </fieldset>
 
-        <fieldset className="profile-page__field">
+        <fieldset className="profile-page__field profile-page__field--compact">
           <legend>Situation professionnelle</legend>
           <select
             value={profile.workSituation}

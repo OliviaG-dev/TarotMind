@@ -1,26 +1,27 @@
 :root {
-  --text: #c8becf;
-  --text-h: #f5edf8;
-  --bg: #0f0b14;
-  --bg-elev: #171121;
-  --border: #32263e;
-  --code-bg: #1e1728;
-  --accent: #de85d7;
-  --accent-strong: #f0aac9;
-  --accent-bg: rgba(222, 133, 215, 0.14);
-  --accent-border: rgba(240, 170, 201, 0.45);
-  --social-bg: rgba(42, 31, 55, 0.48);
+  --text: #584f60;
+  --text-h: #2a2332;
+  --bg: #fff9f6;
+  --bg-elev: #fffdfb;
+  --bg-soft: rgba(255, 251, 248, 0.94);
+  --border: #eedfda;
+  --code-bg: #fff3ed;
+  --accent: #ad74c5;
+  --accent-strong: #8f58ab;
+  --accent-bg: rgba(173, 116, 197, 0.11);
+  --accent-border: rgba(143, 88, 171, 0.3);
+  --social-bg: rgba(173, 116, 197, 0.08);
   --shadow:
-    rgba(7, 4, 12, 0.62) 0 18px 34px -18px,
-    rgba(0, 0, 0, 0.35) 0 12px 20px -16px;
+    rgba(103, 76, 124, 0.12) 0 18px 34px -22px,
+    rgba(53, 33, 69, 0.06) 0 12px 20px -16px;
 
   --sans: Inter, 'Segoe UI', Roboto, system-ui, sans-serif;
-  --heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: dark;
+  color-scheme: light;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -35,22 +36,33 @@
 
 #root {
   width: 100%;
-  max-width: 960px;
+  max-width: none;
   margin: 0 auto;
-  border-inline: 1px solid var(--border);
+  border-inline: none;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background:
+    linear-gradient(180deg, rgba(255, 246, 240, 0.75), rgba(255, 250, 246, 0.92) 34%, rgba(255, 249, 246, 0.98)),
+    rgba(255, 249, 246, 0.98);
+  box-shadow:
+    0 20px 60px -38px rgba(109, 85, 130, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 body {
   margin: 0;
   background:
-    radial-gradient(circle at top right, rgba(240, 170, 201, 0.12), transparent 42%),
-    radial-gradient(circle at 18% 78%, rgba(181, 122, 231, 0.11), transparent 36%),
+    radial-gradient(circle at top right, rgba(248, 215, 234, 0.24), transparent 46%),
+    radial-gradient(circle at 18% 78%, rgba(255, 228, 214, 0.22), transparent 42%),
+    radial-gradient(circle at 82% 62%, rgba(255, 240, 225, 0.2), transparent 48%),
     var(--bg);
   color: var(--text);
+}
+
+a {
+  color: inherit;
 }
 
 /* Titre de page + pictogramme (public/img/*.png) */
@@ -72,27 +84,32 @@ body {
 h1,
 h2 {
   font-family: var(--heading);
-  font-weight: 600;
   color: var(--text-h);
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
+  background: linear-gradient(135deg, #6b3a7d 0%, #c47db5 50%, #e8a87c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 28px 0;
   @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+    margin: 18px 0;
   }
 }
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
 }
 p {
   margin: 0;
