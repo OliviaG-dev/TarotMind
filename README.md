@@ -2,7 +2,7 @@
 
 # TarotMind
 
-**Application web de tirage et d’interprétation de tarot** — interface fluide, profil personnalisable et historique des tirages, avec une architecture prête pour l’évolution (API, données partagées).
+**Application web de tirage et d’interpretation de tarot** — experience sombre elegante, profil personnalisable, historique local et generation IA via API.
 
 <br />
 
@@ -13,6 +13,7 @@
 
 [![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?style=for-the-badge&logo=nodedotjs&logoColor=fff)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4-000000?style=for-the-badge&logo=express&logoColor=fff)](https://expressjs.com/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?style=for-the-badge&logo=openai&logoColor=fff)](https://platform.openai.com/)
 [![npm workspaces](https://img.shields.io/badge/npm-workspaces-CB3837?style=for-the-badge&logo=npm&logoColor=fff)](https://docs.npmjs.com/cli/using-npm/workspaces)
 
 </div>
@@ -21,24 +22,28 @@
 
 ## Présentation
 
-TarotMind propose une expérience de **consultation guidée** : choix du tirage, cartes tirées selon les préférences, et suivi dans le temps. Le **profil** et l’**historique** peuvent être conservés **localement** dans le navigateur pour une utilisation immédiate, sans friction. Un **backend Express** et un paquet **TypeScript partagé** posent les bases d’évolutions futures (IA, synchronisation éventuelle).
+TarotMind propose une experience de **consultation guidee** : choix du tirage, saisie des cartes tirees, interpretation personnalisee par ton (spirituel, psychologique, direct) et suivi dans le temps.
+
+Le **profil** et l’**historique** sont stockes localement dans le navigateur pour une utilisation immediate. L’API Express fournit le point d’entree IA (`POST /interpret`) et reste simple a faire evoluer.
 
 ## Fonctionnalités
 
-- Interface **responsive** (accueil, tirage, profil, historique).
-- **Profil** : préférences (jeu de cartes, objectifs, contexte) pour contextualiser les interprétations.
-- **Historique** des tirages conservé côté client selon la configuration actuelle.
-- **API REST** avec point de santé (`/health`) ; les routes métier (ex. interprétation IA) s’ajoutent côté serveur sans authentification obligatoire pour l’instant.
+- Interface **responsive** (accueil, tirage, profil, historique), theme sombre elegant.
+- **Icones dediees** (plus d’emojis) pour les modules et types de tirages.
+- **Profil** : preferences utilisateur (objectifs, contexte relationnel/pro, jeu de cartes).
+- **Interpretation IA** via OpenAI sur `POST /interpret`, avec fallback local en cas d’erreur.
+- **Historique local** des tirages + comparaison.
+- **Aucune authentification obligatoire** dans la version actuelle.
 
 ## Architecture
 
 | Dossier | Rôle |
 |--------|------|
 | `client/` | SPA **React** + **React Router**, build **Vite**, typage **TypeScript**. |
-| `server/` | **Express**, API REST minimale (santé), prêt pour l’ajout de routes (ex. Gemini). |
+| `server/` | **Express**, `GET /health`, `POST /interpret` (OpenAI), gestion des flags d’execution IA. |
 | `packages/shared/` | Types et modules **TypeScript** partagés entre client et serveur. |
 
-En développement, le client Vite **proxy** le préfixe `/api` vers `http://localhost:4000` (voir `client/vite.config.ts`).
+En developpement, le client Vite **proxy** le prefixe `/api` vers `http://localhost:4000` (voir `client/vite.config.ts`).
 
 ## Prérequis
 
@@ -55,7 +60,7 @@ npm install
 
 ## Développement
 
-Démarrage conjoint du front (port Vite habituel **5173**) et de l’API (**4000** par défaut) :
+Demarrage conjoint du front (port Vite habituel **5173**) et de l’API (**4000** par defaut) :
 
 ```bash
 npm run dev
@@ -69,7 +74,32 @@ npm run dev
 | `npm run preview` | Prévisualisation du build statique du client |
 | `npm run lint` | Analyse ESLint |
 
-Variables optionnelles côté client : `client/.env.example` (`VITE_API_BASE`).
+Variables cote client : `client/.env.example` (`VITE_API_BASE`).
+
+## Configuration IA (OpenAI)
+
+Creer `server/.env` (non committe) avec au minimum :
+
+```env
+PORT=4000
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4o-mini
+```
+
+Options utiles pour maitriser cout/volume pendant les tests :
+
+```env
+# 1 = aucun appel OpenAI, retour d'un texte stub local
+AI_DISABLED=1
+
+# Retries max en cas d'erreurs 5xx
+AI_MAX_RETRIES=1
+
+# 1 = pas de second appel "reponse trop courte"
+AI_NO_EXPAND=1
+```
+
+Reference complete : `server/.env.example`.
 
 ## Build et exécution
 
@@ -77,8 +107,8 @@ Variables optionnelles côté client : `client/.env.example` (`VITE_API_BASE`).
 npm run build
 ```
 
-Ensuite : servir les fichiers de `client/dist` et lancer l’API (par ex. `npm run start` dans `server/` après compilation), selon votre hébergement (VPS, PaaS, conteneurs).
+Ensuite : servir `client/dist` en statique et lancer l’API (`npm run start` dans `server/` apres compilation), selon votre hebergement (VPS, PaaS, conteneurs).
 
 ## Licence
 
-Projet **privé** — usage réservé aux contributeurs autorisés.
+Projet **prive** — usage reserve aux contributeurs autorises.

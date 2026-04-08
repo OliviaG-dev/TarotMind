@@ -93,12 +93,18 @@ export default function DrawPage() {
     setApiHint(null)
     let interpretation = ''
     try {
-      interpretation = await requestInterpretation({
+      const res = await requestInterpretation({
         tone,
         spreadLabel: spread.label,
         profile,
         cards: placedPreview,
       })
+      interpretation = res.interpretation
+      if (res.source === 'mock') {
+        setApiHint(
+          'Serveur en mode configuration (`AI_DISABLED`) : aucune requête OpenAI, texte stub.',
+        )
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : ''
       interpretation = buildMockInterpretation({
@@ -182,9 +188,15 @@ export default function DrawPage() {
                     }
                   }}
                 />
-                <span className="draw__spread-emoji" aria-hidden>
-                  {s.emoji}
-                </span>
+                <img
+                  className="draw__spread-icon"
+                  src={s.icon}
+                  alt=""
+                  width={30}
+                  height={30}
+                  decoding="async"
+                  aria-hidden
+                />
                 <span className="draw__spread-text">
                   <span className="draw__spread-label">{s.label}</span>
                   <span className="draw__spread-desc">{s.description}</span>

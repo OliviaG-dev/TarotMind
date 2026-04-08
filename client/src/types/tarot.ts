@@ -71,6 +71,6 @@ export interface SpreadDefinition {
   id: SpreadId
   label: string
   description: string
-  emoji: string
+  icon: string
   positions: { key: string; label: string }[]
 }

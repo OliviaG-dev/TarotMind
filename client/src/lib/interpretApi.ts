@@ -3,6 +3,7 @@ import type { PlacedCard, Tone, UserProfile } from '../types/tarot'
 
 type InterpretResponse = {
   interpretation: string
+  source?: 'openai' | 'mock'
 }
 
 type ApiErrorResponse = {
@@ -15,7 +16,7 @@ export async function requestInterpretation(opts: {
   question?: string
   profile: UserProfile
   cards: PlacedCard[]
-}): Promise<string> {
+}): Promise<{ interpretation: string; source?: 'openai' | 'mock' }> {
   const response = await fetch(`${apiBase()}/interpret`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -48,5 +49,8 @@ export async function requestInterpretation(opts: {
   if (!body?.interpretation || typeof body.interpretation !== 'string') {
     throw new Error('interpret API invalid payload')
   }
-  return body.interpretation
+  return {
+    interpretation: body.interpretation,
+    source: body.source,
+  }
 }

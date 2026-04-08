@@ -1,10 +1,12 @@
 import { Router } from 'express'
+import { envFlag } from '../lib/envFlags.js'
 import {
   buildInterpretPromptPayload,
   type PromptCardInput,
   type PromptTone,
 } from '../lib/interpretPrompts.js'
-import { generateInterpretation } from '../lib/gemini.js'
+import { generateInterpretation } from '../lib/openai.js'
+import { buildConfigurationStub } from '../lib/mockInterpretationStub.js'
 
 export const interpretRouter = Router()
 
@@ -72,6 +74,18 @@ interpretRouter.post('/interpret', async (req, res) => {
       return
     }
 
+    if (envFlag('AI_DISABLED') || envFlag('GEMINI_DISABLED')) {
+      res.json({
+        interpretation: buildConfigurationStub({
+          spreadLabel,
+          tone,
+          cards,
+        }),
+        source: 'mock' as const,
+      })
+      return
+    }
+
     const prompt = buildInterpretPromptPayload({
       tone,
       spreadLabel,
@@ -81,19 +95,19 @@ interpretRouter.post('/interpret', async (req, res) => {
     })
 
     const interpretation = await generateInterpretation(prompt)
-    res.json({ interpretation })
+    res.json({ interpretation, source: 'openai' as const })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erreur serveur'
-    if (message.includes('GEMINI_API_KEY')) {
+    if (message.includes('OPENAI_API_KEY')) {
       res.status(500).json({ error: 'Configuration serveur incomplète' })
       return
     }
     if (
       message.includes('429') ||
-      message.includes('RESOURCE_EXHAUSTED') ||
+      message.includes('rate limit') ||
       message.includes('quota')
     ) {
-      res.status(429).json({ error: 'Quota Gemini depasse ou indisponible' })
+      res.status(429).json({ error: 'Quota OpenAI depasse ou indisponible' })
       return
     }
     res.status(502).json({ error: 'Echec generation IA' })

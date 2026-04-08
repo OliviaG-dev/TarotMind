@@ -6,19 +6,19 @@ const FEATURES = [
     to: '/tirage',
     title: 'Tirage & schéma',
     text: 'Tu tires avec ton jeu physique ; l’app affiche le schéma (1 carte, 3 temps, croix, thèmes…) pour que tu saisisses chaque arcane. L’IA interprète ensuite selon ton profil et le ton choisi.',
-    emoji: '🔮',
+    icon: '/icons/tirage-shema.png',
   },
   {
     to: '/profil',
     title: 'Profil enrichi',
     text: 'Statut amoureux, genre, situation pro, objectifs amour / argent / bien-être pour des conseils et un suivi plus personnalisés.',
-    emoji: '👤',
+    icon: '/icons/profil-enrichi.png',
   },
   {
     to: '/historique',
     title: 'Historique & évolution',
     text: 'Timeline des tirages, comparaison entre deux tirages, aperçu d’analyse (motifs, thèmes) — prêt à être branché sur une vraie IA.',
-    emoji: '📅',
+    icon: '/icons/historique.png',
   },
 ]
 
@@ -54,9 +54,15 @@ export default function Home() {
             {FEATURES.map((f) => (
               <li key={f.to}>
                 <Link to={f.to} className="home__feature-card">
-                  <span className="home__feature-emoji" aria-hidden>
-                    {f.emoji}
-                  </span>
+                  <img
+                    className="home__feature-icon"
+                    src={f.icon}
+                    alt=""
+                    width={34}
+                    height={34}
+                    decoding="async"
+                    aria-hidden
+                  />
                   <span className="home__feature-body">
                     <span className="home__feature-name">{f.title}</span>
                     <span className="home__feature-text">{f.text}</span>

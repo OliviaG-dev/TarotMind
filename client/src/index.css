@@ -1,23 +1,26 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
+  --text: #c8becf;
+  --text-h: #f5edf8;
+  --bg: #0f0b14;
+  --bg-elev: #171121;
+  --border: #32263e;
+  --code-bg: #1e1728;
+  --accent: #de85d7;
+  --accent-strong: #f0aac9;
+  --accent-bg: rgba(222, 133, 215, 0.14);
+  --accent-border: rgba(240, 170, 201, 0.45);
+  --social-bg: rgba(42, 31, 55, 0.48);
   --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+    rgba(7, 4, 12, 0.62) 0 18px 34px -18px,
+    rgba(0, 0, 0, 0.35) 0 12px 20px -16px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: Inter, 'Segoe UI', Roboto, system-ui, sans-serif;
+  --heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
+  color-scheme: dark;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -27,26 +30,6 @@
 
   @media (max-width: 1024px) {
     font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
   }
 }
 
@@ -63,6 +46,11 @@
 
 body {
   margin: 0;
+  background:
+    radial-gradient(circle at top right, rgba(240, 170, 201, 0.12), transparent 42%),
+    radial-gradient(circle at 18% 78%, rgba(181, 122, 231, 0.11), transparent 36%),
+    var(--bg);
+  color: var(--text);
 }
 
 /* Titre de page + pictogramme (public/img/*.png) */
@@ -78,12 +66,13 @@ body {
   height: clamp(44px, 10vw, 56px);
   object-fit: contain;
   flex-shrink: 0;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
 }
 
 h1,
 h2 {
   font-family: var(--heading);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-h);
 }
 
@@ -122,4 +111,5 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+  border: 1px solid var(--border);
 }

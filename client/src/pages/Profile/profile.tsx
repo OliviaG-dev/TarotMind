@@ -33,10 +33,10 @@ const WORK: { value: WorkSituation; label: string }[] = [
   { value: 'other', label: 'Autre / en transition' },
 ]
 
-const GOALS: { id: GoalId; label: string; emoji: string }[] = [
-  { id: 'love', label: 'Amour', emoji: '❤️' },
-  { id: 'money', label: 'Argent', emoji: '💰' },
-  { id: 'wellbeing', label: 'Bien-être', emoji: '🧘' },
+const GOALS: { id: GoalId; label: string; icon: string }[] = [
+  { id: 'love', label: 'Amour', icon: '/icons/amour.png' },
+  { id: 'money', label: 'Argent', icon: '/icons/argent.png' },
+  { id: 'wellbeing', label: 'Bien-être', icon: '/icons/bien-etre.png' },
 ]
 
 const DECK: { value: DeckPreference; label: string; hint: string }[] = [
@@ -189,7 +189,14 @@ export default function ProfilePage() {
                   checked={profile.goals.includes(g.id)}
                   onChange={() => toggleGoal(g.id)}
                 />
-                <span aria-hidden>{g.emoji}</span>
+                <img
+                  src={g.icon}
+                  alt=""
+                  width={20}
+                  height={20}
+                  decoding="async"
+                  aria-hidden
+                />
                 <span>{g.label}</span>
               </label>
             ))}

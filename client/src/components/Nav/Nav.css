@@ -6,22 +6,25 @@
 
 .nav__link {
   font-size: 0.95rem;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
   color: var(--text);
   text-decoration: none;
-  border: none;
+  border: 1px solid transparent;
   transition:
-    background 0.15s,
-    color 0.15s;
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
 }
 
 .nav__link:hover {
   color: var(--text-h);
+  border-color: var(--accent-border);
   background: var(--social-bg);
 }
 
 .nav__link.active {
-  color: var(--accent);
+  color: var(--accent-strong);
+  border-color: var(--accent-border);
   background: var(--accent-bg);
 }
