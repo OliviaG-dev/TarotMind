@@ -23,6 +23,17 @@ export type BuildInterpretPromptInput = {
   cards: PromptCardInput[]
 }
 
+export type HistoryInsightsDrawInput = {
+  createdAt: string
+  spreadLabel: string
+  tone: PromptTone
+  cards: Array<{
+    positionLabel: string
+    cardName: string
+    reversed: boolean
+  }>
+}
+
 export const TAROTMIND_SYSTEM_PROMPT = [
   'Tu es TarotMind, assistant d’interpretation de tirages de tarot en francais.',
   'Style: bienveillant, clair, concret, non-jugement.',
@@ -40,6 +51,24 @@ export const TAROTMIND_SYSTEM_PROMPT = [
   '- Toujours formuler comme piste de reflexion, avec nuances.',
   '- Francais naturel, sans jargon esoterique excessif.',
   '- Longueur cible: 220 a 420 mots.',
+].join('\n')
+
+export const TAROTMIND_HISTORY_SYSTEM_PROMPT = [
+  'Tu es TarotMind, analyste de motifs de tirages de tarot en francais.',
+  'Tu identifies des tendances, sans predire l’avenir de facon certaine.',
+  '',
+  'Sortie obligatoire en 5 sections exactement:',
+  '### Motif principal',
+  '### Ce que ca raconte de ta periode',
+  '### Point de vigilance',
+  '### Action 7 jours',
+  '### Question d’introspection',
+  '',
+  'Contraintes:',
+  '- Ton bienveillant, clair, concret.',
+  '- Pas de certitudes absolues.',
+  '- Une seule action prioritaire dans "Action 7 jours".',
+  '- Longueur cible: 180 a 260 mots.',
 ].join('\n')
 
 const TONE_EXTRA_INSTRUCTIONS: Record<PromptTone, string> = {
@@ -135,5 +164,44 @@ export function buildInterpretPromptPayload(input: BuildInterpretPromptInput): {
   return {
     systemInstruction: TAROTMIND_SYSTEM_PROMPT,
     userPrompt: buildInterpretUserPrompt(input),
+  }
+}
+
+export function buildHistoryInsightsPromptPayload(input: {
+  profile?: PromptProfileInput
+  draws: HistoryInsightsDrawInput[]
+  topCards: Array<{ name: string; count: number }>
+}): { systemInstruction: string; userPrompt: string } {
+  const drawsBlock = input.draws
+    .map((d) => {
+      const cards = d.cards
+        .map((c) => `${c.positionLabel}: ${c.cardName}${c.reversed ? ' (inversee)' : ''}`)
+        .join(' | ')
+      return `- ${d.createdAt} — ${d.spreadLabel} (${d.tone}) — ${cards}`
+    })
+    .join('\n')
+
+  const topCardsBlock =
+    input.topCards.length > 0
+      ? input.topCards.map((c) => `- ${c.name} (${c.count})`).join('\n')
+      : '- Aucun motif fort detecte'
+
+  const userPrompt = [
+    'Contexte profil:',
+    formatProfile(input.profile),
+    '',
+    'Historique recent:',
+    drawsBlock || '- Aucun tirage',
+    '',
+    'Cartes les plus frequentes:',
+    topCardsBlock,
+    '',
+    'Consigne:',
+    'Propose une analyse concise, utile et actionnable en respectant strictement les 5 sections imposees.',
+  ].join('\n')
+
+  return {
+    systemInstruction: TAROTMIND_HISTORY_SYSTEM_PROMPT,
+    userPrompt,
   }
 }

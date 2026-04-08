@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { InterpretationText } from '../../components/InterpretationText'
 import { useHistory } from '../../context/HistoryContext'
+import { useProfile } from '../../context/ProfileContext'
+import { requestHistoryInsights } from '../../lib/historyInsightsApi'
 import { buildHistoryInsights } from '../../lib/historyInsights'
 import type { DrawRecord, Tone } from '../../types/tarot'
 import './history.css'
@@ -28,14 +29,45 @@ function cardsSummary(d: DrawRecord) {
 }
 
 export default function HistoryPage() {
+  const { profile } = useProfile()
   const { draws, clearHistory } = useHistory()
   const [compareA, setCompareA] = useState<string>('')
   const [compareB, setCompareB] = useState<string>('')
+  const [historyAiText, setHistoryAiText] = useState<string | null>(null)
+  const [historyAiHint, setHistoryAiHint] = useState<string | null>(null)
+  const [loadingHistoryAi, setLoadingHistoryAi] = useState(false)
 
   const insights = useMemo(() => buildHistoryInsights(draws), [draws])
 
   const drawA = draws.find((d) => d.id === compareA)
   const drawB = draws.find((d) => d.id === compareB)
+
+  async function generateHistoryAiInsights() {
+    if (draws.length === 0 || loadingHistoryAi) return
+    setLoadingHistoryAi(true)
+    setHistoryAiHint(null)
+    try {
+      const res = await requestHistoryInsights({ profile, draws })
+      setHistoryAiText(res.interpretation)
+      if (res.source === 'mock') {
+        setHistoryAiHint(
+          "Mode configuration: l'IA est désactivée côté serveur (`AI_DISABLED`).",
+        )
+      } else if (res.source === 'cache') {
+        setHistoryAiHint("Analyse chargée depuis le cache local (aucun appel IA).")
+      }
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : ''
+      setHistoryAiText(null)
+      setHistoryAiHint(
+        msg
+          ? `Impossible de générer l'analyse IA: ${msg}.`
+          : "Impossible de générer l'analyse IA pour le moment.",
+      )
+    } finally {
+      setLoadingHistoryAi(false)
+    }
+  }
 
   return (
     <div className="history-page">
@@ -58,9 +90,19 @@ export default function HistoryPage() {
       </header>
 
       <section className="history-page__section" aria-labelledby="insights-h">
-        <h2 id="insights-h" className="history-page__h2">
-          Analyse (aperçu IA)
-        </h2>
+        <div className="history-page__insights-head">
+          <h2 id="insights-h" className="history-page__h2">
+            Analyse (aperçu IA)
+          </h2>
+          <button
+            type="button"
+            className="history-page__analyze"
+            onClick={generateHistoryAiInsights}
+            disabled={draws.length === 0 || loadingHistoryAi}
+          >
+            {loadingHistoryAi ? 'Analyse en cours...' : 'Analyser mon historique'}
+          </button>
+        </div>
         <ul className="history-page__insights">
           {insights.map((line, i) => (
             <li key={i}>
@@ -68,6 +110,12 @@ export default function HistoryPage() {
             </li>
           ))}
         </ul>
+        {historyAiHint && <p className="history-page__note">{historyAiHint}</p>}
+        {historyAiText && (
+          <div className="history-page__ai-result">
+            <InterpretationText text={historyAiText} />
+          </div>
+        )}
       </section>
 
       <section className="history-page__section" aria-labelledby="compare-h">
@@ -76,10 +124,7 @@ export default function HistoryPage() {
         </h2>
         {draws.length < 2 ? (
           <p className="history-page__empty">
-            Il faut au moins deux tirages.{' '}
-            <Link to="/tirage" className="history-page__link">
-              Faire un tirage
-            </Link>
+            Il faut au moins deux tirages pour activer la comparaison.
           </p>
         ) : (
           <>
@@ -184,12 +229,7 @@ export default function HistoryPage() {
           )}
         </div>
         {draws.length === 0 ? (
-          <p className="history-page__empty">
-            Aucun tirage enregistré.{' '}
-            <Link to="/tirage" className="history-page__link">
-              Commencer
-            </Link>
-          </p>
+          <p className="history-page__empty">Aucun tirage enregistré.</p>
         ) : (
           <ol className="history-page__timeline">
             {draws.map((d) => (

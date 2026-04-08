@@ -109,7 +109,6 @@
   border-color: var(--accent-border);
   background: var(--accent-bg);
   box-shadow: var(--shadow);
-  transform: translateY(-1px);
 }
 
 .home__feature-icon {
@@ -167,30 +166,6 @@
   font-style: italic;
   line-height: 1.55;
   color: var(--text-h);
-}
-
-.home__cta {
-  margin: 0 0 48px;
-}
-
-.home__cta-link {
-  display: inline-flex;
-  align-items: center;
-  font-weight: 600;
-  padding: 12px 22px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  color: #1b1023;
-  text-decoration: none;
-  box-shadow: var(--shadow);
-  transition:
-    filter 0.15s,
-    transform 0.15s;
-}
-
-.home__cta-link:hover {
-  filter: brightness(1.06);
-  transform: translateY(-1px);
 }
 
 .home__footer {

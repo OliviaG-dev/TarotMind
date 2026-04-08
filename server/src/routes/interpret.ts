@@ -1,7 +1,9 @@
 import { Router } from 'express'
 import { envFlag } from '../lib/envFlags.js'
 import {
+  buildHistoryInsightsPromptPayload,
   buildInterpretPromptPayload,
+  type HistoryInsightsDrawInput,
   type PromptCardInput,
   type PromptTone,
 } from '../lib/interpretPrompts.js'
@@ -22,6 +24,18 @@ type InterpretBody = {
     deckPreference?: string
   }
   cards?: PromptCardInput[]
+}
+
+type HistoryInsightsBody = {
+  profile?: {
+    relationshipStatus?: string
+    gender?: string
+    workSituation?: string
+    goals?: string[]
+    deckPreference?: string
+  }
+  draws?: HistoryInsightsDrawInput[]
+  topCards?: Array<{ name: string; count: number }>
 }
 
 function isTone(value: unknown): value is PromptTone {
@@ -94,6 +108,51 @@ interpretRouter.post('/interpret', async (req, res) => {
       cards,
     })
 
+    const interpretation = await generateInterpretation(prompt)
+    res.json({ interpretation, source: 'openai' as const })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Erreur serveur'
+    if (message.includes('OPENAI_API_KEY')) {
+      res.status(500).json({ error: 'Configuration serveur incomplète' })
+      return
+    }
+    if (
+      message.includes('429') ||
+      message.includes('rate limit') ||
+      message.includes('quota')
+    ) {
+      res.status(429).json({ error: 'Quota OpenAI depasse ou indisponible' })
+      return
+    }
+    res.status(502).json({ error: 'Echec generation IA' })
+  }
+})
+
+interpretRouter.post('/history-insights', async (req, res) => {
+  try {
+    const body = (req.body ?? {}) as HistoryInsightsBody
+    const draws = Array.isArray(body.draws) ? body.draws.slice(0, 12) : []
+    const topCards = Array.isArray(body.topCards) ? body.topCards.slice(0, 8) : []
+
+    if (draws.length === 0) {
+      res.status(400).json({ error: 'draws requis' })
+      return
+    }
+
+    if (envFlag('AI_DISABLED') || envFlag('GEMINI_DISABLED')) {
+      res.json({
+        interpretation:
+          '### Motif principal\nMode configuration actif.\n\n### Ce que ca raconte de ta periode\nLes donnees sont bien recues, mais l’IA est desactivee.\n\n### Point de vigilance\nPense a rebasculer `AI_DISABLED=0` pour obtenir une analyse reelle.\n\n### Action 7 jours\nActive OpenAI puis relance une analyse depuis Historique.\n\n### Question d’introspection\nQuel motif veux-tu explorer en priorite cette semaine ?',
+        source: 'mock' as const,
+      })
+      return
+    }
+
+    const prompt = buildHistoryInsightsPromptPayload({
+      profile: body.profile,
+      draws,
+      topCards,
+    })
     const interpretation = await generateInterpretation(prompt)
     res.json({ interpretation, source: 'openai' as const })
   } catch (error) {

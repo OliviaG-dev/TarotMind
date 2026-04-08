@@ -101,11 +101,6 @@ export default function Home() {
           </blockquote>
         </section>
 
-        <p className="home__cta">
-          <Link to="/tirage" className="home__cta-link">
-            Commencer un tirage
-          </Link>
-        </p>
       </main>
 
       <footer className="home__footer">
