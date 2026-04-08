@@ -5,14 +5,14 @@ export const SPREADS: SpreadDefinition[] = [
     id: 'one',
     label: '1 carte',
     description: 'Réponse rapide à une question précise.',
-    emoji: '🔮',
+    icon: '/icons/1carte.png',
     positions: [{ key: 'focus', label: 'Message du moment' }],
   },
   {
     id: 'three_ppf',
     label: '3 cartes — passé / présent / futur',
     description: 'Ligne du temps : racines, situation actuelle, tendance.',
-    emoji: '🃏',
+    icon: '/icons/passe-present-futur.png',
     positions: [
       { key: 'past', label: 'Passé' },
       { key: 'present', label: 'Présent' },
@@ -23,7 +23,7 @@ export const SPREADS: SpreadDefinition[] = [
     id: 'cross',
     label: 'Tirage en croix',
     description: 'Vue d’ensemble : blocages, contexte et conseil.',
-    emoji: '🧭',
+    icon: '/icons/tirage-croix.png',
     positions: [
       { key: 'center', label: 'Situation centrale' },
       { key: 'cross', label: 'Obstacle ou défi' },
@@ -36,7 +36,7 @@ export const SPREADS: SpreadDefinition[] = [
     id: 'love',
     label: 'Amour',
     description: 'Cœur, dynamique relationnelle, piste à cultiver.',
-    emoji: '❤️',
+    icon: '/icons/tirage-amour.png',
     positions: [
       { key: 'heart', label: 'État du cœur' },
       { key: 'bond', label: 'Dynamique' },
@@ -47,7 +47,7 @@ export const SPREADS: SpreadDefinition[] = [
     id: 'career',
     label: 'Carrière',
     description: 'Contexte pro, tension utile, opportunité.',
-    emoji: '💼',
+    icon: '/icons/tirage-carriere.png',
     positions: [
       { key: 'context', label: 'Contexte professionnel' },
       { key: 'tension', label: 'Défi ou tension' },
@@ -58,7 +58,7 @@ export const SPREADS: SpreadDefinition[] = [
     id: 'decision',
     label: 'Décision',
     description: 'Éclairer un choix : question, piste A, piste B.',
-    emoji: '⚖️',
+    icon: '/icons/tirage-decision.png',
     positions: [
       { key: 'question', label: 'Ta question / enjeu' },
       { key: 'path_a', label: 'Piste 1' },

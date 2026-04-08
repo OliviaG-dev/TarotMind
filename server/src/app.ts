@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { authRouter } from './routes/auth.js'
+import { interpretRouter } from './routes/interpret.js'
 
 export function createApp() {
   const app = express()
@@ -16,7 +16,7 @@ export function createApp() {
     res.json({ ok: true })
   })
 
-  app.use(authRouter)
+  app.use(interpretRouter)
 
   app.use((_req, res) => {
     res.status(404).json({ error: 'Not found' })

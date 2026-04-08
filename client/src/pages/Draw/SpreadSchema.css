@@ -1,9 +1,9 @@
 .spread-schema {
   margin-top: 20px;
   padding: 20px;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid var(--border);
-  background: var(--social-bg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
 }
 
 .spread-schema__hint {
@@ -49,9 +49,9 @@
   align-items: center;
   justify-content: center;
   padding: 10px 8px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 2px dashed var(--border);
-  background: var(--bg);
+  background: var(--bg-elev);
   text-align: center;
   transition:
     border-color 0.15s,
@@ -84,9 +84,9 @@
   font-family: var(--sans);
   font-size: 0.85rem;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--bg-elev);
   color: var(--text-h);
   width: 100%;
   box-sizing: border-box;
