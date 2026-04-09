@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { InterpretationText } from '../../components/InterpretationText'
 import { useHistory } from '../../context/HistoryContext'
 import { useProfile } from '../../context/ProfileContext'
@@ -245,6 +246,12 @@ export default function HistoryPage() {
           </ol>
         )}
       </section>
+
+      <div className="cta-nav">
+        <Link to="/" className="cta-nav__link">
+          ← Accueil
+        </Link>
+      </div>
     </div>
   )
 }

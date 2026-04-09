@@ -130,3 +130,38 @@ code {
   background: var(--code-bg);
   border: 1px solid var(--border);
 }
+
+.cta-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.cta-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 13px 32px;
+  border-radius: 999px;
+  border: none;
+  text-decoration: none;
+  color: #fff;
+  background: var(--accent-strong);
+  box-shadow: var(--shadow);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cta-nav__link:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+
+.cta-nav__link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

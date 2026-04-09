@@ -8,7 +8,6 @@
 
 .home__main {
   flex: 1;
-  padding: clamp(32px, 7vw, 72px) clamp(20px, 4.5vw, 44px) 64px;
   max-width: 1080px;
   margin: 0 auto;
   width: 100%;

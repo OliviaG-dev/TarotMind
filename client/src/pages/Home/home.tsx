@@ -99,11 +99,14 @@ export default function Home() {
           </blockquote>
         </section>
 
+        <div className="cta-nav">
+          <Link to="/profil" className="cta-nav__link">
+            Commencer →
+          </Link>
+        </div>
+
       </main>
 
-      <footer className="home__footer">
-        <span>TarotMind — fait avec soin</span>
-      </footer>
     </div>
   )
 }

@@ -292,6 +292,12 @@ export default function DrawPage() {
           </p>
         </section>
       )}
+
+      <div className="cta-nav">
+        <Link to="/historique" className="cta-nav__link">
+          Continuer →
+        </Link>
+      </div>
     </div>
   )
 }

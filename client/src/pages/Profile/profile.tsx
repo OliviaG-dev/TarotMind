@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type {
   DeckPreference,
   Gender,
@@ -203,6 +204,12 @@ export default function ProfilePage() {
           </div>
         </fieldset>
       </form>
+
+      <div className="cta-nav">
+        <Link to="/tirage" className="cta-nav__link">
+          Continuer →
+        </Link>
+      </div>
     </div>
   )
 }
