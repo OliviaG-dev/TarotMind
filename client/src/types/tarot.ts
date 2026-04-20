@@ -7,6 +7,7 @@ export type SpreadId =
   | 'love'
   | 'career'
   | 'decision'
+  | 'compatibility'
 
 export type RelationshipStatus =
   | 'single'
@@ -66,6 +67,8 @@ export interface DrawRecord {
   cards: PlacedCard[]
   interpretation: string
   question?: string
+  note?: string
+  favorite?: boolean
 }
 
 export interface SpreadDefinition {

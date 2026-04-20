@@ -10,4 +10,5 @@ export const SPREAD_LAYOUT: Record<SpreadId, SpreadLayoutKind> = {
   love: 'triangle3',
   career: 'triangle3',
   decision: 'triangle3',
+  compatibility: 'cross5',
 }

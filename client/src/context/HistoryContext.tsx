@@ -31,6 +31,8 @@ type HistoryContextValue = {
   draws: DrawRecord[]
   addDraw: (draw: DrawRecord) => void
   clearHistory: () => void
+  toggleFavorite: (id: string) => void
+  updateNote: (id: string, note: string) => void
 }
 
 const HistoryContext = createContext<HistoryContextValue | null>(null)
@@ -50,9 +52,21 @@ export function HistoryProvider({ children }: { children: ReactNode }) {
     setDraws([])
   }, [])
 
+  const toggleFavorite = useCallback((id: string) => {
+    setDraws((prev) =>
+      prev.map((d) => (d.id === id ? { ...d, favorite: !d.favorite } : d)),
+    )
+  }, [])
+
+  const updateNote = useCallback((id: string, note: string) => {
+    setDraws((prev) =>
+      prev.map((d) => (d.id === id ? { ...d, note } : d)),
+    )
+  }, [])
+
   const value = useMemo(
-    () => ({ draws, addDraw, clearHistory }),
-    [draws, addDraw, clearHistory],
+    () => ({ draws, addDraw, clearHistory, toggleFavorite, updateNote }),
+    [draws, addDraw, clearHistory, toggleFavorite, updateNote],
   )
 
   return (

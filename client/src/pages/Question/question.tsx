@@ -158,7 +158,7 @@ export default function QuestionPage() {
             Type de tirage
           </h2>
           <ul className="question-page__spread-list">
-            {SPREADS.map((s) => (
+            {SPREADS.filter((s) => s.id !== 'love' && s.id !== 'career' && s.id !== 'decision' && s.id !== 'compatibility').map((s) => (
               <li key={s.id}>
                 <label
                   className={`question-page__spread-option ${spreadId === s.id ? 'question-page__spread-option--on' : ''}`}

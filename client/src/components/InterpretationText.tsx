@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 
 function formatParagraph(line: string) {
   const parts = line.split(/(\*\*.+?\*\*)/g)
@@ -42,6 +42,43 @@ function isHighlightedMiniTitle(title: string): boolean {
     'piste 1',
     'piste 2',
   ].includes(normalized)
+}
+
+function SpeakButton({ text }: { text: string }) {
+  const [speaking, setSpeaking] = useState(false)
+
+  const handleSpeak = useCallback(() => {
+    if (!('speechSynthesis' in window)) return
+
+    if (speaking) {
+      speechSynthesis.cancel()
+      setSpeaking(false)
+      return
+    }
+
+    const plain = text.replace(/[#*_\-]/g, '').replace(/\n+/g, '. ')
+    const utterance = new SpeechSynthesisUtterance(plain)
+    utterance.lang = 'fr-FR'
+    utterance.rate = 0.95
+    utterance.onend = () => setSpeaking(false)
+    utterance.onerror = () => setSpeaking(false)
+    setSpeaking(true)
+    speechSynthesis.speak(utterance)
+  }, [text, speaking])
+
+  if (!('speechSynthesis' in window)) return null
+
+  return (
+    <button
+      type="button"
+      className="interpretation-text__speak"
+      onClick={handleSpeak}
+      aria-label={speaking ? 'Arreter la lecture' : 'Ecouter'}
+      title={speaking ? 'Arreter' : 'Ecouter'}
+    >
+      {speaking ? '\u23F9' : '\u25B6'} {speaking ? 'Arreter' : 'Ecouter'}
+    </button>
+  )
 }
 
 export function InterpretationText({ text }: { text: string }) {
@@ -94,6 +131,7 @@ export function InterpretationText({ text }: { text: string }) {
 
   return (
     <div className="interpretation-text">
+      <SpeakButton text={text} />
       {blocks.map((b, idx) => {
         if (b.type === 'h3') {
           return (

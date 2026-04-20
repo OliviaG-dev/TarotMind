@@ -3,28 +3,40 @@ import './home.css'
 
 const FEATURES = [
   {
+    to: '/carte-du-jour',
+    title: 'Carte du jour',
+    text: 'Chaque matin, une carte et un message d\'inspiration pour bien commencer ta journee.',
+    icon: '/icons/1carte.png',
+  },
+  {
     to: '/tirage',
     title: 'Tire tes cartes',
-    text: "Utilise ton propre jeu, choisis un type de tirage et laisse-toi guider. Tu places chaque carte toi-même, et l'interprétation s'adapte à ton profil et à ce que tu traverses.",
+    text: "Choisis un tirage, place tes cartes et laisse l'IA interpreter selon ton profil.",
+    icon: '/icons/tirage-shema.png',
+  },
+  {
+    to: '/question',
+    title: 'Pose ta question',
+    text: "Une question precise ? Tire tes cartes et obtiens une reponse personnalisee.",
     icon: '/icons/tirage-shema.png',
   },
   {
     to: '/profil',
     title: 'Ton espace perso',
-    text: 'Dis-nous ce qui compte pour toi : amour, travail, bien-être… Plus ton profil est complet, plus les lectures deviennent justes et pertinentes.',
+    text: 'Configure ton profil pour des lectures plus justes et pertinentes.',
     icon: '/icons/profil-enrichi.png',
-  },
-  {
-    to: '/question',
-    title: 'Pose ta question',
-    text: "Tu as une question precise ? Choisis un tirage, place tes cartes et obtiens une reponse personnalisee, guidee par ton profil et tes arcanes.",
-    icon: '/icons/tirage-shema.png',
   },
   {
     to: '/historique',
     title: 'Ton parcours',
-    text: 'Retrouve tes tirages passés, compare-les et observe comment les cartes évoluent avec toi au fil du temps.',
+    text: 'Retrouve tes tirages, ajoute des notes, compare et observe ton evolution.',
     icon: '/icons/historique.png',
+  },
+  {
+    to: '/encyclopedie',
+    title: 'Encyclopedie',
+    text: 'Explore les 78 cartes, leurs mots-cles et leurs significations.',
+    icon: '/icons/tirage-shema.png',
   },
 ]
 

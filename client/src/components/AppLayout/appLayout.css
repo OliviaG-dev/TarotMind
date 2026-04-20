@@ -43,6 +43,24 @@
   color: var(--accent);
 }
 
+.shell__theme-toggle {
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  color: var(--text-h);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+
+.shell__theme-toggle:hover {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
+
 .shell__body {
   flex: 1;
   padding: clamp(16px, 2vw, 28px) clamp(18px, 3vw, 40px) 56px;
@@ -117,4 +135,25 @@
 .interpretation-text strong {
   color: var(--accent-strong);
   font-weight: 600;
+}
+
+.interpretation-text__speak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--accent-strong);
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background 0.15s;
+}
+
+.interpretation-text__speak:hover {
+  background: var(--accent-border);
 }

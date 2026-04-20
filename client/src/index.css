@@ -34,6 +34,25 @@
   }
 }
 
+:root[data-theme='dark'] {
+  --text: #c5bfcf;
+  --text-h: #eee8f4;
+  --bg: #1a1225;
+  --bg-elev: #231a30;
+  --bg-soft: rgba(30, 22, 42, 0.94);
+  --border: #3a2d4a;
+  --code-bg: #2a1e3a;
+  --accent: #c98de6;
+  --accent-strong: #b06fd4;
+  --accent-bg: rgba(185, 130, 220, 0.14);
+  --accent-border: rgba(176, 111, 212, 0.35);
+  --social-bg: rgba(185, 130, 220, 0.1);
+  --shadow:
+    rgba(0, 0, 0, 0.35) 0 18px 34px -22px,
+    rgba(0, 0, 0, 0.2) 0 12px 20px -16px;
+  color-scheme: dark;
+}
+
 #root {
   width: 100%;
   max-width: none;
@@ -85,6 +104,21 @@ h1,
 h2 {
   font-family: var(--heading);
   color: var(--text-h);
+}
+
+:root[data-theme='dark'] #root {
+  background: linear-gradient(180deg, rgba(26, 18, 37, 0.9), rgba(26, 18, 37, 0.98) 34%);
+}
+
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at top right, rgba(80, 40, 100, 0.2), transparent 46%),
+    radial-gradient(circle at 18% 78%, rgba(60, 30, 80, 0.15), transparent 42%),
+    var(--bg);
+}
+
+:root[data-theme='dark'] .shell__header {
+  background: rgba(26, 18, 37, 0.92);
 }
 
 h1 {
@@ -164,4 +198,40 @@ code {
 .cta-nav__link:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.home,
+.draw,
+.question-page,
+.daily-card,
+.encyclopedia,
+.stats-page,
+.history-page {
+  animation: pageFadeIn 0.35s ease both;
+}
+
+@keyframes interpretReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.draw__result,
+.question-page__result,
+.history-page__detail-interp {
+  animation: interpretReveal 0.4s ease both;
+}
+
+.page-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  font-size: 1rem;
+  color: var(--text);
+  opacity: 0.6;
 }

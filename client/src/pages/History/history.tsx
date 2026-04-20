@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useRef, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { InterpretationText } from '../../components/InterpretationText'
 import { useHistory } from '../../context/HistoryContext'
@@ -29,11 +29,43 @@ function cardsSummary(d: DrawRecord) {
   return d.cards.map((c) => c.card.nameFr).join(' · ')
 }
 
+function NoteForm({ drawId, currentNote, onSave }: {
+  drawId: string
+  currentNote: string
+  onSave: (id: string, note: string) => void
+}) {
+  const ref = useRef<HTMLTextAreaElement>(null)
+  const [saved, setSaved] = useState(false)
+
+  function handleSave() {
+    const val = ref.current?.value ?? ''
+    onSave(drawId, val.trim())
+    setSaved(true)
+    setTimeout(() => setSaved(false), 1500)
+  }
+
+  return (
+    <div className="history-page__note-form">
+      <textarea
+        ref={ref}
+        className="history-page__note-textarea"
+        defaultValue={currentNote}
+        placeholder="Ecris tes ressentis, reflexions..."
+        rows={3}
+      />
+      <button type="button" className="history-page__note-save" onClick={handleSave}>
+        {saved ? 'Enregistre !' : 'Enregistrer'}
+      </button>
+    </div>
+  )
+}
+
 export default function HistoryPage() {
   const { profile } = useProfile()
-  const { draws, clearHistory } = useHistory()
+  const { draws, clearHistory, toggleFavorite, updateNote } = useHistory()
   const [compareA, setCompareA] = useState<string>('')
   const [compareB, setCompareB] = useState<string>('')
+  const [expandedId, setExpandedId] = useState<string | null>(null)
   const [historyAiText, setHistoryAiText] = useState<string | null>(null)
   const [historyAiHint, setHistoryAiHint] = useState<string | null>(null)
   const [loadingHistoryAi, setLoadingHistoryAi] = useState(false)
@@ -235,20 +267,82 @@ export default function HistoryPage() {
           <ol className="history-page__timeline">
             {draws.map((d) => (
               <li key={d.id} className="history-page__event">
-                <time dateTime={d.createdAt}>{formatWhen(d.createdAt)}</time>
-                <span className="history-page__event-spread">
-                  {d.question ? 'Question' : 'Tirage'} · {d.spreadLabel}
-                </span>
-                {d.question && (
-                  <span className="history-page__event-question">
-                    &laquo; {d.question} &raquo;
+                <button
+                  type="button"
+                  className="history-page__event-toggle"
+                  onClick={() => setExpandedId(expandedId === d.id ? null : d.id)}
+                  aria-expanded={expandedId === d.id}
+                >
+                  <time dateTime={d.createdAt}>{formatWhen(d.createdAt)}</time>
+                  <span className="history-page__event-spread">
+                    {d.question ? 'Question' : 'Tirage'} · {d.spreadLabel}
+                    {d.favorite && <span className="history-page__star" aria-label="favori"> &#9733;</span>}
                   </span>
-                )}
-                <span className="history-page__event-cards">{cardsSummary(d)}</span>
-                {!d.question && (
-                  <span className="history-page__event-tone">
-                    Ton : {toneLabel(d.tone)}
-                  </span>
+                  {d.question && (
+                    <span className="history-page__event-question">
+                      &laquo; {d.question} &raquo;
+                    </span>
+                  )}
+                  <span className="history-page__event-cards">{cardsSummary(d)}</span>
+                  {!d.question && (
+                    <span className="history-page__event-tone">
+                      Ton : {toneLabel(d.tone)}
+                    </span>
+                  )}
+                </button>
+                {expandedId === d.id && (
+                  <div className="history-page__detail">
+                    <div className="history-page__detail-actions">
+                      <button
+                        type="button"
+                        className="history-page__fav-btn"
+                        onClick={() => toggleFavorite(d.id)}
+                      >
+                        {d.favorite ? '&#9733; Retirer des favoris' : '&#9734; Ajouter aux favoris'}
+                      </button>
+                      <button
+                        type="button"
+                        className="history-page__fav-btn"
+                        onClick={() => {
+                          const lines = [
+                            `TarotMind - ${d.question ? 'Question' : 'Tirage'}`,
+                            `Date : ${formatWhen(d.createdAt)}`,
+                            `Type : ${d.spreadLabel}`,
+                            d.question ? `Question : ${d.question}` : `Ton : ${toneLabel(d.tone)}`,
+                            '',
+                            'Cartes :',
+                            ...d.cards.map((c) => `  ${c.positionLabel} : ${c.card.nameFr}${c.reversed ? ' (renversee)' : ''}`),
+                            '',
+                            'Interpretation :',
+                            d.interpretation,
+                          ]
+                          navigator.clipboard.writeText(lines.join('\n'))
+                        }}
+                      >
+                        Copier
+                      </button>
+                    </div>
+                    <h4 className="history-page__detail-h">Cartes</h4>
+                    <ul className="history-page__detail-cards">
+                      {d.cards.map((c) => (
+                        <li key={c.positionKey}>
+                          <span className="history-page__pos">{c.positionLabel}</span>
+                          <span className="history-page__name">
+                            {c.card.nameFr}
+                            {c.reversed ? ' (renversee)' : ''}
+                          </span>
+                          <span className="history-page__kw">{c.card.keywords.join(', ')}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <h4 className="history-page__detail-h">Note personnelle</h4>
+                    <NoteForm drawId={d.id} currentNote={d.note ?? ''} onSave={updateNote} />
+
+                    <h4 className="history-page__detail-h">Interpretation</h4>
+                    <div className="history-page__detail-interp">
+                      <InterpretationText text={d.interpretation} />
+                    </div>
+                  </div>
                 )}
               </li>
             ))}

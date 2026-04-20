@@ -2,23 +2,6 @@ import type { DeckPreference, DrawnCard, PlacedCard, TarotCard } from '../types/
 
 const byId = new Map<string, TarotCard>()
 
-const MINOR_RANKS = [
-  'As',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  'Valet',
-  'Cavalier',
-  'Dame',
-  'Roi',
-] as const
-
 const MINOR_SUITS = [
   { id: 'coupes', name: 'Coupes' },
   { id: 'batons', name: 'Bâtons' },
@@ -26,14 +9,87 @@ const MINOR_SUITS = [
   { id: 'deniers', name: 'Deniers' },
 ] as const
 
+const MINOR_KEYWORDS: Record<string, string[][]> = {
+  coupes: [
+    ['amour naissant', 'intuition', 'offrande'],
+    ['union', 'harmonie', 'attirance'],
+    ['celebration', 'amitie', 'partage'],
+    ['repli', 'lassitude', 'reflexion'],
+    ['deuil', 'perte', 'nostalgie'],
+    ['enfance', 'souvenir', 'tendresse'],
+    ['illusion', 'reve', 'choix flou'],
+    ['depart', 'abandon', 'quete'],
+    ['satisfaction', 'voeu exauce', 'plenitude'],
+    ['bonheur familial', 'accomplissement', 'gratitude'],
+    ['sensibilite', 'message', 'creativite'],
+    ['romantisme', 'seduction', 'charme'],
+    ['compassion', 'sagesse du coeur', 'empathie'],
+    ['maturite emotionnelle', 'generosite', 'equilibre'],
+  ],
+  batons: [
+    ['elan', 'inspiration', 'potentiel'],
+    ['planification', 'ambition', 'decision'],
+    ['expansion', 'vision', 'commerce'],
+    ['fete', 'fondation', 'etape'],
+    ['competition', 'conflit', 'defi'],
+    ['victoire', 'reconnaissance', 'fierte'],
+    ['perseverance', 'defense', 'courage'],
+    ['vitesse', 'mouvement', 'progression'],
+    ['resilience', 'vigilance', 'endurance'],
+    ['charge', 'responsabilite', 'surmenage'],
+    ['aventure', 'enthousiasme', 'decouverte'],
+    ['passion', 'energie', 'leadership'],
+    ['charisme', 'confiance', 'determination'],
+    ['autorite', 'vision strategique', 'entreprenariat'],
+  ],
+  epees: [
+    ['verite', 'clarte', 'percee'],
+    ['indecision', 'blocage', 'compromise'],
+    ['chagrin', 'rupture', 'separation'],
+    ['repos', 'recuperation', 'pause'],
+    ['defaite', 'humiliation', 'lecon'],
+    ['transition', 'passage', 'soulagement'],
+    ['ruse', 'strategie', 'fuite'],
+    ['prison mentale', 'impuissance', 'anxiete'],
+    ['insomnie', 'culpabilite', 'inquietude'],
+    ['fin brutale', 'epuisement', 'limite'],
+    ['perspicacite', 'curiosite', 'esprit vif'],
+    ['communication', 'franchise', 'rapidite'],
+    ['discernement', 'autorite intellectuelle', 'objectivite'],
+    ['justice', 'logique', 'decision tranchee'],
+  ],
+  deniers: [
+    ['opportunite', 'prosperite', 'debut materiel'],
+    ['equilibre', 'gestion', 'adaptation'],
+    ['maitrise', 'savoir-faire', 'collaboration'],
+    ['securite', 'possession', 'controle'],
+    ['precarite', 'isolement', 'epreuve'],
+    ['generosite', 'partage', 'charite'],
+    ['patience', 'investissement', 'croissance'],
+    ['apprentissage', 'perfectionnement', 'rigueur'],
+    ['independance', 'abondance', 'luxe'],
+    ['heritage', 'famille', 'patrimoine'],
+    ['etude', 'concentration', 'pragmatisme'],
+    ['fiabilite', 'travail', 'methodique'],
+    ['confort', 'abondance', 'nature'],
+    ['reussite materielle', 'influence', 'stabilite'],
+  ],
+}
+
+const MINOR_RANKS = [
+  'As', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+  'Valet', 'Cavalier', 'Dame', 'Roi',
+] as const
+
 function buildMinorArcana(): TarotCard[] {
   const out: TarotCard[] = []
   for (const suit of MINOR_SUITS) {
     MINOR_RANKS.forEach((rank, i) => {
+      const kw = MINOR_KEYWORDS[suit.id]?.[i]
       out.push({
         id: `minor-${suit.id}-${i}`,
         nameFr: `${rank} de ${suit.name}`,
-        keywords: ['mineur', suit.name.toLowerCase(), 'quotidien'],
+        keywords: kw ?? ['mineur', suit.name.toLowerCase(), 'quotidien'],
       })
     })
   }
