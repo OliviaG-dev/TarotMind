@@ -298,6 +298,15 @@
   margin-bottom: 4px;
 }
 
+.history-page__event-question {
+  display: block;
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1.45;
+  margin-bottom: 4px;
+}
+
 .history-page__event-tone {
   font-size: 0.82rem;
   color: var(--text);

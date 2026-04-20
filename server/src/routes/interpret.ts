@@ -3,6 +3,7 @@ import { envFlag } from '../lib/envFlags.js'
 import {
   buildHistoryInsightsPromptPayload,
   buildInterpretPromptPayload,
+  buildQuestionPromptPayload,
   type HistoryInsightsDrawInput,
   type PromptCardInput,
   type PromptTone,
@@ -122,6 +123,73 @@ interpretRouter.post('/interpret', async (req, res) => {
       message.includes('quota')
     ) {
       res.status(429).json({ error: 'Quota OpenAI depasse ou indisponible' })
+      return
+    }
+    res.status(502).json({ error: 'Echec generation IA' })
+  }
+})
+
+type QuestionBody = {
+  question?: string
+  spreadLabel?: string
+  profile?: {
+    relationshipStatus?: string
+    gender?: string
+    workSituation?: string
+    goals?: string[]
+    deckPreference?: string
+  }
+  cards?: PromptCardInput[]
+}
+
+interpretRouter.post('/question', async (req, res) => {
+  try {
+    const body = (req.body ?? {}) as QuestionBody
+    const question = body.question?.trim()
+
+    if (!question || question.length < 3) {
+      res.status(400).json({ error: 'question requise (3 caracteres min)' })
+      return
+    }
+
+    if (envFlag('AI_DISABLED') || envFlag('GEMINI_DISABLED')) {
+      res.json({
+        interpretation:
+          `**Ta question :** ${question}\n\n` +
+          '### Eclairage\n' +
+          "L'IA est actuellement en mode demo. En production, tu recevras ici une reponse personnalisee basee sur ton profil et ta question.\n\n" +
+          '### Conseil concret\n' +
+          '- Prends un moment pour reformuler ta question avec precision.\n' +
+          '- Note ce qui te vient spontanement a l\'esprit.\n\n' +
+          '### Question d\'introspection\n' +
+          'Qu\'est-ce qui se cache derriere cette question ?',
+        source: 'mock' as const,
+      })
+      return
+    }
+
+    const cards = sanitizeCards(body.cards)
+    const prompt = buildQuestionPromptPayload({
+      question,
+      profile: body.profile,
+      spreadLabel: body.spreadLabel?.trim(),
+      cards: cards ?? undefined,
+    })
+
+    const interpretation = await generateInterpretation(prompt)
+    res.json({ interpretation, source: 'openai' as const })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Erreur serveur'
+    if (message.includes('OPENAI_API_KEY')) {
+      res.status(500).json({ error: 'Configuration serveur incomplete' })
+      return
+    }
+    if (
+      message.includes('429') ||
+      message.includes('rate limit') ||
+      message.includes('quota')
+    ) {
+      res.status(429).json({ error: 'Quota IA depasse ou indisponible' })
       return
     }
     res.status(502).json({ error: 'Echec generation IA' })

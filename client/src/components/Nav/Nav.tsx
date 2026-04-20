@@ -13,6 +13,9 @@ export default function Nav() {
       <NavLink to="/tirage" className="nav__link">
         Tirage
       </NavLink>
+      <NavLink to="/question" className="nav__link">
+        Question
+      </NavLink>
       <NavLink to="/historique" className="nav__link">
         Historique
       </NavLink>

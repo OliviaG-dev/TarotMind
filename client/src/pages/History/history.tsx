@@ -86,7 +86,7 @@ export default function HistoryPage() {
         </div>
         <p className="history-page__subtitle">
           Timeline de tes tirages, comparaison rapide et aperçu d’analyse (règles
-          locales — à remplacer par l’IA sur tes vraies données).
+          locales , à remplacer par l’IA sur tes vraies données).
         </p>
       </header>
 
@@ -139,7 +139,7 @@ export default function HistoryPage() {
                   <option value="">Choisir…</option>
                   {draws.map((d) => (
                     <option key={d.id} value={d.id}>
-                      {formatWhen(d.createdAt)} — {d.spreadLabel}
+                      {formatWhen(d.createdAt)} , {d.question ? 'Q' : 'T'} · {d.spreadLabel}
                     </option>
                   ))}
                 </select>
@@ -153,7 +153,7 @@ export default function HistoryPage() {
                   <option value="">Choisir…</option>
                   {draws.map((d) => (
                     <option key={`b-${d.id}`} value={d.id}>
-                      {formatWhen(d.createdAt)} — {d.spreadLabel}
+                      {formatWhen(d.createdAt)} , {d.question ? 'Q' : 'T'} · {d.spreadLabel}
                     </option>
                   ))}
                 </select>
@@ -236,11 +236,20 @@ export default function HistoryPage() {
             {draws.map((d) => (
               <li key={d.id} className="history-page__event">
                 <time dateTime={d.createdAt}>{formatWhen(d.createdAt)}</time>
-                <span className="history-page__event-spread">{d.spreadLabel}</span>
-                <span className="history-page__event-cards">{cardsSummary(d)}</span>
-                <span className="history-page__event-tone">
-                  Ton : {toneLabel(d.tone)}
+                <span className="history-page__event-spread">
+                  {d.question ? 'Question' : 'Tirage'} · {d.spreadLabel}
                 </span>
+                {d.question && (
+                  <span className="history-page__event-question">
+                    &laquo; {d.question} &raquo;
+                  </span>
+                )}
+                <span className="history-page__event-cards">{cardsSummary(d)}</span>
+                {!d.question && (
+                  <span className="history-page__event-tone">
+                    Ton : {toneLabel(d.tone)}
+                  </span>
+                )}
               </li>
             ))}
           </ol>

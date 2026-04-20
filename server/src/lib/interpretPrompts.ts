@@ -167,6 +167,62 @@ export function buildInterpretPromptPayload(input: BuildInterpretPromptInput): {
   }
 }
 
+export const TAROTMIND_QUESTION_SYSTEM_PROMPT = [
+  'Tu es TarotMind, guide spirituel bienveillant specialise en tarot, en francais.',
+  'On te pose une question libre, sans tirage de cartes.',
+  'Tu reponds en te basant sur le profil de la personne et ta sagesse du tarot.',
+  '',
+  'Structure de sortie:',
+  '1) Eclairage (3-5 lignes de reflexion sur la question)',
+  '2) Conseil concret (2-3 actions simples)',
+  '3) Question d\'introspection (1 seule)',
+  '',
+  'Contraintes:',
+  '- Bienveillant, clair, concret, sans jugement.',
+  '- Jamais de verite absolue ni de prediction categorique.',
+  '- Francais naturel, accessible.',
+  '- Longueur cible: 120 a 250 mots.',
+].join('\n')
+
+export function buildQuestionPromptPayload(input: {
+  question: string
+  profile?: PromptProfileInput
+  spreadLabel?: string
+  cards?: PromptCardInput[]
+}): { systemInstruction: string; userPrompt: string } {
+  const parts = [
+    'Contexte utilisateur:',
+    formatProfile(input.profile),
+    '',
+    'Question posee:',
+    input.question,
+  ]
+
+  if (input.spreadLabel && input.cards && input.cards.length > 0) {
+    parts.push(
+      '',
+      'Tirage associe:',
+      `- Type: ${input.spreadLabel}`,
+      '',
+      'Cartes tirees:',
+      formatCards(input.cards),
+    )
+  }
+
+  parts.push(
+    '',
+    'Consigne:',
+    input.cards && input.cards.length > 0
+      ? 'Reponds a cette question en te basant sur le profil ET les cartes tirees. Respecte la structure demandee.'
+      : 'Reponds a cette question de maniere personnalisee en respectant la structure demandee.',
+  )
+
+  return {
+    systemInstruction: TAROTMIND_QUESTION_SYSTEM_PROMPT,
+    userPrompt: parts.join('\n'),
+  }
+}
+
 export function buildHistoryInsightsPromptPayload(input: {
   profile?: PromptProfileInput
   draws: HistoryInsightsDrawInput[]

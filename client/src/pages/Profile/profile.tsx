@@ -54,7 +54,7 @@ const DECK: { value: DeckPreference; label: string; hint: string }[] = [
   {
     value: 'minors_only',
     label: 'Arcanes mineurs seulement',
-    hint: 'Coupes, Bâtons, Épées, Deniers — situations concrètes.',
+    hint: 'Coupes, Bâtons, Épées, Deniers : situations concrètes.',
   },
 ]
 
@@ -180,7 +180,7 @@ export default function ProfilePage() {
         <fieldset className="profile-page__field profile-page__field--goals">
           <legend>Objectifs actuels</legend>
           <p className="profile-page__hint">
-            Plusieurs choix possibles — l’IA pourra prioriser ces thèmes.
+            Plusieurs choix possibles. L’IA pourra prioriser ces thèmes.
           </p>
           <div className="profile-page__goals">
             {GOALS.map((g) => (

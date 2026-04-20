@@ -88,7 +88,7 @@ function SchemaSlot({
           })
         }
       >
-        <option value="">— Choisir la carte —</option>
+        <option value=""> Choisir la carte </option>
         <CardOptions cards={deckCards} />
       </select>
       <label className="spread-schema__rev">
@@ -181,7 +181,7 @@ export function SpreadSchema({
     )
   }
 
-  /* cross5 — ordre des positions dans spreads : center, cross, base, crown, outcome */
+  /* cross5  ordre des positions dans spreads : center, cross, base, crown, outcome */
   const [center, cross, base, crown, outcome] = positions
   return (
     <div className="spread-schema spread-schema--cross">

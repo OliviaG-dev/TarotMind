@@ -65,6 +65,7 @@ export interface DrawRecord {
   tone: Tone
   cards: PlacedCard[]
   interpretation: string
+  question?: string
 }
 
 export interface SpreadDefinition {

@@ -154,7 +154,7 @@ export default function DrawPage() {
           Fais ton tirage <strong>avec ton jeu physique</strong> (ou comme tu en as
           l’habitude). TarotMind affiche le <strong>schéma du tirage</strong> : tu
           indiques toi-même chaque arcane tiré. L’
-          <strong>IA</strong> (ici un texte de démo) ne tire pas les cartes — elle sert
+          <strong>IA</strong> (ici un texte de démo) ne tire pas les cartes, elle sert
           uniquement à <strong>interpréter</strong> la combinaison, selon ton{' '}
           <Link to="/profil" className="draw__inline-link">
             profil
@@ -262,7 +262,7 @@ export default function DrawPage() {
         {spread && (
           <p className="draw__meta">
             {spread.positions.length} position
-            {spread.positions.length > 1 ? 's' : ''} — remplis chaque arcane pour
+            {spread.positions.length > 1 ? 's' : ''} , remplis chaque arcane pour
             activer le bouton.
           </p>
         )}
@@ -294,8 +294,8 @@ export default function DrawPage() {
       )}
 
       <div className="cta-nav">
-        <Link to="/historique" className="cta-nav__link">
-          Continuer →
+        <Link to="/question" className="cta-nav__link">
+          Continuer &rarr;
         </Link>
       </div>
     </div>

@@ -5,7 +5,7 @@ const FEATURES = [
   {
     to: '/tirage',
     title: 'Tire tes cartes',
-    text: "Utilise ton propre jeu, choisis un type de tirage et laisse-toi guider. Tu places chaque carte toi-même — l'interprétation s'adapte à ton profil et à ce que tu traverses.",
+    text: "Utilise ton propre jeu, choisis un type de tirage et laisse-toi guider. Tu places chaque carte toi-même, et l'interprétation s'adapte à ton profil et à ce que tu traverses.",
     icon: '/icons/tirage-shema.png',
   },
   {
@@ -13,6 +13,12 @@ const FEATURES = [
     title: 'Ton espace perso',
     text: 'Dis-nous ce qui compte pour toi : amour, travail, bien-être… Plus ton profil est complet, plus les lectures deviennent justes et pertinentes.',
     icon: '/icons/profil-enrichi.png',
+  },
+  {
+    to: '/question',
+    title: 'Pose ta question',
+    text: "Tu as une question precise ? Choisis un tirage, place tes cartes et obtiens une reponse personnalisee, guidee par ton profil et tes arcanes.",
+    icon: '/icons/tirage-shema.png',
   },
   {
     to: '/historique',
@@ -42,7 +48,7 @@ export default function Home() {
         </div>
         <p className="home__lead">
           Le tarot, c'est avant tout une conversation avec toi-même.
-          TarotMind t'accompagne dans cette exploration — avec douceur,
+          TarotMind t'accompagne dans cette exploration, avec douceur,
           intelligence et une touche de magie.
         </p>
 
@@ -76,7 +82,7 @@ export default function Home() {
         <section className="home__section" aria-labelledby="pitch-heading">
           <h2 id="pitch-heading">Pourquoi TarotMind ?</h2>
           <p>
-            Chaque tirage est unique — comme toi. L'interprétation tient
+            Chaque tirage est unique, comme toi. L'interprétation tient
             compte de ta situation amoureuse, de ton parcours pro et de
             ce qui te préoccupe en ce moment.
           </p>
@@ -86,7 +92,7 @@ export default function Home() {
           </p>
           <p>
             Que tu cherches à y voir plus clair, à prendre une décision
-            ou simplement à te reconnecter à toi-même — TarotMind est là.
+            ou simplement à te reconnecter à toi-même, TarotMind est là.
           </p>
         </section>
 
@@ -94,7 +100,7 @@ export default function Home() {
           <h2 id="deck-heading">En un mot</h2>
           <blockquote className="home__quote">
             Un compagnon de route qui mêle sagesse du tarot et intelligence
-            artificielle — pour t'offrir une lecture qui te ressemble,
+            artificielle, pour t'offrir une lecture qui te ressemble,
             à tout moment.
           </blockquote>
         </section>
