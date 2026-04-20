@@ -1,6 +1,6 @@
 import { MAJOR_ARCANA } from '../data/tarotDeck'
 
-const STORAGE_KEY = 'tarotmind.dailyCard.v1'
+const STORAGE_KEY = 'tarotmind.dailyCard.v2'
 
 interface DailyCardData {
   date: string
@@ -20,18 +20,6 @@ function sumDigits(n: number): number {
     n = Math.floor(n / 10)
   }
   return s
-}
-
-function dateToArcanum(dateStr: string): number {
-  const digits = dateStr.replace(/\D/g, '')
-  let total = 0
-  for (const ch of digits) {
-    total += Number(ch)
-  }
-  while (total >= 22) {
-    total = sumDigits(total)
-  }
-  return total
 }
 
 function digitsToArcanum(str: string): number {
@@ -77,7 +65,7 @@ export function getDailyCard() {
     // ignore
   }
 
-  const idx = dateToArcanum(today)
+  const idx = digitsToArcanum(today)
   const card = MAJOR_ARCANA[idx]!
 
   const data: DailyCardData = { date: today, cardId: card.id, reversed: false }
