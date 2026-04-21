@@ -2,7 +2,7 @@
 
 # TarotMind
 
-**Application web de tirage et d’interpretation de tarot** — experience sombre elegante, profil personnalisable, historique local et generation IA via API.
+**Application web de tirage et d'interpretation de tarot** — experience elegante, profil personnalisable, historique local et generation IA via API.
 
 <br />
 
@@ -20,32 +20,34 @@
 
 ---
 
-## Présentation
+## Presentation
 
 TarotMind propose une experience de **consultation guidee** : choix du tirage, saisie des cartes tirees, interpretation personnalisee par ton (spirituel, psychologique, direct) et suivi dans le temps.
 
-Le **profil** et l’**historique** sont stockes localement dans le navigateur pour une utilisation immediate. L’API Express fournit le point d’entree IA (`POST /interpret`) et reste simple a faire evoluer.
+Le **profil** et l'**historique** sont stockes localement dans le navigateur pour une utilisation immediate. L'API Express expose des endpoints d'interpretation (`POST /interpret`, `POST /question`, `POST /history-insights`) et reste simple a faire evoluer.
 
-## Fonctionnalités
+## Fonctionnalites
 
-- Interface **responsive** (accueil, tirage, profil, historique), theme sombre elegant.
-- **Icones dediees** (plus d’emojis) pour les modules et types de tirages.
-- **Profil** : preferences utilisateur (objectifs, contexte relationnel/pro, jeu de cartes).
-- **Interpretation IA** via OpenAI sur `POST /interpret`, avec fallback local en cas d’erreur.
-- **Historique local** des tirages + comparaison.
-- **Aucune authentification obligatoire** dans la version actuelle.
+- Interface **responsive** (accueil, tirage, profil, question, historique, stats, encyclopedie).
+- **Carte du jour** deterministe avec message quotidien et animation.
+- **Profil** : preferences utilisateur + rappels navigateur (notifications optionnelles).
+- **Interpretation IA** via OpenAI (`/interpret`, `/question`, `/history-insights`) avec fallback local.
+- **Historique local** des tirages avec detail complet, favoris, notes personnelles et copie partageable.
+- **Statistiques personnelles** (KPIs, cartes frequentes, repartition par type de tirage).
+- **Encyclopedie du tarot** (filtres, recherche, details des arcanes majeurs).
+- **Mode sombre/clair**, transitions de page et lecture vocale (Web Speech API).
 
 ## Architecture
 
 | Dossier | Rôle |
 |--------|------|
 | `client/` | SPA **React** + **React Router**, build **Vite**, typage **TypeScript**. |
-| `server/` | **Express**, `GET /health`, `POST /interpret` (OpenAI), gestion des flags d’execution IA. |
+| `server/` | **Express**, `GET /health`, endpoints IA (`POST /interpret`, `POST /question`, `POST /history-insights`), rate limiting et flags d'execution IA. |
 | `packages/shared/` | Types et modules **TypeScript** partagés entre client et serveur. |
 
 En developpement, le client Vite **proxy** le prefixe `/api` vers `http://localhost:4000` (voir `client/vite.config.ts`).
 
-## Prérequis
+## Prerequis
 
 - **Node.js** (LTS recommandé)
 - **npm** (gestionnaire du monorepo)
@@ -71,7 +73,7 @@ npm run dev
 | `npm run dev:client` | Client uniquement |
 | `npm run dev:server` | Serveur uniquement |
 | `npm run build` | Build client + compilation TypeScript du serveur |
-| `npm run preview` | Prévisualisation du build statique du client |
+| `npm run preview` | Previsualisation du build statique du client |
 | `npm run lint` | Analyse ESLint |
 
 Variables cote client : `client/.env.example` (`VITE_API_BASE`).
@@ -101,13 +103,45 @@ AI_NO_EXPAND=1
 
 Reference complete : `server/.env.example`.
 
-## Build et exécution
+## Endpoints API
+
+Les routes principales exposees par le serveur :
+
+- `GET /health` : etat de sante de l'API.
+- `POST /interpret` : interpretation d'un tirage.
+- `POST /question` : interpretation orientee question utilisateur.
+- `POST /history-insights` : synthese/insights a partir de l'historique.
+- `POST /auth/register`, `POST /auth/login`, `GET /auth/me` : placeholders actuellement non implementes (501).
+
+## Navigation
+
+La barre de navigation inclut :
+
+- `Accueil` (`/`)
+- `Carte du jour` (`/carte-du-jour`)
+- `Profil` (`/profil`)
+- `Tirage` (`/tirage`)
+- `Question` (`/question`)
+- `Historique` (`/historique`)
+- `Encyclopedie` (`/encyclopedie`)
+- `Stats` (`/statistiques`)
+
+## Build et execution
 
 ```bash
 npm run build
 ```
 
-Ensuite : servir `client/dist` en statique et lancer l’API (`npm run start` dans `server/` apres compilation), selon votre hebergement (VPS, PaaS, conteneurs).
+Ensuite : servir `client/dist` en statique et lancer l'API (`npm run start` dans `server/` apres compilation), selon votre hebergement (VPS, PaaS, conteneurs).
+
+## Tests
+
+Tests client (Vitest) :
+
+```bash
+cd client
+npm test
+```
 
 ## Licence
 
