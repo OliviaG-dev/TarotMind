@@ -2,7 +2,7 @@
 
 # TarotMind
 
-**Application web de tirage et d'interpretation de tarot** — experience elegante, profil personnalisable, historique local et generation IA via API.
+**Application web de tirage et d'interpretation de tarot** - experience elegante, profil personnalisable, historique local et generation IA via API.
 
 <br />
 
@@ -20,13 +20,13 @@
 
 ---
 
-## Presentation
+## Présentation
 
 TarotMind propose une experience de **consultation guidee** : choix du tirage, saisie des cartes tirees, interpretation personnalisee par ton (spirituel, psychologique, direct) et suivi dans le temps.
 
 Le **profil** et l'**historique** sont stockes localement dans le navigateur pour une utilisation immediate. L'API Express expose des endpoints d'interpretation (`POST /interpret`, `POST /question`, `POST /history-insights`) et reste simple a faire evoluer.
 
-## Fonctionnalites
+## Fonctionnalités
 
 - Interface **responsive** (accueil, tirage, profil, question, historique, stats, encyclopedie).
 - **Carte du jour** deterministe avec message quotidien et animation.
@@ -49,7 +49,7 @@ En developpement, le client Vite **proxy** le prefixe `/api` vers `http://localh
 
 ## Prerequis
 
-- **Node.js** (LTS recommandé)
+- **Node.js** (LTS recommande)
 - **npm** (gestionnaire du monorepo)
 
 ## Installation
@@ -60,9 +60,9 @@ cd tarotmind
 npm install
 ```
 
-## Développement
+## Developpement
 
-Demarrage conjoint du front (port Vite habituel **5173**) et de l’API (**4000** par defaut) :
+Demarrage conjoint du front (port Vite habituel **5173**) et de l'API (**4000** par defaut) :
 
 ```bash
 npm run dev
@@ -101,7 +101,14 @@ AI_MAX_RETRIES=1
 AI_NO_EXPAND=1
 ```
 
-Reference complete : `server/.env.example`.
+Variables serveur utilisees par le code :
+
+- `PORT` (port HTTP de l'API, defaut `4000`)
+- `OPENAI_API_KEY` (obligatoire si IA active)
+- `OPENAI_MODEL` (optionnel, defaut `gpt-4o-mini`)
+- `AI_DISABLED` / `GEMINI_DISABLED` (desactive les appels IA et renvoie un texte mock)
+- `AI_MAX_RETRIES` (nombre max de retries sur erreurs 5xx, defaut `2`)
+- `AI_NO_EXPAND` (desactive la 2e passe d'expansion de reponse)
 
 ## Endpoints API
 
@@ -111,7 +118,7 @@ Les routes principales exposees par le serveur :
 - `POST /interpret` : interpretation d'un tirage.
 - `POST /question` : interpretation orientee question utilisateur.
 - `POST /history-insights` : synthese/insights a partir de l'historique.
-- `POST /auth/register`, `POST /auth/login`, `GET /auth/me` : placeholders actuellement non implementes (501).
+- `POST /auth/register`, `POST /auth/login`, `GET /auth/me` : endpoints placeholder, non implementes (retour `501`).
 
 ## Navigation
 
@@ -132,7 +139,7 @@ La barre de navigation inclut :
 npm run build
 ```
 
-Ensuite : servir `client/dist` en statique et lancer l'API (`npm run start` dans `server/` apres compilation), selon votre hebergement (VPS, PaaS, conteneurs).
+Ensuite : servir `client/dist` en statique et lancer l'API (depuis `server/`, `npm run start` apres compilation), selon votre hebergement (VPS, PaaS, conteneurs).
 
 ## Tests
 
