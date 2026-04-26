@@ -1,4 +1,5 @@
 import { apiBase } from './apiBase'
+import { getClientIdentity } from './clientIdentity'
 import type { PlacedCard, UserProfile } from '../types/tarot'
 
 type QuestionResponse = {
@@ -18,7 +19,10 @@ export async function requestQuestion(opts: {
 }): Promise<{ interpretation: string; source?: 'openai' | 'mock' }> {
   const response = await fetch(`${apiBase()}/question`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-User-Id': getClientIdentity(),
+    },
     body: JSON.stringify({
       question: opts.question,
       profile: opts.profile,

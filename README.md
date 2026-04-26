@@ -32,6 +32,8 @@ Le **profil** et l'**historique** sont stockes localement dans le navigateur pou
 - **Carte du jour** deterministe avec message quotidien et animation.
 - **Profil** : preferences utilisateur + rappels navigateur (notifications optionnelles).
 - **Interpretation IA** via OpenAI (`/interpret`, `/question`, `/history-insights`) avec fallback local.
+- **Observabilite IA** via `GET /ai-usage` (volume, fallback rate, estimation cout USD, tokens).
+- **Quota journalier IA** par utilisateur (header `X-User-Id`, fallback IP) pour limiter les abus.
 - **Historique local** des tirages avec detail complet, favoris, notes personnelles et copie partageable.
 - **Statistiques personnelles** (KPIs, cartes frequentes, repartition par type de tirage).
 - **Encyclopedie du tarot** (filtres, recherche, details des arcanes majeurs).
@@ -42,7 +44,7 @@ Le **profil** et l'**historique** sont stockes localement dans le navigateur pou
 | Dossier | Rôle |
 |--------|------|
 | `client/` | SPA **React** + **React Router**, build **Vite**, typage **TypeScript**. |
-| `server/` | **Express**, `GET /health`, endpoints IA (`POST /interpret`, `POST /question`, `POST /history-insights`), rate limiting et flags d'execution IA. |
+| `server/` | **Express**, `GET /health`, endpoints IA (`POST /interpret`, `POST /question`, `POST /history-insights`), `GET /ai-usage`, rate limiting, quota journalier et flags d'execution IA. |
 | `packages/shared/` | Types et modules **TypeScript** partagés entre client et serveur. |
 
 En developpement, le client Vite **proxy** le prefixe `/api` vers `http://localhost:4000` (voir `client/vite.config.ts`).
@@ -75,6 +77,8 @@ npm run dev
 | `npm run build` | Build client + compilation TypeScript du serveur |
 | `npm run preview` | Previsualisation du build statique du client |
 | `npm run lint` | Analyse ESLint |
+| `npm run test:server` | Tests d'integration API serveur (Vitest + Supertest) |
+| `npm run test:e2e` | Tests E2E client (Playwright) |
 
 Variables cote client : `client/.env.example` (`VITE_API_BASE`).
 
@@ -99,6 +103,13 @@ AI_MAX_RETRIES=1
 
 # 1 = pas de second appel "reponse trop courte"
 AI_NO_EXPAND=1
+
+# quota journalier par utilisateur (header X-User-Id, fallback IP)
+AI_DAILY_QUOTA_PER_USER=40
+
+# estimation cout (USD) basee sur les tokens OpenAI
+AI_COST_INPUT_PER_1K_USD=0.00015
+AI_COST_OUTPUT_PER_1K_USD=0.0006
 ```
 
 Variables serveur utilisees par le code :
@@ -109,6 +120,9 @@ Variables serveur utilisees par le code :
 - `AI_DISABLED` / `GEMINI_DISABLED` (desactive les appels IA et renvoie un texte mock)
 - `AI_MAX_RETRIES` (nombre max de retries sur erreurs 5xx, defaut `2`)
 - `AI_NO_EXPAND` (desactive la 2e passe d'expansion de reponse)
+- `AI_DAILY_QUOTA_PER_USER` (quota journalier IA par utilisateur, defaut `40`)
+- `AI_COST_INPUT_PER_1K_USD` (cout d'entree par 1000 tokens, defaut `0.00015`)
+- `AI_COST_OUTPUT_PER_1K_USD` (cout de sortie par 1000 tokens, defaut `0.0006`)
 
 ## Endpoints API
 
@@ -118,6 +132,7 @@ Les routes principales exposees par le serveur :
 - `POST /interpret` : interpretation d'un tirage.
 - `POST /question` : interpretation orientee question utilisateur.
 - `POST /history-insights` : synthese/insights a partir de l'historique.
+- `GET /ai-usage` : metriques IA (requests, tokens, fallback rate, estimation cout).
 - `POST /auth/register`, `POST /auth/login`, `GET /auth/me` : endpoints placeholder, non implementes (retour `501`).
 
 ## Navigation
@@ -143,12 +158,46 @@ Ensuite : servir `client/dist` en statique et lancer l'API (depuis `server/`, `n
 
 ## Tests
 
-Tests client (Vitest) :
+Tests client unitaires (Vitest) :
 
 ```bash
 cd client
 npm test
 ```
+
+Tests integration API serveur (Vitest + Supertest) :
+
+```bash
+npm run test:server
+```
+
+Tests E2E (Playwright) :
+
+```bash
+npm run test:e2e
+```
+
+Au premier lancement E2E, installer le navigateur Playwright :
+
+```bash
+cd client
+npx playwright install chromium
+```
+
+## Quota et cout IA
+
+- Chaque appel IA envoie un `X-User-Id` (genere et stocke cote client) pour appliquer un quota par utilisateur.
+- Si `X-User-Id` est absent, le serveur applique le quota par IP.
+- Les headers de quota exposes par le serveur :
+  - `X-AI-Daily-Quota-Limit`
+  - `X-AI-Daily-Quota-Remaining`
+  - `X-AI-Daily-Quota-Reset`
+- En depassement : HTTP `429` avec message `Quota journalier IA atteint. Reessaie demain.`
+- Le endpoint `GET /ai-usage` expose un tableau de bord JSON in-memory :
+  - volume total et par endpoint
+  - repartition `openai` vs `mock` (`fallbackRate`)
+  - tokens `input/output`
+  - estimation du cout USD
 
 ## Licence
 

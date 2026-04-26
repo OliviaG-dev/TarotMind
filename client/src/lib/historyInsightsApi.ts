@@ -1,4 +1,5 @@
 import { apiBase } from './apiBase'
+import { getClientIdentity } from './clientIdentity'
 import type { DrawRecord, UserProfile } from '../types/tarot'
 
 type ApiErrorResponse = { error?: string }
@@ -97,7 +98,10 @@ export async function requestHistoryInsights(opts: {
 
   const response = await fetch(`${apiBase()}/history-insights`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-User-Id': getClientIdentity(),
+    },
     body: JSON.stringify({
       profile: opts.profile,
       draws: recentDraws,

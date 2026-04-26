@@ -8,7 +8,8 @@ import {
   type PromptCardInput,
   type PromptTone,
 } from '../lib/interpretPrompts.js'
-import { generateInterpretation } from '../lib/openai.js'
+import { trackAiRequest, getAiUsageSnapshot } from '../lib/aiUsage.js'
+import { generateInterpretationDetailed } from '../lib/openai.js'
 import { buildConfigurationStub } from '../lib/mockInterpretationStub.js'
 
 export const interpretRouter = Router()
@@ -90,6 +91,7 @@ interpretRouter.post('/interpret', async (req, res) => {
     }
 
     if (envFlag('AI_DISABLED') || envFlag('GEMINI_DISABLED')) {
+      trackAiRequest({ endpoint: '/interpret', source: 'mock' })
       res.json({
         interpretation: buildConfigurationStub({
           spreadLabel,
@@ -109,8 +111,14 @@ interpretRouter.post('/interpret', async (req, res) => {
       cards,
     })
 
-    const interpretation = await generateInterpretation(prompt)
-    res.json({ interpretation, source: 'openai' as const })
+    const ai = await generateInterpretationDetailed(prompt)
+    trackAiRequest({
+      endpoint: '/interpret',
+      source: 'openai',
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
+    })
+    res.json({ interpretation: ai.text, source: 'openai' as const })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erreur serveur'
     if (message.includes('OPENAI_API_KEY')) {
@@ -153,6 +161,7 @@ interpretRouter.post('/question', async (req, res) => {
     }
 
     if (envFlag('AI_DISABLED') || envFlag('GEMINI_DISABLED')) {
+      trackAiRequest({ endpoint: '/question', source: 'mock' })
       res.json({
         interpretation:
           `**Ta question :** ${question}\n\n` +
@@ -176,8 +185,14 @@ interpretRouter.post('/question', async (req, res) => {
       cards: cards ?? undefined,
     })
 
-    const interpretation = await generateInterpretation(prompt)
-    res.json({ interpretation, source: 'openai' as const })
+    const ai = await generateInterpretationDetailed(prompt)
+    trackAiRequest({
+      endpoint: '/question',
+      source: 'openai',
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
+    })
+    res.json({ interpretation: ai.text, source: 'openai' as const })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erreur serveur'
     if (message.includes('OPENAI_API_KEY')) {
@@ -208,6 +223,7 @@ interpretRouter.post('/history-insights', async (req, res) => {
     }
 
     if (envFlag('AI_DISABLED') || envFlag('GEMINI_DISABLED')) {
+      trackAiRequest({ endpoint: '/history-insights', source: 'mock' })
       res.json({
         interpretation:
           '### Motif principal\nMode configuration actif.\n\n### Ce que ca raconte de ta periode\nLes donnees sont bien recues, mais l’IA est desactivee.\n\n### Point de vigilance\nPense a rebasculer `AI_DISABLED=0` pour obtenir une analyse reelle.\n\n### Action 7 jours\nActive OpenAI puis relance une analyse depuis Historique.\n\n### Question d’introspection\nQuel motif veux-tu explorer en priorite cette semaine ?',
@@ -221,8 +237,14 @@ interpretRouter.post('/history-insights', async (req, res) => {
       draws,
       topCards,
     })
-    const interpretation = await generateInterpretation(prompt)
-    res.json({ interpretation, source: 'openai' as const })
+    const ai = await generateInterpretationDetailed(prompt)
+    trackAiRequest({
+      endpoint: '/history-insights',
+      source: 'openai',
+      inputTokens: ai.inputTokens,
+      outputTokens: ai.outputTokens,
+    })
+    res.json({ interpretation: ai.text, source: 'openai' as const })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erreur serveur'
     if (message.includes('OPENAI_API_KEY')) {
@@ -239,4 +261,8 @@ interpretRouter.post('/history-insights', async (req, res) => {
     }
     res.status(502).json({ error: 'Echec generation IA' })
   }
+})
+
+interpretRouter.get('/ai-usage', (_req, res) => {
+  res.json(getAiUsageSnapshot())
 })

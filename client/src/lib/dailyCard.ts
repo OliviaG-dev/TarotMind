@@ -28,10 +28,10 @@ function digitsToArcanum(str: string): number {
   for (const ch of digits) {
     total += Number(ch)
   }
-  while (total >= 22) {
+  while (total > 22) {
     total = sumDigits(total)
   }
-  return total
+  return total === 22 ? 0 : total
 }
 
 export function getMonthlyCard() {

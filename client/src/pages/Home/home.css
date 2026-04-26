@@ -83,6 +83,18 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .home__tagline {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home__tagline {
+    margin-top: 16px;
+  }
+}
+
 .home__feature-card {
   display: flex;
   gap: 12px;

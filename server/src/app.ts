@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import { createDailyAiQuotaMiddleware } from './lib/dailyQuota.js'
 import { createRateLimiter } from './lib/rateLimit.js'
 import { authRouter } from './routes/auth.js'
 import { interpretRouter } from './routes/interpret.js'
@@ -18,9 +19,13 @@ export function createApp() {
     windowMs: 60_000,
     maxRequests: 30,
   })
+  const dailyQuota = createDailyAiQuotaMiddleware()
   app.use('/interpret', apiLimiter)
   app.use('/question', apiLimiter)
   app.use('/history-insights', apiLimiter)
+  app.use('/interpret', dailyQuota)
+  app.use('/question', dailyQuota)
+  app.use('/history-insights', dailyQuota)
 
   app.get('/health', (_req, res) => {
     res.json({ ok: true })

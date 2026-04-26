@@ -1,4 +1,5 @@
 import { apiBase } from './apiBase'
+import { getClientIdentity } from './clientIdentity'
 import type { PlacedCard, Tone, UserProfile } from '../types/tarot'
 
 type InterpretResponse = {
@@ -19,7 +20,10 @@ export async function requestInterpretation(opts: {
 }): Promise<{ interpretation: string; source?: 'openai' | 'mock' }> {
   const response = await fetch(`${apiBase()}/interpret`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-User-Id': getClientIdentity(),
+    },
     body: JSON.stringify({
       tone: opts.tone,
       spreadLabel: opts.spreadLabel,

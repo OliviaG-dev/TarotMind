@@ -16,6 +16,14 @@ export async function generateInterpretation(opts: {
   systemInstruction: string
   userPrompt: string
 }): Promise<string> {
+  const result = await generateInterpretationDetailed(opts)
+  return result.text
+}
+
+export async function generateInterpretationDetailed(opts: {
+  systemInstruction: string
+  userPrompt: string
+}): Promise<{ text: string; inputTokens: number; outputTokens: number }> {
   const key = requireOpenAiApiKey()
   const skipSecondPass = envFlag('AI_NO_EXPAND')
 
@@ -26,7 +34,7 @@ export async function generateInterpretation(opts: {
     userPrompt: opts.userPrompt,
   })
 
-  if (first.length >= MIN_INTERPRETATION_LENGTH || skipSecondPass) {
+  if (first.text.length >= MIN_INTERPRETATION_LENGTH || skipSecondPass) {
     return first
   }
 
@@ -41,10 +49,14 @@ export async function generateInterpretation(opts: {
       'Refais une lecture complete de 220 a 420 mots en respectant strictement les 4 sections demandees.',
       '',
       'Brouillon precedent:',
-      first,
+      first.text,
     ].join('\n'),
   })
-  return expanded
+  return {
+    text: expanded.text,
+    inputTokens: first.inputTokens + expanded.inputTokens,
+    outputTokens: first.outputTokens + expanded.outputTokens,
+  }
 }
 
 async function requestOpenAi(opts: {
@@ -52,7 +64,7 @@ async function requestOpenAi(opts: {
   model: string
   systemInstruction: string
   userPrompt: string
-}): Promise<string> {
+}): Promise<{ text: string; inputTokens: number; outputTokens: number }> {
   const maxAttempts = Math.max(1, Math.min(envInt('AI_MAX_RETRIES', 2), 10))
 
   // Retries courts seulement sur surcharge temporaire (>=500), pas sur 429 quota/rate-limit.
@@ -77,10 +89,15 @@ async function requestOpenAi(opts: {
     if (response.ok) {
       const data = (await response.json()) as {
         choices?: Array<{ message?: { content?: string } }>
+        usage?: { prompt_tokens?: number; completion_tokens?: number }
       }
       const text = data.choices?.[0]?.message?.content?.trim()
       if (!text) throw new Error('OpenAI a renvoye une reponse vide')
-      return text
+      return {
+        text,
+        inputTokens: Math.max(0, data.usage?.prompt_tokens ?? 0),
+        outputTokens: Math.max(0, data.usage?.completion_tokens ?? 0),
+      }
     }
 
     const body = await response.text()

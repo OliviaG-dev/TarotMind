@@ -14,7 +14,9 @@
     "dev:server": "npm run dev --workspace=@tarotmind/server",
     "build": "npm run build --workspace=@tarotmind/client && npm run build --workspace=@tarotmind/server",
     "lint": "eslint .",
-    "preview": "npm run preview --workspace=@tarotmind/client"
+    "preview": "npm run preview --workspace=@tarotmind/client",
+    "test:server": "npm run test --workspace=@tarotmind/server",
+    "test:e2e": "npm run e2e --workspace=@tarotmind/client"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

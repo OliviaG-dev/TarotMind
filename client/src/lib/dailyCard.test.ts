@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 
 const store: Record<string, string> = {}
 
@@ -41,4 +41,18 @@ describe('getDailyCard', async () => {
     expect(typeof msg).toBe('string')
     expect(msg.length).toBeGreaterThan(10)
   })
+
+  it('maps a total of 22 to Le Mat (id 0)', () => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2026-04-26T12:00:00.000Z'))
+
+    const daily = getDailyCard()
+
+    expect(daily.card.id).toBe('0')
+    expect(daily.card.nameFr).toBe('Le Mat')
+  })
+})
+
+afterEach(() => {
+  vi.useRealTimers()
 })
