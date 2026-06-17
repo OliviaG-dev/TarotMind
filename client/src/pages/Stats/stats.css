@@ -33,20 +33,30 @@
 }
 
 .stats-page__kpi {
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid var(--hairline);
   background: var(--bg-elev);
   text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.stats-page__kpi:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-border);
+  box-shadow: var(--glow-soft);
 }
 
 .stats-page__kpi-value {
   display: block;
   font-family: var(--heading);
-  font-size: 2rem;
+  font-size: 2.1rem;
   font-weight: 700;
-  color: var(--accent-strong);
   line-height: 1.2;
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .stats-page__kpi-label {
@@ -143,9 +153,16 @@
 .stats-page__spread-count {
   display: block;
   font-family: var(--heading);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--accent-strong);
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stats-page__bar-fill {
+  box-shadow: var(--glow-soft);
 }
 
 .stats-page__spread-name {

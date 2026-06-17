@@ -97,10 +97,12 @@
 .draw__spread-option--on {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+  box-shadow: var(--glow-soft);
 }
 
 .draw__spread-option:hover {
   transform: translateY(-1px);
+  border-color: var(--accent-border);
 }
 
 .draw__spread-icon {
@@ -172,10 +174,12 @@
 .draw__tone--on {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+  box-shadow: var(--glow-soft);
 }
 
 .draw__tone:hover {
   transform: translateY(-1px);
+  border-color: var(--accent-border);
 }
 
 .draw__tone-label {
@@ -197,21 +201,24 @@
   font-family: var(--sans);
   font-size: 1rem;
   font-weight: 600;
-  padding: 12px 24px;
+  letter-spacing: 0.02em;
+  padding: 13px 28px;
   border-radius: 999px;
   border: none;
   cursor: pointer;
   color: #ffffff;
-  background: var(--accent-strong);
-  box-shadow: var(--shadow);
+  background: var(--grad-accent);
+  box-shadow: var(--glow), 0 14px 30px -16px rgba(109, 74, 237, 0.6);
   transition:
-    filter 0.15s,
-    background 0.15s;
+    filter 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
-.draw__primary:hover {
-  background: var(--accent);
-  filter: none;
+.draw__primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(167, 139, 250, 0.45), 0 16px 34px -16px rgba(109, 74, 237, 0.65);
 }
 
 .draw__primary:focus-visible {

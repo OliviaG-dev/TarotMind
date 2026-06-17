@@ -79,6 +79,7 @@
   border-color: var(--accent-border);
   color: var(--accent-strong);
   font-weight: 600;
+  box-shadow: var(--glow-soft);
 }
 
 .encyclopedia__grid {
@@ -93,20 +94,22 @@
 .encyclopedia__card {
   padding: 16px;
   border-radius: 16px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--hairline);
   background: var(--bg-elev);
-  transition: border-color 0.15s, transform 0.15s;
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
   cursor: pointer;
 }
 
 .encyclopedia__card:hover {
   border-color: var(--accent-border);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: var(--glow-soft);
 }
 
 .encyclopedia__card--expanded {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+  box-shadow: var(--glow-soft);
 }
 
 .encyclopedia__card-header {

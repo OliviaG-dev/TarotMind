@@ -1,14 +1,28 @@
-import { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import {
+  NavIconBook,
+  NavIconCards,
+  NavIconChart,
+  NavIconClock,
+  NavIconHome,
+  NavIconQuestion,
+  NavIconSun,
+} from './NavIcons'
 import './Nav.css'
+
+const NAV_ITEMS = [
+  { to: '/', label: 'Accueil', end: true, Icon: NavIconHome },
+  { to: '/carte-du-jour', label: 'Carte du jour', Icon: NavIconSun },
+  { to: '/tirage', label: 'Tirage', Icon: NavIconCards },
+  { to: '/question', label: 'Question', Icon: NavIconQuestion },
+  { to: '/historique', label: 'Historique', Icon: NavIconClock },
+  { to: '/encyclopedie', label: 'Encyclopédie', Icon: NavIconBook },
+  { to: '/statistiques', label: 'Stats', Icon: NavIconChart },
+] as const
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false)
-  const location = useLocation()
-
-  useEffect(() => {
-    setIsOpen(false)
-  }, [location.pathname])
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev)
@@ -29,30 +43,18 @@ export default function Nav() {
       </button>
 
       <div id="main-nav-links" className={`nav__links${isOpen ? ' nav__links--open' : ''}`}>
-        <NavLink to="/" className="nav__link" end>
-          Accueil
-        </NavLink>
-        <NavLink to="/carte-du-jour" className="nav__link">
-          Carte du jour
-        </NavLink>
-        <NavLink to="/profil" className="nav__link">
-          Profil
-        </NavLink>
-        <NavLink to="/tirage" className="nav__link">
-          Tirage
-        </NavLink>
-        <NavLink to="/question" className="nav__link">
-          Question
-        </NavLink>
-        <NavLink to="/historique" className="nav__link">
-          Historique
-        </NavLink>
-        <NavLink to="/encyclopedie" className="nav__link">
-          Encyclopedie
-        </NavLink>
-        <NavLink to="/statistiques" className="nav__link">
-          Stats
-        </NavLink>
+        {NAV_ITEMS.map(({ to, label, Icon, ...rest }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className="nav__link"
+            onClick={() => setIsOpen(false)}
+            {...rest}
+          >
+            <Icon className="nav__link-icon" />
+            <span className="nav__link-text">{label}</span>
+          </NavLink>
+        ))}
       </div>
     </nav>
   )
