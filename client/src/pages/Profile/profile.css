@@ -118,6 +118,7 @@
 .profile-page__goal:has(input:checked) {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+  box-shadow: var(--glow-soft);
 }
 
 .profile-page__goal:hover {
@@ -169,6 +170,7 @@
 .profile-page__deck-option--on {
   border-color: var(--accent-border);
   background: var(--accent-bg);
+  box-shadow: var(--glow-soft);
 }
 
 .profile-page__deck-option:hover {

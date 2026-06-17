@@ -44,7 +44,7 @@
 }
 
 .spread-schema__face {
-  min-height: 72px;
+  min-height: 76px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,8 +54,14 @@
   background: var(--bg-elev);
   text-align: center;
   transition:
-    border-color 0.15s,
-    transform 0.15s;
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.spread-schema__slot:hover .spread-schema__face {
+  border-color: var(--accent-border);
+  box-shadow: var(--glow-soft);
 }
 
 .spread-schema__face--rev {
@@ -176,6 +182,7 @@
   border-style: solid;
   border-color: var(--accent-border);
   background: var(--accent-bg);
+  box-shadow: var(--glow-soft);
 }
 
 @media (max-width: 720px) {

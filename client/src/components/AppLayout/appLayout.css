@@ -1,7 +1,10 @@
 .shell {
+  position: relative;
+  z-index: 1;
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
 
 .shell__header {
@@ -9,29 +12,57 @@
   top: 0;
   z-index: 20;
   display: flex;
+  justify-content: center;
+  padding: 20px clamp(18px, 3vw, 40px) 0;
+  border-bottom: none;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.shell__nav-pill {
+  position: relative;
+  display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 16px 28px;
-  border-bottom: 1px solid var(--border);
-  row-gap: 10px;
-  background: rgba(255, 252, 249, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  justify-content: space-between;
+  gap: 16px;
+  width: min(100%, 1320px);
+  padding: 11px 20px 11px 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  box-shadow:
+    0 12px 36px rgba(80, 55, 130, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 .shell__brand {
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 10px;
   font-family: var(--heading);
   font-weight: 700;
-  font-size: 1.45rem;
-  letter-spacing: -0.01em;
-  color: var(--accent-strong);
+  font-size: 1.28rem;
+  letter-spacing: -0.015em;
   text-decoration: none;
-  transition: color 0.25s ease;
+  color: #3d2b56;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.shell__brand-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 12px rgba(124, 58, 237, 0.35));
+}
+
+.shell__brand::before {
+  content: none;
 }
 
 .shell__brand-text {
@@ -40,25 +71,74 @@
 }
 
 .shell__brand:hover {
-  color: var(--accent);
+  opacity: 0.88;
+  transform: none;
+  filter: none;
 }
 
 .shell__theme-toggle {
-  font-size: 1.3rem;
-  line-height: 1;
-  padding: 6px 10px;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  width: 68px;
+  height: 34px;
+  padding: 0;
+  margin-left: auto;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--bg-elev);
-  color: var(--text-h);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: linear-gradient(90deg, #8b5cf6 0%, #8b5cf6 50%, #fde68a 50%, #fde68a 100%);
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
   flex-shrink: 0;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
 }
 
 .shell__theme-toggle:hover {
-  border-color: var(--accent-border);
-  background: var(--accent-bg);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.25);
+  transform: none;
+  border-color: rgba(255, 255, 255, 0.55);
+  background: linear-gradient(90deg, #8b5cf6 0%, #8b5cf6 50%, #fde68a 50%, #fde68a 100%);
+}
+
+.shell__theme-icon {
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  line-height: 1;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shell__theme-icon--moon {
+  color: #fff;
+}
+
+.shell__theme-icon--sun {
+  color: #92400e;
+}
+
+.shell__theme-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease;
+  transform: translateX(34px);
+}
+
+.shell__theme-toggle--dark .shell__theme-knob {
+  transform: translateX(0);
+}
+
+.shell__theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .shell__body {
@@ -66,13 +146,36 @@
   padding: clamp(16px, 2vw, 28px) clamp(18px, 3vw, 40px) 56px;
 }
 
+/* Accueil : hero + cartes dans la hauteur disponible */
+@media (min-width: 981px) {
+  .shell:has(.home) {
+    min-height: 100svh;
+    height: auto;
+    overflow-x: hidden;
+  }
+
+  .shell:has(.home) .shell__body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow: visible;
+    padding: clamp(6px, 1.2vw, 16px) clamp(18px, 3vw, 40px) clamp(16px, 2vw, 28px);
+  }
+}
+
 @media (max-width: 900px) {
   .shell__header {
+    padding: 12px 14px 0;
+  }
+
+  .shell__nav-pill {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    gap: 10px 12px;
-    padding: 12px 16px;
+    gap: 8px 10px;
+    width: 100%;
+    border-radius: 22px;
+    padding: 12px 14px;
   }
 
   .shell__brand {
@@ -81,6 +184,7 @@
   }
 
   .shell__theme-toggle {
+    margin-left: 0;
     justify-self: end;
   }
 }

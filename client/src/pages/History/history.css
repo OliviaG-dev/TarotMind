@@ -79,20 +79,23 @@
   font-family: var(--sans);
   font-size: 0.9rem;
   font-weight: 600;
-  padding: 9px 16px;
+  padding: 10px 18px;
   border-radius: 999px;
-  border: 1px solid var(--accent-border);
+  border: none;
   color: #ffffff;
-  background: var(--accent-strong);
+  background: var(--grad-accent);
+  box-shadow: var(--glow-soft);
   cursor: pointer;
   transition:
-    background 0.15s,
-    filter 0.15s;
+    filter 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .history-page__analyze:hover:not(:disabled) {
-  background: var(--accent);
-  filter: none;
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: var(--glow);
 }
 
 .history-page__analyze:disabled {
@@ -449,14 +452,17 @@
   font-family: var(--sans);
   font-size: 0.82rem;
   font-weight: 600;
-  padding: 6px 16px;
+  padding: 7px 18px;
   border-radius: 999px;
   border: none;
-  background: var(--accent-strong);
+  background: var(--grad-accent);
+  box-shadow: var(--glow-soft);
   color: #fff;
   cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
 }
 
 .history-page__note-save:hover {
-  background: var(--accent);
+  filter: brightness(1.08);
+  transform: translateY(-1px);
 }
