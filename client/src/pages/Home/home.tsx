@@ -1,7 +1,12 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import type { ComponentType } from "react";
+import { usePointerTiltHandlers } from "../../hooks/usePointerTilt";
 import {
   ArrowRightIcon,
+  DecoSoftCloud,
+  DecoSoftCrescentMoon,
+  DecoSoftSparkle,
   FeatureIconCardsStar,
   FeatureIconQuestionBubble,
   NavIconSun,
@@ -42,6 +47,9 @@ const FEATURES: {
 ];
 
 export default function Home() {
+  const heroStageRef = useRef<HTMLDivElement>(null);
+  const { onPointerMove, onPointerLeave } = usePointerTiltHandlers(heroStageRef);
+
   return (
     <div className="home">
       <main className="home__main">
@@ -72,15 +80,23 @@ export default function Home() {
           </div>
 
           <div className="home__hero-art">
-            <div className="home__hero-glow" aria-hidden="true" />
-            <img
-              className="home__hero-img"
-              src="/img/hero-cartes-transparent.png"
-              alt="Trois cartes de tarot — La Lune, Le Soleil et L'Étoile — entourées de cristaux, lavande et d'une bougie"
-              width={663}
-              height={376}
-              decoding="async"
-            />
+            <div className="home__hero-semicircle" aria-hidden="true" />
+            <div
+              ref={heroStageRef}
+              className="home__hero-img-stage"
+              onPointerMove={onPointerMove}
+              onPointerLeave={onPointerLeave}
+            >
+              <div className="home__hero-contact-shadow" aria-hidden="true" />
+              <img
+                className="home__hero-img"
+                src="/img/hero-cartes-transparent.png"
+                alt="Trois cartes de tarot — La Lune, Le Soleil et L'Étoile — entourées de cristaux, lavande et d'une bougie"
+                width={663}
+                height={376}
+                decoding="async"
+              />
+            </div>
           </div>
         </section>
 
@@ -93,10 +109,38 @@ export default function Home() {
                   className={`home__feature-card home__feature-card--${theme}`}
                 >
                   <span className="home__feature-deco" aria-hidden="true">
-                    <span className="home__feature-cloud home__feature-cloud--a" />
-                    <span className="home__feature-cloud home__feature-cloud--b" />
-                    <span className="home__feature-spark home__feature-spark--a" />
-                    <span className="home__feature-spark home__feature-spark--b" />
+                    {(theme === "purple" || theme === "green") && (
+                      <DecoSoftCloud className="home__feature-deco-soft-cloud" />
+                    )}
+                    {theme === "green" && (
+                      <>
+                        <DecoSoftCloud className="home__feature-deco-soft-cloud home__feature-deco-soft-cloud--right" />
+                        <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-left-cloud" />
+                        <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-left-cloud-sm" />
+                        <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-cloud" />
+                      </>
+                    )}
+                    {theme === "pink" && (
+                      <>
+                        <span className="home__feature-cloud home__feature-cloud--a" />
+                        <span className="home__feature-cloud home__feature-cloud--b" />
+                      </>
+                    )}
+                    {theme === "purple" && (
+                      <>
+                        <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--a" />
+                        <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--b" />
+                        <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--c" />
+                      </>
+                    )}
+                    {theme === "pink" && (
+                      <>
+                        <DecoSoftCrescentMoon className="home__feature-deco-moon" />
+                        <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--pink-moon" />
+                        <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--pink-a" />
+                        <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--pink-b" />
+                      </>
+                    )}
                   </span>
                   <span className="home__feature-icon-wrap">
                     <Icon className="home__feature-icon" />

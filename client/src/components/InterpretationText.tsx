@@ -56,7 +56,7 @@ function SpeakButton({ text }: { text: string }) {
       return
     }
 
-    const plain = text.replace(/[#*_\-]/g, '').replace(/\n+/g, '. ')
+    const plain = text.replace(/[#*_-]/g, '').replace(/\n+/g, '. ')
     const utterance = new SpeechSynthesisUtterance(plain)
     utterance.lang = 'fr-FR'
     utterance.rate = 0.95

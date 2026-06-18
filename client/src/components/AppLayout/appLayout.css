@@ -143,7 +143,7 @@
 
 .shell__body {
   flex: 1;
-  padding: clamp(16px, 2vw, 28px) clamp(18px, 3vw, 40px) 56px;
+  padding: clamp(4px, 0.8vw, 8px) clamp(18px, 3vw, 40px) 56px;
 }
 
 /* Accueil : hero + cartes dans la hauteur disponible */
@@ -159,7 +159,7 @@
     min-height: 0;
     display: flex;
     overflow: visible;
-    padding: clamp(6px, 1.2vw, 16px) clamp(18px, 3vw, 40px) clamp(16px, 2vw, 28px);
+    padding: clamp(4px, 0.8vw, 8px) clamp(18px, 3vw, 40px) clamp(16px, 2vw, 28px);
   }
 }
 
@@ -204,8 +204,9 @@
 .interpretation-text__h3 {
   margin: 18px 0 8px;
   font-size: 1.02rem;
+  font-weight: 700;
   line-height: 1.35;
-  color: var(--accent-strong);
+  color: var(--text-h);
   letter-spacing: 0.01em;
 }
 

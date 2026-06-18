@@ -17,8 +17,8 @@ export function NavIconHome({ className }: IconProps) {
 export function NavIconSun({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
 }
@@ -68,15 +68,19 @@ export function NavIconChart({ className }: IconProps) {
   )
 }
 
-export function SparkleIcon({ className }: IconProps) {
+export function DecoSoftSparkle({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
-        d="M12 2l1.4 5.2L18.6 9 13.4 10.4 12 15.6 10.6 10.4 5.4 9l5.2-1.8L12 2Z"
+        d="M12 2.2 13.4 9.1 20.3 10.5 13.4 11.9 12 18.8 10.6 11.9 3.7 10.5 10.6 9.1 12 2.2Z"
         fill="currentColor"
       />
     </svg>
   )
+}
+
+export function SparkleIcon({ className }: IconProps) {
+  return <DecoSoftSparkle className={className} />
 }
 
 export function ArrowRightIcon({ className }: IconProps) {
@@ -96,35 +100,112 @@ export function ArrowRightIcon({ className }: IconProps) {
 
 export function FeatureIconCardsStar({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="4.5" y="7.5" width="10" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.6" transform="rotate(-10 9.5 14.5)" />
-      <rect x="8.5" y="5.5" width="10" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.6" transform="rotate(10 13.5 12.5)" />
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <g transform="translate(0, 2)">
+        {/* Arrière-plan : gauche puis droite */}
+        <rect
+          x="3"
+          y="5"
+          width="10"
+          height="14"
+          rx="2"
+          transform="rotate(-12 3 5)"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <rect
+          x="11"
+          y="3"
+          width="10"
+          height="14"
+          rx="2"
+          transform="rotate(12 11 3)"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        {/* Premier plan : masque les traits intérieurs des cartes derrière */}
+        <rect
+          x="7"
+          y="3"
+          width="10"
+          height="14"
+          rx="2"
+          fill="#fff"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M12 8.5L13.1 10.7L15.5 11L13.75 12.7L14.2 15L12 13.8L9.8 15L10.25 12.7L8.5 11L10.9 10.7L12 8.5Z"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+        />
+      </g>
+    </svg>
+  )
+}
+
+export function DecoSoftCloud({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 100 56" fill="none" aria-hidden="true">
+      <g className="deco-soft-cloud__blobs">
+        <ellipse cx="28" cy="36" rx="22" ry="15" fill="currentColor" />
+        <ellipse cx="50" cy="30" rx="26" ry="18" fill="currentColor" />
+        <ellipse cx="70" cy="34" rx="20" ry="14" fill="currentColor" />
+        <ellipse cx="40" cy="26" rx="16" ry="13" fill="currentColor" />
+        <ellipse cx="58" cy="38" rx="18" ry="12" fill="currentColor" />
+      </g>
       <path
-        d="M15.2 7.8l.5 1.8 1.8.5-1.8.5-.5 1.8-.5-1.8-1.8-.5 1.8-.5.5-1.8Z"
+        className="deco-soft-cloud__unified"
+        d="M12 40c-6 0-10-4-10-10 0-4 2-7 6-8-1-6 6-11 14-9 4-8 18-9 24-1 8-2 15 2 14 9 6 1 10 6 8 11-2 5-9 9-17 9H12z"
         fill="currentColor"
       />
     </svg>
   )
 }
 
+export function DecoSoftCrescentMoon({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <defs>
+        <mask id="deco-soft-crescent-moon-mask">
+          <rect width="80" height="80" fill="white" />
+          <circle cx="36" cy="39.5" r="25.5" fill="black" />
+        </mask>
+        <filter id="deco-soft-crescent-moon-blur" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="0.65" />
+        </filter>
+      </defs>
+      <g transform="rotate(45 40 40)">
+        <circle
+          cx="51"
+          cy="40"
+          r="28"
+          fill="currentColor"
+          mask="url(#deco-soft-crescent-moon-mask)"
+          filter="url(#deco-soft-crescent-moon-blur)"
+        />
+      </g>
+    </svg>
+  )
+}
+
 export function FeatureIconQuestionBubble({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
-        d="M6 5.5h11a2.5 2.5 0 0 1 2.5 2.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-3.5 2.8V17.5H6a2.5 2.5 0 0 1-2.5-2.5V8A2.5 2.5 0 0 1 6 5.5Z"
-        fill="none"
+        d="M12 3C6.48 3 2 6.81 2 11.5C2 13.74 3.02 15.78 4.72 17.31L4 21L7.54 19.11C8.91 19.68 10.42 20 12 20C17.52 20 22 16.19 22 11.5C22 6.81 17.52 3 12 3Z"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.5"
         strokeLinejoin="round"
       />
       <path
-        d="M10.2 10.2a2.2 2.2 0 1 1 3.8 1.5c-.7.55-1.3 1.05-1.3 2"
-        fill="none"
+        d="M9.8 10C9.8 8.5 11 7.4 12.5 7.4C14 7.4 15.2 8.5 15.2 10C15.2 11 14.6 11.7 13.8 12.3C13 12.9 12.5 13.4 12.5 14.3"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.5"
         strokeLinecap="round"
       />
-      <circle cx="12" cy="16.2" r="0.9" fill="currentColor" />
+      <circle cx="12.5" cy="16.9" r="0.85" fill="currentColor" />
     </svg>
   )
 }
