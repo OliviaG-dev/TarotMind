@@ -130,7 +130,7 @@ export function FeatureIconCardsStar({ className }: IconProps) {
           width="10"
           height="14"
           rx="2"
-          fill="#fff"
+          fill="var(--feature-icon-card-face, #fff)"
           stroke="currentColor"
           strokeWidth="1.5"
         />

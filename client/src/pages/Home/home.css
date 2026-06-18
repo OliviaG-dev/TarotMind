@@ -271,14 +271,52 @@
   opacity: 0.8;
 }
 
-.home__hero-deco-ring {
+.home__hero-deco-ring,
+.home__hero-deco-dot {
   position: absolute;
   border-radius: 50%;
-  border: 2px solid rgba(255, 250, 245, 0.72);
-  background: rgba(255, 252, 248, 0.32);
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.78);
+  background:
+    radial-gradient(
+      125% 125% at 28% 18%,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 252, 248, 0.68) 40%,
+      rgba(255, 250, 245, 0.32) 72%,
+      rgba(255, 252, 248, 0.12) 100%
+    );
   box-shadow:
-    0 0 10px var(--deco-cream-glow),
-    0 0 3px var(--deco-cream-shadow);
+    inset 0 -5px 12px rgba(255, 255, 255, 0.45),
+    inset 0 4px 10px rgba(255, 255, 255, 0.58),
+    0 3px 12px var(--deco-cream-shadow),
+    0 0 14px var(--deco-cream-glow);
+}
+
+.home__hero-deco-ring::before,
+.home__hero-deco-dot::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 14%;
+  width: 40%;
+  height: 32%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  filter: blur(0.35px);
+  pointer-events: none;
+}
+
+.home__hero-deco-ring::after,
+.home__hero-deco-dot::after {
+  content: '';
+  position: absolute;
+  bottom: 14%;
+  right: 16%;
+  width: 24%;
+  height: 18%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  pointer-events: none;
 }
 
 .home__hero-deco-ring--a {
@@ -295,16 +333,6 @@
   width: 24px;
   height: 24px;
   opacity: 0.78;
-}
-
-.home__hero-deco-dot {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--deco-cream);
-  box-shadow:
-    0 0 6px var(--deco-cream-glow),
-    0 0 2px var(--deco-cream-shadow);
-  filter: blur(0.1px);
 }
 
 .home__hero-deco-dot--a {
@@ -693,6 +721,7 @@
 }
 
 .home__feature-icon-wrap {
+  --feature-icon-card-face: #fff;
   position: relative;
   z-index: 1;
   display: grid;
@@ -718,6 +747,7 @@
 }
 
 .home__feature-card--pink .home__feature-icon-wrap {
+  --feature-icon-card-face: #fffbfc;
   background: linear-gradient(145deg, #fffbfc 0%, #faf0f4 100%);
   box-shadow:
     0 3px 7px -1px rgba(200, 100, 130, 0.24),
@@ -1111,6 +1141,7 @@
 
 :root[data-theme='dark'] .home__feature-card--pink .home__feature-icon-wrap,
 :root[data-theme='dark'] .home__feature-card--pink .home__feature-arrow {
+  --feature-icon-card-face: #4a3040;
   background: linear-gradient(145deg, rgba(250, 210, 225, 0.14) 0%, rgba(230, 160, 185, 0.08) 100%);
   box-shadow:
     0 2px 6px -1px rgba(150, 60, 95, 0.38),
@@ -1177,9 +1208,32 @@
   --deco-cream-shadow: rgba(255, 248, 242, 0.18);
 }
 
-:root[data-theme='dark'] .home__hero-deco-ring {
-  border-color: rgba(255, 248, 242, 0.45);
-  background: rgba(255, 248, 242, 0.12);
+:root[data-theme='dark'] .home__hero-deco-ring,
+:root[data-theme='dark'] .home__hero-deco-dot {
+  border-color: rgba(255, 248, 242, 0.52);
+  background:
+    radial-gradient(
+      125% 125% at 28% 18%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 248, 242, 0.28) 42%,
+      rgba(255, 248, 242, 0.1) 72%,
+      rgba(255, 248, 242, 0.04) 100%
+    );
+  box-shadow:
+    inset 0 -4px 10px rgba(255, 248, 242, 0.18),
+    inset 0 3px 8px rgba(255, 255, 255, 0.22),
+    0 3px 12px rgba(0, 0, 0, 0.18),
+    0 0 14px var(--deco-cream-glow);
+}
+
+:root[data-theme='dark'] .home__hero-deco-ring::before,
+:root[data-theme='dark'] .home__hero-deco-dot::before {
+  background: rgba(255, 255, 255, 0.62);
+}
+
+:root[data-theme='dark'] .home__hero-deco-ring::after,
+:root[data-theme='dark'] .home__hero-deco-dot::after {
+  background: rgba(255, 255, 255, 0.28);
 }
 
 :root[data-theme='dark'] .home__hero-semicircle {
