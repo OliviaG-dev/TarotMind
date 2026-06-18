@@ -81,6 +81,23 @@ export default function Home() {
 
           <div className="home__hero-art">
             <div className="home__hero-semicircle" aria-hidden="true" />
+            <div className="home__hero-deco" aria-hidden="true">
+              <DecoSoftSparkle className="home__hero-deco-star home__hero-deco-star--a" />
+              <DecoSoftSparkle className="home__hero-deco-star home__hero-deco-star--b" />
+              <DecoSoftSparkle className="home__hero-deco-star home__hero-deco-star--c" />
+              <DecoSoftSparkle className="home__hero-deco-star home__hero-deco-star--d" />
+              <DecoSoftSparkle className="home__hero-deco-star home__hero-deco-star--e" />
+              <span className="home__hero-deco-ring home__hero-deco-ring--a" />
+              <span className="home__hero-deco-ring home__hero-deco-ring--b" />
+              <span className="home__hero-deco-dot home__hero-deco-dot--a" />
+              <span className="home__hero-deco-dot home__hero-deco-dot--b" />
+              <span className="home__hero-deco-dot home__hero-deco-dot--c" />
+              <span className="home__hero-deco-dot home__hero-deco-dot--d" />
+              <span className="home__hero-deco-dot home__hero-deco-dot--e" />
+              <span className="home__hero-deco-dot home__hero-deco-dot--f" />
+              <span className="home__hero-deco-dot home__hero-deco-dot--g" />
+              <span className="home__hero-deco-dot home__hero-deco-dot--h" />
+            </div>
             <div
               ref={heroStageRef}
               className="home__hero-img-stage"

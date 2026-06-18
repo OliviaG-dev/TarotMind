@@ -175,20 +175,200 @@
   background:
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.55) 0%,
-      rgba(255, 255, 255, 0) 42%
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(255, 255, 255, 0.08) 34%,
+      rgba(235, 224, 246, 0.04) 60%,
+      transparent 100%
     ),
     linear-gradient(
-      95deg,
-      rgba(255, 218, 210, 0.88) 0%,
-      rgba(255, 236, 220, 0.9) 22%,
-      rgba(255, 248, 238, 0.92) 48%,
-      rgba(232, 248, 240, 0.88) 78%,
-      rgba(210, 240, 228, 0.85) 100%
+      90deg,
+      rgba(255, 205, 184, 0.96) 0%,
+      rgba(253, 210, 190, 0.95) 20%,
+      rgba(255, 192, 200, 0.93) 42%,
+      rgba(248, 208, 218, 0.88) 58%,
+      rgba(240, 222, 238, 0.72) 74%,
+      rgba(232, 218, 248, 0.55) 88%,
+      rgba(226, 212, 248, 0.38) 100%
     );
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 32%,
+    rgba(0, 0, 0, 0.9) 52%,
+    rgba(0, 0, 0, 0.38) 76%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 32%,
+    rgba(0, 0, 0, 0.9) 52%,
+    rgba(0, 0, 0, 0.38) 76%,
+    transparent 100%
+  );
   box-shadow:
-    0 0 40px rgba(255, 235, 220, 0.45),
-    0 0 24px rgba(210, 235, 225, 0.35);
+    0 0 48px rgba(255, 192, 180, 0.4),
+    0 0 32px rgba(226, 212, 248, 0.18);
+}
+
+/* Étoiles et ronds décoratifs — blanc crème unifié */
+.home__hero-deco {
+  --deco-cream: #fffaf5;
+  --deco-cream-soft: #fff8f2;
+  --deco-cream-glow: rgba(255, 252, 248, 0.85);
+  --deco-cream-shadow: rgba(235, 228, 218, 0.38);
+  position: absolute;
+  inset: -6% -4% -4%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.home__hero-deco-star {
+  position: absolute;
+  color: var(--deco-cream);
+  filter:
+    drop-shadow(0 0 6px var(--deco-cream-glow))
+    drop-shadow(0 1px 2px var(--deco-cream-shadow));
+}
+
+.home__hero-deco-star--a {
+  top: 6%;
+  right: 10%;
+  width: 40px;
+  height: 40px;
+  opacity: 0.92;
+}
+
+.home__hero-deco-star--b {
+  top: 16%;
+  left: 6%;
+  width: 30px;
+  height: 30px;
+  opacity: 0.88;
+}
+
+.home__hero-deco-star--c {
+  top: 2%;
+  left: 24%;
+  width: 22px;
+  height: 22px;
+  opacity: 0.86;
+}
+
+.home__hero-deco-star--d {
+  top: 24%;
+  right: 24%;
+  width: 26px;
+  height: 26px;
+  opacity: 0.84;
+}
+
+.home__hero-deco-star--e {
+  top: 10%;
+  right: 36%;
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+}
+
+.home__hero-deco-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 250, 245, 0.72);
+  background: rgba(255, 252, 248, 0.32);
+  box-shadow:
+    0 0 10px var(--deco-cream-glow),
+    0 0 3px var(--deco-cream-shadow);
+}
+
+.home__hero-deco-ring--a {
+  top: 14%;
+  left: 14%;
+  width: 36px;
+  height: 36px;
+  opacity: 0.82;
+}
+
+.home__hero-deco-ring--b {
+  top: 8%;
+  right: 22%;
+  width: 24px;
+  height: 24px;
+  opacity: 0.78;
+}
+
+.home__hero-deco-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--deco-cream);
+  box-shadow:
+    0 0 6px var(--deco-cream-glow),
+    0 0 2px var(--deco-cream-shadow);
+  filter: blur(0.1px);
+}
+
+.home__hero-deco-dot--a {
+  top: 4%;
+  left: 42%;
+  width: 9px;
+  height: 9px;
+  opacity: 0.88;
+}
+
+.home__hero-deco-dot--b {
+  top: 12%;
+  left: 18%;
+  width: 8px;
+  height: 8px;
+  opacity: 0.86;
+}
+
+.home__hero-deco-dot--c {
+  top: 20%;
+  right: 8%;
+  width: 10px;
+  height: 10px;
+  opacity: 0.88;
+}
+
+.home__hero-deco-dot--d {
+  top: 8%;
+  right: 48%;
+  width: 6px;
+  height: 6px;
+  opacity: 0.82;
+}
+
+.home__hero-deco-dot--e {
+  top: 28%;
+  left: 32%;
+  width: 8px;
+  height: 8px;
+  opacity: 0.84;
+}
+
+.home__hero-deco-dot--f {
+  top: 18%;
+  right: 42%;
+  width: 9px;
+  height: 9px;
+  opacity: 0.85;
+}
+
+.home__hero-deco-dot--g {
+  top: 6%;
+  left: 52%;
+  width: 6px;
+  height: 6px;
+  opacity: 0.8;
+}
+
+.home__hero-deco-dot--h {
+  top: 22%;
+  left: 8%;
+  width: 8px;
+  height: 8px;
+  opacity: 0.82;
 }
 
 /* Scène 3D — inclinaison de base + suivi du curseur via variables CSS */
@@ -747,6 +927,33 @@
     order: 1;
   }
 
+  .home__hero-deco-star--a {
+    width: 34px;
+    height: 34px;
+  }
+
+  .home__hero-deco-star--b,
+  .home__hero-deco-star--d {
+    width: 24px;
+    height: 24px;
+  }
+
+  .home__hero-deco-star--c,
+  .home__hero-deco-star--e {
+    width: 18px;
+    height: 18px;
+  }
+
+  .home__hero-deco-ring--a {
+    width: 30px;
+    height: 30px;
+  }
+
+  .home__hero-deco-ring--b {
+    width: 20px;
+    height: 20px;
+  }
+
   .home__title-line {
     justify-content: center;
   }
@@ -963,24 +1170,55 @@
   color: rgba(126, 207, 184, 0.82);
 }
 
+:root[data-theme='dark'] .home__hero-deco {
+  --deco-cream: #fff8f2;
+  --deco-cream-soft: #fff6ee;
+  --deco-cream-glow: rgba(255, 248, 242, 0.4);
+  --deco-cream-shadow: rgba(255, 248, 242, 0.18);
+}
+
+:root[data-theme='dark'] .home__hero-deco-ring {
+  border-color: rgba(255, 248, 242, 0.45);
+  background: rgba(255, 248, 242, 0.12);
+}
+
 :root[data-theme='dark'] .home__hero-semicircle {
   background:
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0) 42%
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 34%,
+      rgba(30, 22, 42, 0.1) 60%,
+      transparent 100%
     ),
     linear-gradient(
-      95deg,
-      rgba(200, 107, 154, 0.22) 0%,
-      rgba(180, 120, 160, 0.16) 25%,
-      rgba(140, 110, 170, 0.12) 50%,
-      rgba(74, 154, 136, 0.18) 78%,
-      rgba(60, 130, 115, 0.2) 100%
+      90deg,
+      rgba(220, 120, 130, 0.26) 0%,
+      rgba(210, 100, 140, 0.24) 22%,
+      rgba(200, 107, 154, 0.2) 44%,
+      rgba(180, 110, 150, 0.16) 62%,
+      rgba(150, 110, 170, 0.12) 80%,
+      rgba(124, 92, 191, 0.08) 100%
     );
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 32%,
+    rgba(0, 0, 0, 0.9) 52%,
+    rgba(0, 0, 0, 0.38) 76%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 32%,
+    rgba(0, 0, 0, 0.9) 52%,
+    rgba(0, 0, 0, 0.38) 76%,
+    transparent 100%
+  );
   box-shadow:
-    0 0 40px rgba(124, 92, 191, 0.12),
-    0 0 24px rgba(74, 154, 136, 0.1);
+    0 0 48px rgba(200, 107, 154, 0.14),
+    0 0 32px rgba(124, 92, 191, 0.07);
 }
 
 :root[data-theme='dark'] .home__hero-contact-shadow {
