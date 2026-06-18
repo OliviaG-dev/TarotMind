@@ -53,9 +53,27 @@ export function NavIconClock({ className }: IconProps) {
 
 export function NavIconBook({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M6 5h9a3 3 0 0 1 3 3v13H9a3 3 0 0 0-3 3V5Z" fill="none" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M6 18a3 3 0 0 1 3-3h9" fill="none" stroke="currentColor" strokeWidth="1.6" />
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 6.25v12.75"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12 6.25C10.83 5.48 9.25 5 7.5 5 5.75 5 4.17 5.48 3 6.25v12.75C4.17 19.02 5.75 18.5 7.5 18.5c1.75 0 3.33.52 4.5 1.25"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 6.25c1.17-.77 2.75-1.25 4.5-1.25 1.75 0 3.33.48 4.5 1.25v12.75c-1.17.52-2.75 1-4.5 1-1.75 0-3.33-.52-4.5-1.25"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

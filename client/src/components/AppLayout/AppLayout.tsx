@@ -33,6 +33,31 @@ function CrystalLogo() {
   )
 }
 
+function ThemeMoonIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12 3.2a6.2 6.2 0 0 0 9.3 9.3 9.3 9.3 0 1 1-9.3-9.3Z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
+function ThemeSunIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="5" fill="currentColor" />
+      <path
+        d="M12 2.5v2.6M12 19v2.5M2.5 12h2.6M19 12h2.5M5.2 5.2l1.9 1.9M17 17l1.9 1.9M5.2 18.8l1.9-1.9M17 7l1.9-1.9"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 export function AppLayout() {
   const { theme, toggle } = useTheme()
 
@@ -53,13 +78,16 @@ export function AppLayout() {
             aria-label={theme === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair'}
             title={theme === 'light' ? 'Mode sombre' : 'Mode clair'}
           >
-            <span className="shell__theme-icon shell__theme-icon--moon" aria-hidden="true">
-              &#9789;
+            <span className="shell__theme-band" aria-hidden="true" />
+            <span className="shell__theme-side shell__theme-side--moon" aria-hidden="true">
+              <ThemeMoonIcon />
             </span>
-            <span className="shell__theme-icon shell__theme-icon--sun" aria-hidden="true">
-              &#9728;
+            <span className="shell__theme-side shell__theme-side--sun" aria-hidden="true">
+              <ThemeSunIcon />
             </span>
-            <span className="shell__theme-knob" aria-hidden="true" />
+            <span className="shell__theme-knob" aria-hidden="true">
+              {theme === 'light' ? <ThemeSunIcon /> : <ThemeMoonIcon />}
+            </span>
           </button>
         </div>
       </header>

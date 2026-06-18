@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import {
+  FeatureIconCardsStar,
+  FeatureIconQuestionBubble,
   NavIconBook,
-  NavIconCards,
   NavIconChart,
   NavIconClock,
   NavIconHome,
-  NavIconQuestion,
   NavIconSun,
 } from './NavIcons'
 import './Nav.css'
@@ -14,8 +14,8 @@ import './Nav.css'
 const NAV_ITEMS = [
   { to: '/', label: 'Accueil', end: true, Icon: NavIconHome },
   { to: '/carte-du-jour', label: 'Carte du jour', Icon: NavIconSun },
-  { to: '/tirage', label: 'Tirage', Icon: NavIconCards },
-  { to: '/question', label: 'Question', Icon: NavIconQuestion },
+  { to: '/tirage', label: 'Tirage', Icon: FeatureIconCardsStar },
+  { to: '/question', label: 'Question', Icon: FeatureIconQuestionBubble },
   { to: '/historique', label: 'Historique', Icon: NavIconClock },
   { to: '/encyclopedie', label: 'Encyclopédie', Icon: NavIconBook },
   { to: '/statistiques', label: 'Stats', Icon: NavIconChart },
