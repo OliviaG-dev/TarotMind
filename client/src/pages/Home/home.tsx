@@ -48,7 +48,19 @@ const FEATURES: {
 
 export default function Home() {
   const heroStageRef = useRef<HTMLDivElement>(null);
+  const ctaBtnRef = useRef<HTMLAnchorElement>(null);
   const { onPointerMove, onPointerLeave } = usePointerTiltHandlers(heroStageRef);
+  const {
+    onPointerMove: onCtaPointerMove,
+    onPointerLeave: onCtaPointerLeave,
+  } = usePointerTiltHandlers(ctaBtnRef, {
+    maxTilt: 14,
+    baseRotateX: 0,
+    baseRotateY: 0,
+    hoverScale: 1,
+    hoverLift: -5,
+    cssVarPrefix: "cta-tilt",
+  });
 
   return (
     <div className="home">
@@ -68,11 +80,17 @@ export default function Home() {
               et vos énergies.
             </p>
             <div className="home__cta">
-              <Link to="/profil" className="home__cta-btn">
+              <Link
+                ref={ctaBtnRef}
+                to="/profil"
+                className="home__cta-btn"
+                onPointerMove={onCtaPointerMove}
+                onPointerLeave={onCtaPointerLeave}
+              >
                 <span className="home__cta-sparkles" aria-hidden="true">
-                  <SparkleIcon />
-                  <SparkleIcon />
-                  <SparkleIcon />
+                  <SparkleIcon className="home__cta-sparkle home__cta-sparkle--main" />
+                  <SparkleIcon className="home__cta-sparkle home__cta-sparkle--sm home__cta-sparkle--top" />
+                  <SparkleIcon className="home__cta-sparkle home__cta-sparkle--sm home__cta-sparkle--bottom" />
                 </span>
                 <span className="home__cta-label">Commencer</span>
               </Link>

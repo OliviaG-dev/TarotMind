@@ -23,6 +23,7 @@
 
   /* Accents candy pastel (decoratif) + accent solide pour boutons (texte blanc lisible) */
   --grad-candy: linear-gradient(90deg, #a78bfa 0%, #fbbf24 46%, #6ee7b7 100%);
+  --grad-cta: linear-gradient(100deg, #b49ae8 0%, #e8a0c8 40%, #f5c8a0 100%);
   --grad-accent: linear-gradient(135deg, #8b5cf6 0%, #c13b9c 100%);
   --grad-gold: linear-gradient(90deg, rgba(139, 92, 246, 0.85), rgba(241, 184, 208, 0.6) 70%, transparent);
   --grad-border: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(241, 184, 208, 0.4));
@@ -74,6 +75,7 @@
   --social-bg: rgba(196, 165, 245, 0.1);
 
   --grad-candy: linear-gradient(135deg, #9b7be0 0%, #d98bb6 50%, #8fd0bd 100%);
+  --grad-cta: linear-gradient(100deg, #9b7fd4 0%, #d088b0 40%, #d8a888 100%);
   --grad-accent: linear-gradient(135deg, #a77ff0 0%, #d06bb0 100%);
   --grad-gold: linear-gradient(90deg, rgba(196, 165, 245, 0.9), rgba(217, 139, 182, 0.55) 70%, transparent);
   --grad-border: linear-gradient(135deg, rgba(196, 165, 245, 0.45), rgba(217, 139, 182, 0.4));

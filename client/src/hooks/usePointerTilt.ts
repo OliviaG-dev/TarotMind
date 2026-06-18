@@ -5,10 +5,16 @@ type PointerTiltOptions = {
   baseRotateX?: number
   baseRotateY?: number
   hoverScale?: number
+  hoverLift?: number
+  cssVarPrefix?: string
 }
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+function tiltVarName(prefix: string, suffix: string): string {
+  return `--${prefix}-${suffix}`
 }
 
 export function usePointerTiltHandlers(
@@ -18,17 +24,20 @@ export function usePointerTiltHandlers(
     baseRotateX = 4,
     baseRotateY = -6,
     hoverScale = 1.02,
+    hoverLift = 0,
+    cssVarPrefix = 'hero-tilt',
   }: PointerTiltOptions = {},
 ) {
   const applyTilt = useCallback(
-    (rotateX: number, rotateY: number, scale: number) => {
+    (rotateX: number, rotateY: number, scale: number, lift = 0) => {
       const el = elementRef.current
       if (!el) return
-      el.style.setProperty('--hero-tilt-x', `${rotateX}deg`)
-      el.style.setProperty('--hero-tilt-y', `${rotateY}deg`)
-      el.style.setProperty('--hero-tilt-scale', String(scale))
+      el.style.setProperty(tiltVarName(cssVarPrefix, 'x'), `${rotateX}deg`)
+      el.style.setProperty(tiltVarName(cssVarPrefix, 'y'), `${rotateY}deg`)
+      el.style.setProperty(tiltVarName(cssVarPrefix, 'scale'), String(scale))
+      el.style.setProperty(tiltVarName(cssVarPrefix, 'lift'), `${lift}px`)
     },
-    [elementRef],
+    [cssVarPrefix, elementRef],
   )
 
   const onPointerMove = useCallback(
@@ -44,13 +53,13 @@ export function usePointerTiltHandlers(
       const rotateY = baseRotateY + x * maxTilt * 2
       const rotateX = baseRotateX - y * maxTilt * 2
 
-      applyTilt(rotateX, rotateY, hoverScale)
+      applyTilt(rotateX, rotateY, hoverScale, hoverLift)
     },
-    [applyTilt, baseRotateX, baseRotateY, elementRef, hoverScale, maxTilt],
+    [applyTilt, baseRotateX, baseRotateY, elementRef, hoverLift, hoverScale, maxTilt],
   )
 
   const onPointerLeave = useCallback(() => {
-    applyTilt(baseRotateX, baseRotateY, 1)
+    applyTilt(baseRotateX, baseRotateY, 1, 0)
   }, [applyTilt, baseRotateX, baseRotateY])
 
   return { onPointerMove, onPointerLeave }
