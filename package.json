@@ -16,6 +16,7 @@
     "lint": "eslint .",
     "preview": "npm run preview --workspace=@tarotmind/client",
     "test": "npm run test --workspace=@tarotmind/client && npm run test --workspace=@tarotmind/server",
+    "test:coverage": "npm run test:coverage --workspace=@tarotmind/client && npm run test:coverage --workspace=@tarotmind/server",
     "test:server": "npm run test --workspace=@tarotmind/server",
     "test:e2e": "npm run e2e --workspace=@tarotmind/client",
     "prepare": "node -e \"if(process.env.CI||process.env.VERCEL||process.env.HUSKY==='0'||process.env.NODE_ENV==='production')process.exit(0);require('child_process').execSync('husky',{stdio:'inherit'})\""
