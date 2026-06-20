@@ -27,3 +27,8 @@ server/data/
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright
+client/test-results/
+client/playwright-report/
+client/blob-report/

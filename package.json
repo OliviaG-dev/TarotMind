@@ -17,13 +17,21 @@
     "preview": "npm run preview --workspace=@tarotmind/client",
     "test": "npm run test --workspace=@tarotmind/client && npm run test --workspace=@tarotmind/server",
     "test:server": "npm run test --workspace=@tarotmind/server",
-    "test:e2e": "npm run e2e --workspace=@tarotmind/client"
+    "test:e2e": "npm run e2e --workspace=@tarotmind/client",
+    "prepare": "node -e \"if(process.env.CI||process.env.VERCEL||process.env.HUSKY==='0'||process.env.NODE_ENV==='production')process.exit(0);require('child_process').execSync('husky',{stdio:'inherit'})\""
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.4",
     "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "typescript-eslint": "^8.57.0"
+  },
+  "lint-staged": {
+    "client/**/*.{ts,tsx}": "eslint --fix",
+    "server/**/*.ts": "eslint --fix",
+    "packages/shared/**/*.ts": "eslint --fix"
   }
 }
