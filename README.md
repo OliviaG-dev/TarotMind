@@ -16,6 +16,8 @@
 [![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?style=for-the-badge&logo=openai&logoColor=fff)](https://platform.openai.com/)
 [![npm workspaces](https://img.shields.io/badge/npm-workspaces-CB3837?style=for-the-badge&logo=npm&logoColor=fff)](https://docs.npmjs.com/cli/using-npm/workspaces)
 
+[![CI](https://github.com/OliviaG-dev/TarotMind/actions/workflows/ci.yml/badge.svg)](https://github.com/OliviaG-dev/TarotMind/actions/workflows/ci.yml)
+
 </div>
 
 ---
@@ -77,6 +79,7 @@ npm run dev
 | `npm run build` | Build client + compilation TypeScript du serveur |
 | `npm run preview` | Previsualisation du build statique du client |
 | `npm run lint` | Analyse ESLint |
+| `npm test` | Tests unitaires client + integration serveur |
 | `npm run test:server` | Tests d'integration API serveur (Vitest + Supertest) |
 | `npm run test:e2e` | Tests E2E client (Playwright) |
 
@@ -183,6 +186,24 @@ Au premier lancement E2E, installer le navigateur Playwright :
 cd client
 npx playwright install chromium
 ```
+
+## CI/CD
+
+Pipeline **GitHub Actions** (`.github/workflows/ci.yml`) declenche sur chaque push vers `master` et chaque pull request :
+
+1. `npm ci`
+2. `npm run lint`
+3. `npm run build`
+4. `npm test` (Vitest client + serveur)
+5. `npm run test:e2e` (Playwright + Chromium)
+
+Badge CI en haut de page : statut du dernier run sur `master`.
+
+**Pre-commit local (Husky)** : a chaque commit, ESLint corrige les fichiers stages (`lint-staged`) puis lance `npm test`. Les E2E restent executes uniquement en CI.
+
+**Dependabot** : mises a jour npm hebdomadaires (PRs groupees prod / dev) via `.github/dependabot.yml`.
+
+Aucun secret GitHub requis pour la CI actuelle (tests en mode mock, E2E avec interception API).
 
 ## Quota et cout IA
 
