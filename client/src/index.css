@@ -25,8 +25,17 @@
   --grad-candy: linear-gradient(90deg, #a78bfa 0%, #fbbf24 46%, #6ee7b7 100%);
   --grad-cta: linear-gradient(100deg, #b49ae8 0%, #e8a0c8 40%, #f5c8a0 100%);
   --grad-accent: linear-gradient(135deg, #8b5cf6 0%, #c13b9c 100%);
-  --grad-gold: linear-gradient(90deg, rgba(139, 92, 246, 0.85), rgba(241, 184, 208, 0.6) 70%, transparent);
-  --grad-border: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(241, 184, 208, 0.4));
+  --grad-gold: linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0.85),
+    rgba(241, 184, 208, 0.6) 70%,
+    transparent
+  );
+  --grad-border: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.4),
+    rgba(241, 184, 208, 0.4)
+  );
 
   --glow: 0 14px 34px -16px rgba(139, 92, 246, 0.4);
   --glow-soft: 0 10px 24px -14px rgba(139, 92, 246, 0.28);
@@ -37,8 +46,8 @@
   --blur: 14px;
   --radius: 22px;
 
-  --sans: Outfit, 'Segoe UI', Roboto, system-ui, sans-serif;
-  --heading: Quicksand, 'Segoe UI', system-ui, sans-serif;
+  --sans: Outfit, "Segoe UI", Roboto, system-ui, sans-serif;
+  --heading: Quicksand, "Segoe UI", system-ui, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -56,7 +65,7 @@
   }
 }
 
-:root[data-theme='dark'] {
+:root[data-theme="dark"] {
   /* Theme sombre — aubergine doux */
   --text: #b6aecb;
   --text-h: #f1ecfa;
@@ -77,14 +86,22 @@
   --grad-candy: linear-gradient(135deg, #9b7be0 0%, #d98bb6 50%, #8fd0bd 100%);
   --grad-cta: linear-gradient(100deg, #9b7fd4 0%, #d088b0 40%, #d8a888 100%);
   --grad-accent: linear-gradient(135deg, #a77ff0 0%, #d06bb0 100%);
-  --grad-gold: linear-gradient(90deg, rgba(196, 165, 245, 0.9), rgba(217, 139, 182, 0.55) 70%, transparent);
-  --grad-border: linear-gradient(135deg, rgba(196, 165, 245, 0.45), rgba(217, 139, 182, 0.4));
+  --grad-gold: linear-gradient(
+    90deg,
+    rgba(196, 165, 245, 0.9),
+    rgba(217, 139, 182, 0.55) 70%,
+    transparent
+  );
+  --grad-border: linear-gradient(
+    135deg,
+    rgba(196, 165, 245, 0.45),
+    rgba(217, 139, 182, 0.4)
+  );
 
   --glow: 0 16px 38px -18px rgba(167, 127, 240, 0.5);
   --glow-soft: 0 10px 26px -16px rgba(167, 127, 240, 0.35);
   --shadow:
-    0 26px 54px -28px rgba(0, 0, 0, 0.6),
-    0 10px 24px -16px rgba(0, 0, 0, 0.4);
+    0 26px 54px -28px rgba(0, 0, 0, 0.6), 0 10px 24px -16px rgba(0, 0, 0, 0.4);
 
   color-scheme: dark;
 }
@@ -255,7 +272,7 @@ code {
   outline-offset: 4px;
 }
 
-:root[data-theme='dark'] .cta-nav__link {
+:root[data-theme="dark"] .cta-nav__link {
   border-color: rgba(255, 255, 255, 0.16);
   color: var(--text-h);
   background: rgba(255, 255, 255, 0.08);
@@ -264,7 +281,7 @@ code {
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-:root[data-theme='dark'] .cta-nav__link:hover {
+:root[data-theme="dark"] .cta-nav__link:hover {
   background: rgba(255, 255, 255, 0.13);
 }
 
@@ -272,8 +289,14 @@ code {
    Animations
    ============================================================ */
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .home,
@@ -288,8 +311,14 @@ code {
 }
 
 @keyframes interpretReveal {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .draw__result,
@@ -299,13 +328,22 @@ code {
 }
 
 @keyframes floatY {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes drawLine {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* —— Filet pastel anime sous les titres de section —— */
@@ -321,7 +359,7 @@ code {
 .question-page__h2::after,
 .history-page__h2::after,
 .stats-page__h2::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 0;

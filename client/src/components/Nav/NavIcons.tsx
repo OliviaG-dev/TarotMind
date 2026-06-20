@@ -1,4 +1,4 @@
-type IconProps = { className?: string }
+type IconProps = { className?: string };
 
 export function NavIconHome({ className }: IconProps) {
   return (
@@ -11,49 +11,114 @@ export function NavIconHome({ className }: IconProps) {
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }
 
 export function NavIconSun({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle
+        cx="12"
+        cy="12"
+        r="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4l1.4-1.4M17 7l1.4-1.4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
     </svg>
-  )
+  );
 }
 
 export function NavIconCards({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="5" y="7" width="10" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.6" transform="rotate(-8 10 14)" />
-      <rect x="9" y="5" width="10" height="14" rx="2" fill="none" stroke="currentColor" strokeWidth="1.6" transform="rotate(8 14 12)" />
+      <rect
+        x="5"
+        y="7"
+        width="10"
+        height="14"
+        rx="2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        transform="rotate(-8 10 14)"
+      />
+      <rect
+        x="9"
+        y="5"
+        width="10"
+        height="14"
+        rx="2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        transform="rotate(8 14 12)"
+      />
     </svg>
-  )
+  );
 }
 
 export function NavIconQuestion({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M9.5 9a3 3 0 1 1 5.2 2.1c-.9.7-1.7 1.4-1.7 2.4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path
+        d="M9.5 9a3 3 0 1 1 5.2 2.1c-.9.7-1.7 1.4-1.7 2.4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
       <circle cx="12.5" cy="17.5" r="1" fill="currentColor" />
-      <rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" strokeWidth="1.6" />
+      <rect
+        x="4"
+        y="4"
+        width="16"
+        height="16"
+        rx="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      />
     </svg>
-  )
+  );
 }
 
 export function NavIconClock({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M12 8v4l3 2" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <circle
+        cx="12"
+        cy="12"
+        r="8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M12 8v4l3 2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
     </svg>
-  )
+  );
 }
 
 export function NavIconBook({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M12 6.25v12.75"
         stroke="currentColor"
@@ -75,30 +140,71 @@ export function NavIconBook({ className }: IconProps) {
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }
 
 export function NavIconChart({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M5 19V11M10 19V7M15 19v-5M20 19V5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path
+        d="M5 19V11M10 19V7M15 19v-5M20 19V5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
     </svg>
-  )
+  );
+}
+
+export function NavIconProfile({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <circle
+        cx="12"
+        cy="12"
+        r="8.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <circle
+        cx="12"
+        cy="10"
+        r="2.8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      />
+      <path
+        d="M7 17.5c1.3-2.6 3.2-3.8 5-3.8s3.7 1.2 5 3.8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 export function DecoSoftSparkle({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M12 2.2 13.4 9.1 20.3 10.5 13.4 11.9 12 18.8 10.6 11.9 3.7 10.5 10.6 9.1 12 2.2Z"
         fill="currentColor"
       />
     </svg>
-  )
+  );
 }
 
 export function SparkleIcon({ className }: IconProps) {
-  return <DecoSoftSparkle className={className} />
+  return <DecoSoftSparkle className={className} />;
 }
 
 export function ArrowRightIcon({ className }: IconProps) {
@@ -113,12 +219,17 @@ export function ArrowRightIcon({ className }: IconProps) {
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }
 
 export function FeatureIconCardsStar({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <g transform="translate(0, 2)">
         {/* Arrière-plan : gauche puis droite */}
         <rect
@@ -160,12 +271,17 @@ export function FeatureIconCardsStar({ className }: IconProps) {
         />
       </g>
     </svg>
-  )
+  );
 }
 
 export function DecoSoftCloud({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 100 56" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 100 56"
+      fill="none"
+      aria-hidden="true"
+    >
       <g className="deco-soft-cloud__blobs">
         <ellipse cx="28" cy="36" rx="22" ry="15" fill="currentColor" />
         <ellipse cx="50" cy="30" rx="26" ry="18" fill="currentColor" />
@@ -179,18 +295,29 @@ export function DecoSoftCloud({ className }: IconProps) {
         fill="currentColor"
       />
     </svg>
-  )
+  );
 }
 
 export function DecoSoftCrescentMoon({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 80 80" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 80 80"
+      fill="none"
+      aria-hidden="true"
+    >
       <defs>
         <mask id="deco-soft-crescent-moon-mask">
           <rect width="80" height="80" fill="white" />
           <circle cx="36" cy="39.5" r="25.5" fill="black" />
         </mask>
-        <filter id="deco-soft-crescent-moon-blur" x="-40%" y="-40%" width="180%" height="180%">
+        <filter
+          id="deco-soft-crescent-moon-blur"
+          x="-40%"
+          y="-40%"
+          width="180%"
+          height="180%"
+        >
           <feGaussianBlur in="SourceGraphic" stdDeviation="0.65" />
         </filter>
       </defs>
@@ -205,12 +332,17 @@ export function DecoSoftCrescentMoon({ className }: IconProps) {
         />
       </g>
     </svg>
-  )
+  );
 }
 
 export function FeatureIconQuestionBubble({ className }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M12 3C6.48 3 2 6.81 2 11.5C2 13.74 3.02 15.78 4.72 17.31L4 21L7.54 19.11C8.91 19.68 10.42 20 12 20C17.52 20 22 16.19 22 11.5C22 6.81 17.52 3 12 3Z"
         stroke="currentColor"
@@ -225,5 +357,5 @@ export function FeatureIconQuestionBubble({ className }: IconProps) {
       />
       <circle cx="12.5" cy="16.9" r="0.85" fill="currentColor" />
     </svg>
-  )
+  );
 }
