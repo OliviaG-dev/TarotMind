@@ -100,11 +100,7 @@
   --cta-tilt-lift: 0px;
   transform: translateY(var(--cta-tilt-lift)) rotateX(var(--cta-tilt-x))
     rotateY(var(--cta-tilt-y))
-    scale3d(
-      var(--cta-tilt-scale),
-      var(--cta-tilt-scale),
-      var(--cta-tilt-scale)
-    );
+    scale3d(var(--cta-tilt-scale), var(--cta-tilt-scale), var(--cta-tilt-scale));
   will-change: transform;
   transition:
     transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
@@ -760,7 +756,7 @@
 
 .home__feature-deco-soft-spark {
   position: absolute;
-  color: #d4c4e8;
+  color: #dbd0ea;
 }
 
 .home__feature-deco-soft-spark--a {
@@ -768,7 +764,7 @@
   right: 15%;
   width: 28px;
   height: 28px;
-  opacity: 0.78;
+  opacity: 0.62;
 }
 
 .home__feature-deco-soft-spark--b {
@@ -776,7 +772,7 @@
   right: 8%;
   width: 22px;
   height: 22px;
-  opacity: 0.66;
+  opacity: 0.54;
 }
 
 .home__feature-deco-soft-spark--c {
@@ -784,7 +780,7 @@
   right: 5%;
   width: 17px;
   height: 17px;
-  opacity: 0.58;
+  opacity: 0.48;
 }
 
 .home__feature-card--pink .home__feature-cloud--a,
@@ -821,8 +817,8 @@
   left: calc(6% + 52px);
   width: 22px;
   height: 22px;
-  color: #9ed9c8;
-  opacity: 0.78;
+  color: #aed5cb;
+  opacity: 0.6;
 }
 
 .home__feature-deco-spark--green-left-cloud-sm {
@@ -830,8 +826,8 @@
   left: calc(6% + 72px);
   width: 14px;
   height: 14px;
-  color: #9ed9c8;
-  opacity: 0.64;
+  color: #aed5cb;
+  opacity: 0.5;
 }
 
 .home__feature-deco-spark--green-cloud {
@@ -839,8 +835,8 @@
   right: 14%;
   width: 24px;
   height: 24px;
-  color: #9ed9c8;
-  opacity: 0.72;
+  color: #aed5cb;
+  opacity: 0.56;
 }
 
 .home__feature-deco-spark {
@@ -852,8 +848,8 @@
   left: 14%;
   width: 30px;
   height: 30px;
-  color: rgba(220, 130, 160, 0.75);
-  opacity: 0.75;
+  color: rgba(215, 138, 162, 0.62);
+  opacity: 0.58;
 }
 
 .home__feature-deco-spark--pink-moon {
@@ -861,8 +857,8 @@
   right: 26%;
   width: 16px;
   height: 16px;
-  color: rgba(220, 130, 160, 0.7);
-  opacity: 0.65;
+  color: rgba(215, 138, 162, 0.58);
+  opacity: 0.52;
 }
 
 .home__feature-deco-spark--pink-b {
@@ -870,8 +866,8 @@
   left: 8%;
   width: 22px;
   height: 22px;
-  color: rgba(220, 130, 160, 0.75);
-  opacity: 0.55;
+  color: rgba(215, 138, 162, 0.62);
+  opacity: 0.44;
 }
 
 .home__feature-icon-wrap {
@@ -1311,19 +1307,19 @@
 :root[data-theme="dark"]
   .home__feature-card--green
   .home__feature-deco-spark--green-left-cloud {
-  color: rgba(146, 217, 198, 0.6);
+  color: rgba(138, 205, 188, 0.45);
 }
 
 :root[data-theme="dark"]
   .home__feature-card--green
   .home__feature-deco-spark--green-left-cloud-sm {
-  color: rgba(146, 217, 198, 0.48);
+  color: rgba(138, 205, 188, 0.36);
 }
 
 :root[data-theme="dark"]
   .home__feature-card--green
   .home__feature-deco-spark--green-cloud {
-  color: rgba(146, 217, 198, 0.55);
+  color: rgba(138, 205, 188, 0.42);
 }
 
 :root[data-theme="dark"]
@@ -1339,7 +1335,13 @@
 }
 
 :root[data-theme="dark"] .home__feature-deco-soft-spark {
-  color: rgba(200, 178, 232, 0.55);
+  color: rgba(195, 175, 228, 0.42);
+}
+
+:root[data-theme="dark"] .home__feature-deco-spark--pink-a,
+:root[data-theme="dark"] .home__feature-deco-spark--pink-b,
+:root[data-theme="dark"] .home__feature-deco-spark--pink-moon {
+  color: rgba(205, 135, 158, 0.38);
 }
 
 :root[data-theme="dark"] .home__feature-card--pink {
