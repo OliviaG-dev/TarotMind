@@ -15,6 +15,7 @@
 [![Express](https://img.shields.io/badge/Express-4-000000?style=for-the-badge&logo=express&logoColor=fff)](https://expressjs.com/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?style=for-the-badge&logo=openai&logoColor=fff)](https://platform.openai.com/)
 [![npm workspaces](https://img.shields.io/badge/npm-workspaces-CB3837?style=for-the-badge&logo=npm&logoColor=fff)](https://docs.npmjs.com/cli/using-npm/workspaces)
+[![Husky](https://img.shields.io/badge/Husky-9-000000?style=for-the-badge&logo=husky&logoColor=fff)](https://typicode.github.io/husky/)
 
 [![CI](https://github.com/OliviaG-dev/TarotMind/actions/workflows/ci.yml/badge.svg)](https://github.com/OliviaG-dev/TarotMind/actions/workflows/ci.yml)
 
