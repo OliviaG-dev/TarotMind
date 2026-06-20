@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import request from 'supertest'
+import { createApp } from '../app.js'
 import { resetAiUsageForTests } from '../lib/aiUsage.js'
 import { resetDailyQuotaForTests } from '../lib/dailyQuota.js'
 
@@ -49,14 +50,11 @@ afterEach(() => {
   delete process.env.AI_DISABLED
   delete process.env.GEMINI_DISABLED
   delete process.env.AI_DAILY_QUOTA_PER_USER
-  vi.restoreAllMocks()
-  vi.resetModules()
 })
 
 describe('interpret routes integration in mock mode', () => {
   it('responds on /interpret, /question and /history-insights', async () => {
     process.env.AI_DISABLED = '1'
-    const { createApp } = await import('../app.js')
     const app = createApp()
 
     const interpretRes = await request(app).post('/interpret').send(interpretPayload)
@@ -75,7 +73,6 @@ describe('interpret routes integration in mock mode', () => {
 
   it('exposes ai usage metrics including fallback rate', async () => {
     process.env.AI_DISABLED = '1'
-    const { createApp } = await import('../app.js')
     const app = createApp()
 
     await request(app).post('/interpret').send(interpretPayload)
@@ -92,8 +89,6 @@ describe('interpret routes integration in mock mode', () => {
 describe('daily AI quota integration', () => {
   it('limits requests per user per day when IA is enabled', async () => {
     process.env.AI_DAILY_QUOTA_PER_USER = '1'
-
-    const { createApp } = await import('../app.js')
     const app = createApp()
 
     const first = await request(app)
