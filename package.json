@@ -18,7 +18,7 @@
     "test": "npm run test --workspace=@tarotmind/client && npm run test --workspace=@tarotmind/server",
     "test:server": "npm run test --workspace=@tarotmind/server",
     "test:e2e": "npm run e2e --workspace=@tarotmind/client",
-    "prepare": "husky"
+    "prepare": "node -e \"if(process.env.CI||process.env.VERCEL||process.env.HUSKY==='0'||process.env.NODE_ENV==='production')process.exit(0);require('child_process').execSync('husky',{stdio:'inherit'})\""
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
