@@ -86,6 +86,46 @@ describe('interpret routes integration in mock mode', () => {
   })
 })
 
+describe('interpret payload validation', () => {
+  beforeEach(() => {
+    process.env.AI_DISABLED = '1'
+  })
+
+  it('rejects invalid tone, missing spreadLabel and invalid cards', async () => {
+    const app = createApp()
+
+    const invalidTone = await request(app)
+      .post('/interpret')
+      .send({ ...interpretPayload, tone: 'invalid' })
+    expect(invalidTone.status).toBe(400)
+    expect(invalidTone.body.error).toBe('tone invalide')
+
+    const missingSpread = await request(app)
+      .post('/interpret')
+      .send({ ...interpretPayload, spreadLabel: '   ' })
+    expect(missingSpread.status).toBe(400)
+    expect(missingSpread.body.error).toBe('spreadLabel requis')
+
+    const invalidCards = await request(app)
+      .post('/interpret')
+      .send({ ...interpretPayload, cards: [{ positionLabel: 'Carte' }] })
+    expect(invalidCards.status).toBe(400)
+    expect(invalidCards.body.error).toBe('cards invalides')
+  })
+
+  it('rejects short questions and empty history draws', async () => {
+    const app = createApp()
+
+    const shortQuestion = await request(app).post('/question').send({ question: 'ab' })
+    expect(shortQuestion.status).toBe(400)
+    expect(shortQuestion.body.error).toContain('3 caracteres min')
+
+    const missingDraws = await request(app).post('/history-insights').send({ draws: [] })
+    expect(missingDraws.status).toBe(400)
+    expect(missingDraws.body.error).toBe('draws requis')
+  })
+})
+
 describe('daily AI quota integration', () => {
   it('limits requests per user per day when IA is enabled', async () => {
     process.env.AI_DAILY_QUOTA_PER_USER = '1'

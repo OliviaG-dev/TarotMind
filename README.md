@@ -80,6 +80,7 @@ npm run dev
 | `npm run preview` | Previsualisation du build statique du client |
 | `npm run lint` | Analyse ESLint |
 | `npm test` | Tests unitaires client + integration serveur |
+| `npm run test:coverage` | Couverture Vitest sur `src/lib/` (seuil 40 %) |
 | `npm run test:server` | Tests d'integration API serveur (Vitest + Supertest) |
 | `npm run test:e2e` | Tests E2E client (Playwright) |
 
@@ -180,6 +181,8 @@ Tests E2E (Playwright) :
 npm run test:e2e
 ```
 
+Les E2E demarrent un client dedie (`5174`) et une API Express (`4010`, `AI_DISABLED=1`) pour eviter les conflits avec le dev local. Un scenario (`real-api-flow`) valide le flux client ↔ serveur sans mock reseau Playwright.
+
 Au premier lancement E2E, installer le navigateur Playwright :
 
 ```bash
@@ -195,7 +198,7 @@ Pipeline **GitHub Actions** (`.github/workflows/ci.yml`) declenche sur chaque pu
 2. `npm run lint`
 3. `npm run build`
 4. `npm test` (Vitest client + serveur)
-5. `npm run test:e2e` (Playwright + Chromium)
+5. `npm run test:e2e` (Playwright + Chromium, client proxy vers API Express en `AI_DISABLED=1`)
 
 Badge CI en haut de page : statut du dernier run sur `master`.
 
