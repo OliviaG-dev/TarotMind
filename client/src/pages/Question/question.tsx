@@ -112,7 +112,7 @@ export default function QuestionPage() {
 
       if (res.source === 'mock') {
         setApiHint(
-          "L'IA est en mode demo, la reponse est un texte d'illustration.",
+          "L'IA est en mode démo, la réponse est un texte d'illustration.",
         )
       }
     } catch (error) {
@@ -120,7 +120,7 @@ export default function QuestionPage() {
       setAnswer(null)
       setApiHint(
         message
-          ? `Impossible d'obtenir une reponse : ${message}.`
+          ? `Impossible d'obtenir une réponse : ${message}.`
           : "Impossible de joindre l'IA pour le moment.",
       )
     } finally {
@@ -135,7 +135,7 @@ export default function QuestionPage() {
           <h1 className="question-page__title">Pose ta question</h1>
         </div>
         <p className="question-page__subtitle">
-          Ecris ta question, choisis un tirage et place tes cartes.
+          Écris ta question, choisis un tirage et place tes cartes.
           L'IA te repondra en s'appuyant sur ton profil et tes cartes.
         </p>
       </header>
@@ -200,7 +200,7 @@ export default function QuestionPage() {
         {spread && (
           <section className="question-page__panel" aria-labelledby="q-schema-heading">
             <h2 id="q-schema-heading" className="question-page__h2">
-              Schema du tirage
+              Schéma du tirage
             </h2>
             <SpreadSchema
               spreadId={spreadId}
@@ -218,11 +218,11 @@ export default function QuestionPage() {
             className="question-page__submit"
             disabled={!canSubmit}
           >
-            {loading ? 'Reflexion en cours...' : 'Obtenir une reponse'}
+            {loading ? 'Réflexion en cours...' : 'Obtenir une réponse'}
           </button>
           {!placedCards && (
             <p className="question-page__meta">
-              Place toutes les cartes du tirage pour obtenir ta reponse.
+              Place toutes les cartes du tirage pour obtenir ta réponse.
             </p>
           )}
         </div>
@@ -230,7 +230,7 @@ export default function QuestionPage() {
 
       {answer && (
         <section className="question-page__result" aria-live="polite">
-          <h2 className="question-page__h2">Reponse</h2>
+          <h2 className="question-page__h2">Réponse</h2>
           <div className="question-page__answer">
             <InterpretationText text={answer} />
           </div>

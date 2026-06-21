@@ -116,8 +116,8 @@ export default function DrawPage() {
       })
       setApiHint(
         message
-          ? `Mode demo: ${message}. Texte local affiche.`
-          : "Mode demo: impossible de joindre l'API IA, texte local affiche.",
+          ? `Mode démo : ${message}. Texte local affiché.`
+          : "Mode démo : impossible de joindre l'API IA, texte local affiché.",
       )
     } finally {
       setIsGenerating(false)
@@ -257,7 +257,7 @@ export default function DrawPage() {
           disabled={!placedPreview || isGenerating}
           onClick={generateInterpretation}
         >
-          {isGenerating ? 'Generation en cours...' : 'Generer l’interpretation'}
+          {isGenerating ? 'Génération en cours...' : 'Générer l’interprétation'}
         </button>
         {spread && (
           <p className="draw__meta">
@@ -288,7 +288,7 @@ export default function DrawPage() {
           </div>
           <p className="draw__footnote">
             {apiHint ??
-              'Texte genere par l’IA serveur a partir des cartes saisies et du profil.'}
+              'Texte généré par l’IA serveur à partir des cartes saisies et du profil.'}
           </p>
         </section>
       )}

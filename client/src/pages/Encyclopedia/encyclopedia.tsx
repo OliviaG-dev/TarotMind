@@ -9,36 +9,36 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: 'all', label: 'Toutes' },
   { id: 'major', label: 'Arcanes majeurs' },
   { id: 'coupes', label: 'Coupes' },
-  { id: 'batons', label: 'Batons' },
-  { id: 'epees', label: 'Epees' },
+  { id: 'batons', label: 'Bâtons' },
+  { id: 'epees', label: 'Épées' },
   { id: 'deniers', label: 'Deniers' },
 ]
 
 const ALL_CARDS: TarotCard[] = [...MAJOR_ARCANA, ...MINOR_ARCANA]
 
 const MAJOR_MEANINGS: Record<string, { upright: string; reversed: string }> = {
-  '0': { upright: 'Nouveau depart, liberte, aventure spontanee.', reversed: 'Imprudence, prise de risque excessive, instabilite.' },
-  '1': { upright: 'Potentiel createur, habilete, initiative.', reversed: 'Manipulation, talents gaspilles, manque de confiance.' },
-  '2': { upright: 'Intuition profonde, mystere, patience.', reversed: 'Secrets mal gardes, superficialite, blocage interieur.' },
-  '3': { upright: 'Fertilite, abondance, creation.', reversed: 'Dependance affective, etouffement, blocage creatif.' },
-  '4': { upright: 'Stabilite, autorite, structure.', reversed: 'Rigidite, domination, perte de controle.' },
+  '0': { upright: 'Nouveau départ, liberté, aventure spontanée.', reversed: 'Imprudence, prise de risque excessive, instabilité.' },
+  '1': { upright: 'Potentiel créateur, habileté, initiative.', reversed: 'Manipulation, talents gaspillés, manque de confiance.' },
+  '2': { upright: 'Intuition profonde, mystère, patience.', reversed: 'Secrets mal gardés, superficialité, blocage intérieur.' },
+  '3': { upright: 'Fertilité, abondance, création.', reversed: 'Dépendance affective, étouffement, blocage créatif.' },
+  '4': { upright: 'Stabilité, autorité, structure.', reversed: 'Rigidité, domination, perte de contrôle.' },
   '5': { upright: 'Sagesse, tradition, guidance spirituelle.', reversed: 'Dogmatisme, conformisme excessif, mauvais conseil.' },
-  '6': { upright: 'Choix amoureux, harmonie, union.', reversed: 'Hesitation, desequilibre, conflit interieur.' },
-  '7': { upright: 'Volonte, victoire, determination.', reversed: 'Manque de direction, echec, aggressivite.' },
-  '8': { upright: 'Equilibre, verite, responsabilite.', reversed: 'Injustice, malhonnetete, partialite.' },
-  '9': { upright: 'Introspection, sagesse, solitude feconde.', reversed: 'Isolement, repli sur soi, paranoie.' },
-  '10': { upright: 'Changement de cycle, chance, mouvement.', reversed: 'Malchance, resistance au changement, stagnation.' },
-  '11': { upright: 'Courage interieur, douceur, maitrise de soi.', reversed: 'Doute de soi, faiblesse, manque de controle.' },
-  '12': { upright: 'Sacrifice voluntaire, lacher-prise, nouvelle perspective.', reversed: 'Sacrifice inutile, martyre, stagnation.' },
-  '13': { upright: 'Transformation, fin de cycle, renouveau.', reversed: 'Resistance au changement, peur, stagnation.' },
-  '14': { upright: 'Equilibre, patience, harmonie.', reversed: 'Exces, desequilibre, impatience.' },
-  '15': { upright: 'Attachement, ombre, prise de conscience.', reversed: 'Liberation, detachement, guerison.' },
-  '16': { upright: 'Bouleversement, revelation, renouveau brutal.', reversed: 'Catastrophe evitee, changement progressif, peur.' },
-  '17': { upright: 'Espoir, inspiration, serenite.', reversed: 'Desespoir, perte de foi, deconnexion.' },
-  '18': { upright: 'Emotions profondes, intuition, reve.', reversed: 'Confusion, illusion, peur de l\'inconnu.' },
-  '19': { upright: 'Joie, vitalite, succes.', reversed: 'Tristesse temporaire, ego, exces d\'optimisme.' },
-  '20': { upright: 'Reveil, appel interieur, renaissance.', reversed: 'Refus d\'evoluer, culpabilite, doute.' },
-  '21': { upright: 'Accomplissement, integration, plenitude.', reversed: 'Inachevement, manque de cloture, blocage final.' },
+  '6': { upright: 'Choix amoureux, harmonie, union.', reversed: 'Hésitation, déséquilibre, conflit intérieur.' },
+  '7': { upright: 'Volonté, victoire, détermination.', reversed: 'Manque de direction, échec, agressivité.' },
+  '8': { upright: 'Équilibre, vérité, responsabilité.', reversed: 'Injustice, malhonnêteté, partialité.' },
+  '9': { upright: 'Introspection, sagesse, solitude féconde.', reversed: 'Isolement, repli sur soi, paranoïa.' },
+  '10': { upright: 'Changement de cycle, chance, mouvement.', reversed: 'Malchance, résistance au changement, stagnation.' },
+  '11': { upright: 'Courage intérieur, douceur, maîtrise de soi.', reversed: 'Doute de soi, faiblesse, manque de contrôle.' },
+  '12': { upright: 'Sacrifice volontaire, lâcher-prise, nouvelle perspective.', reversed: 'Sacrifice inutile, martyre, stagnation.' },
+  '13': { upright: 'Transformation, fin de cycle, renouveau.', reversed: 'Résistance au changement, peur, stagnation.' },
+  '14': { upright: 'Équilibre, patience, harmonie.', reversed: 'Excès, déséquilibre, impatience.' },
+  '15': { upright: 'Attachement, ombre, prise de conscience.', reversed: 'Libération, détachement, guérison.' },
+  '16': { upright: 'Bouleversement, révélation, renouveau brutal.', reversed: 'Catastrophe évitée, changement progressif, peur.' },
+  '17': { upright: 'Espoir, inspiration, sérénité.', reversed: 'Désespoir, perte de foi, déconnexion.' },
+  '18': { upright: 'Émotions profondes, intuition, rêve.', reversed: 'Confusion, illusion, peur de l\'inconnu.' },
+  '19': { upright: 'Joie, vitalité, succès.', reversed: 'Tristesse temporaire, ego, excès d\'optimisme.' },
+  '20': { upright: 'Réveil, appel intérieur, renaissance.', reversed: 'Refus d\'évoluer, culpabilité, doute.' },
+  '21': { upright: 'Accomplissement, intégration, plénitude.', reversed: 'Inachèvement, manque de clôture, blocage final.' },
 }
 
 function getMeaning(card: TarotCard): { upright: string; reversed: string } | null {
@@ -71,17 +71,17 @@ export default function EncyclopediaPage() {
     <div className="encyclopedia">
       <header className="encyclopedia__intro">
         <div className="page-heading encyclopedia__heading">
-          <h1 className="encyclopedia__title">Encyclopedie du Tarot</h1>
+          <h1 className="encyclopedia__title">Encyclopédie du Tarot</h1>
         </div>
         <p className="encyclopedia__subtitle">
-          Explore les 78 cartes du tarot, leurs mots-cles et leurs significations.
+          Explore les 78 cartes du tarot, leurs mots-clés et leurs significations.
         </p>
       </header>
 
       <input
         className="encyclopedia__search"
         type="search"
-        placeholder="Rechercher une carte ou un mot-cle..."
+        placeholder="Rechercher une carte ou un mot-clé..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
@@ -100,7 +100,7 @@ export default function EncyclopediaPage() {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="encyclopedia__empty">Aucune carte trouvee.</p>
+        <p className="encyclopedia__empty">Aucune carte trouvée.</p>
       ) : (
         <ul className="encyclopedia__grid">
           {filtered.map((card) => {
@@ -126,17 +126,17 @@ export default function EncyclopediaPage() {
                 {expanded && meaning && (
                   <div className="encyclopedia__card-detail">
                     <p className="encyclopedia__card-meaning">
-                      <strong>A l'endroit :</strong> {meaning.upright}
+                      <strong>À l'endroit :</strong> {meaning.upright}
                     </p>
                     <p className="encyclopedia__card-meaning">
-                      <strong>Renversee :</strong> {meaning.reversed}
+                      <strong>Renversée :</strong> {meaning.reversed}
                     </p>
                   </div>
                 )}
                 {expanded && !meaning && (
                   <div className="encyclopedia__card-detail">
                     <p className="encyclopedia__card-meaning">
-                      La signification detaillee de cette carte s'interprete
+                      La signification détaillée de cette carte s'interprète
                       selon sa suite et sa valeur dans le contexte du tirage.
                     </p>
                   </div>

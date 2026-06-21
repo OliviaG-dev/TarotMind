@@ -45,7 +45,7 @@ export function createDailyAiQuotaMiddleware() {
 
     if (entry.count > limit) {
       res.status(429).json({
-        error: 'Quota journalier IA atteint. Reessaie demain.',
+        error: 'Quota journalier IA atteint. Réessaie demain.',
       })
       return
     }

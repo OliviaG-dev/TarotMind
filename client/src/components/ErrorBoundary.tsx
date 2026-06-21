@@ -41,7 +41,7 @@ export class ErrorBoundary extends Component<Props, State> {
             marginBottom: '16px',
             color: 'var(--text-h, #2a2332)',
           }}>
-            Oups, quelque chose s'est mal passe
+            Oups, quelque chose s'est mal passé
           </h1>
           <p style={{
             maxWidth: '48ch',

@@ -74,7 +74,7 @@ interpretRouter.post('/interpret', async (req, res) => {
     const body = (req.body ?? {}) as InterpretBody
     const tone = body.tone
     const spreadLabel = body.spreadLabel?.trim()
-    const question = body.question?.trim() || 'Interprete ce tirage.'
+    const question = body.question?.trim() || 'Interprète ce tirage.'
     const cards = sanitizeCards(body.cards)
 
     if (!isTone(tone)) {
@@ -130,10 +130,10 @@ interpretRouter.post('/interpret', async (req, res) => {
       message.includes('rate limit') ||
       message.includes('quota')
     ) {
-      res.status(429).json({ error: 'Quota OpenAI depasse ou indisponible' })
+      res.status(429).json({ error: 'Quota OpenAI dépassé ou indisponible' })
       return
     }
-    res.status(502).json({ error: 'Echec generation IA' })
+    res.status(502).json({ error: 'Échec génération IA' })
   }
 })
 
@@ -156,7 +156,7 @@ interpretRouter.post('/question', async (req, res) => {
     const question = body.question?.trim()
 
     if (!question || question.length < 3) {
-      res.status(400).json({ error: 'question requise (3 caracteres min)' })
+      res.status(400).json({ error: 'question requise (3 caractères min)' })
       return
     }
 
@@ -165,11 +165,11 @@ interpretRouter.post('/question', async (req, res) => {
       res.json({
         interpretation:
           `**Ta question :** ${question}\n\n` +
-          '### Eclairage\n' +
-          "L'IA est actuellement en mode demo. En production, tu recevras ici une reponse personnalisee basee sur ton profil et ta question.\n\n" +
+          '### Éclairage\n' +
+          "L'IA est actuellement en mode démo. En production, tu recevras ici une réponse personnalisée basée sur ton profil et ta question.\n\n" +
           '### Conseil concret\n' +
-          '- Prends un moment pour reformuler ta question avec precision.\n' +
-          '- Note ce qui te vient spontanement a l\'esprit.\n\n' +
+          '- Prends un moment pour reformuler ta question avec précision.\n' +
+          '- Note ce qui te vient spontanément à l\'esprit.\n\n' +
           '### Question d\'introspection\n' +
           'Qu\'est-ce qui se cache derriere cette question ?',
         source: 'mock' as const,
@@ -196,7 +196,7 @@ interpretRouter.post('/question', async (req, res) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erreur serveur'
     if (message.includes('OPENAI_API_KEY')) {
-      res.status(500).json({ error: 'Configuration serveur incomplete' })
+      res.status(500).json({ error: 'Configuration serveur incomplète' })
       return
     }
     if (
@@ -204,10 +204,10 @@ interpretRouter.post('/question', async (req, res) => {
       message.includes('rate limit') ||
       message.includes('quota')
     ) {
-      res.status(429).json({ error: 'Quota IA depasse ou indisponible' })
+      res.status(429).json({ error: 'Quota IA dépassé ou indisponible' })
       return
     }
-    res.status(502).json({ error: 'Echec generation IA' })
+    res.status(502).json({ error: 'Échec génération IA' })
   }
 })
 
@@ -226,7 +226,7 @@ interpretRouter.post('/history-insights', async (req, res) => {
       trackAiRequest({ endpoint: '/history-insights', source: 'mock' })
       res.json({
         interpretation:
-          '### Motif principal\nMode configuration actif.\n\n### Ce que ca raconte de ta periode\nLes donnees sont bien recues, mais l’IA est desactivee.\n\n### Point de vigilance\nPense a rebasculer `AI_DISABLED=0` pour obtenir une analyse reelle.\n\n### Action 7 jours\nActive OpenAI puis relance une analyse depuis Historique.\n\n### Question d’introspection\nQuel motif veux-tu explorer en priorite cette semaine ?',
+          '### Motif principal\nMode configuration actif.\n\n### Ce que ça raconte de ta période\nLes données sont bien reçues, mais l’IA est désactivée.\n\n### Point de vigilance\nPense à rebasculer `AI_DISABLED=0` pour obtenir une analyse réelle.\n\n### Action 7 jours\nActive OpenAI puis relance une analyse depuis Historique.\n\n### Question d’introspection\nQuel motif veux-tu explorer en priorité cette semaine ?',
         source: 'mock' as const,
       })
       return
@@ -256,10 +256,10 @@ interpretRouter.post('/history-insights', async (req, res) => {
       message.includes('rate limit') ||
       message.includes('quota')
     ) {
-      res.status(429).json({ error: 'Quota OpenAI depasse ou indisponible' })
+      res.status(429).json({ error: 'Quota OpenAI dépassé ou indisponible' })
       return
     }
-    res.status(502).json({ error: 'Echec generation IA' })
+    res.status(502).json({ error: 'Échec génération IA' })
   }
 })
 

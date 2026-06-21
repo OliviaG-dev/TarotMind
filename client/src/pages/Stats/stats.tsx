@@ -53,7 +53,7 @@ export default function StatsPage() {
           </div>
         </header>
         <p className="stats-page__empty">
-          Aucun tirage enregistre. Fais ton premier tirage pour voir tes stats apparaitre ici.
+          Aucun tirage enregistré. Fais ton premier tirage pour voir tes stats apparaître ici.
         </p>
         <div className="cta-nav">
           <Link to="/tirage" className="cta-nav__link">Faire un tirage &rarr;</Link>
@@ -69,7 +69,7 @@ export default function StatsPage() {
           <h1 className="stats-page__title">Statistiques</h1>
         </div>
         <p className="stats-page__subtitle">
-          Un apercu de ton parcours avec le tarot.
+          Un aperçu de ton parcours avec le tarot.
         </p>
       </header>
 
@@ -80,7 +80,7 @@ export default function StatsPage() {
         </div>
         <div className="stats-page__kpi">
           <span className="stats-page__kpi-value">{stats.questions}</span>
-          <span className="stats-page__kpi-label">Questions posees</span>
+          <span className="stats-page__kpi-label">Questions posées</span>
         </div>
         <div className="stats-page__kpi">
           <span className="stats-page__kpi-value">{stats.favorites}</span>
@@ -93,7 +93,7 @@ export default function StatsPage() {
       </div>
 
       <section className="stats-page__section">
-        <h2 className="stats-page__h2">Cartes les plus frequentes</h2>
+        <h2 className="stats-page__h2">Cartes les plus fréquentes</h2>
         <ul className="stats-page__bar-list">
           {stats.topCards.map(([name, count]) => (
             <li key={name} className="stats-page__bar-item">
@@ -111,7 +111,7 @@ export default function StatsPage() {
       </section>
 
       <section className="stats-page__section">
-        <h2 className="stats-page__h2">Repartition par type de tirage</h2>
+        <h2 className="stats-page__h2">Répartition par type de tirage</h2>
         <ul className="stats-page__spread-grid">
           {stats.spreads.map(([name, count]) => (
             <li key={name} className="stats-page__spread-item">

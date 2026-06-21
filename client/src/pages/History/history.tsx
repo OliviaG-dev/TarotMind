@@ -50,11 +50,11 @@ function NoteForm({ drawId, currentNote, onSave }: {
         ref={ref}
         className="history-page__note-textarea"
         defaultValue={currentNote}
-        placeholder="Ecris tes ressentis, reflexions..."
+        placeholder="Écris tes ressentis, réflexions..."
         rows={3}
       />
       <button type="button" className="history-page__note-save" onClick={handleSave}>
-        {saved ? 'Enregistre !' : 'Enregistrer'}
+        {saved ? 'Enregistré !' : 'Enregistrer'}
       </button>
     </div>
   )
@@ -311,9 +311,9 @@ export default function HistoryPage() {
                             d.question ? `Question : ${d.question}` : `Ton : ${toneLabel(d.tone)}`,
                             '',
                             'Cartes :',
-                            ...d.cards.map((c) => `  ${c.positionLabel} : ${c.card.nameFr}${c.reversed ? ' (renversee)' : ''}`),
+                            ...d.cards.map((c) => `  ${c.positionLabel} : ${c.card.nameFr}${c.reversed ? ' (renversée)' : ''}`),
                             '',
-                            'Interpretation :',
+                            'Interprétation :',
                             d.interpretation,
                           ]
                           navigator.clipboard.writeText(lines.join('\n'))
@@ -329,7 +329,7 @@ export default function HistoryPage() {
                           <span className="history-page__pos">{c.positionLabel}</span>
                           <span className="history-page__name">
                             {c.card.nameFr}
-                            {c.reversed ? ' (renversee)' : ''}
+                            {c.reversed ? ' (renversée)' : ''}
                           </span>
                           <span className="history-page__kw">{c.card.keywords.join(', ')}</span>
                         </li>
@@ -338,7 +338,7 @@ export default function HistoryPage() {
                     <h4 className="history-page__detail-h">Note personnelle</h4>
                     <NoteForm drawId={d.id} currentNote={d.note ?? ''} onSave={updateNote} />
 
-                    <h4 className="history-page__detail-h">Interpretation</h4>
+                    <h4 className="history-page__detail-h">Interprétation</h4>
                     <div className="history-page__detail-interp">
                       <InterpretationText text={d.interpretation} />
                     </div>

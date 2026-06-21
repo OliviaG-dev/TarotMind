@@ -4,14 +4,15 @@ import { getDailyCard, getDailyMessage, getMonthlyCard, getMonthlyMessage, getYe
 import type { TarotCard } from '../../types/tarot'
 import './dailyCard.css'
 
-function CardReveal({ card, label, message, period }: {
+function CardReveal({ card, label, message, period, variant }: {
   card: TarotCard
   label: string
   message?: string
   period: string
+  variant: 'day' | 'month' | 'year'
 }) {
   return (
-    <div className="daily-card__reveal">
+    <article className={`daily-card__reveal daily-card__reveal--${variant}`}>
       <span className="daily-card__period">{period}</span>
       <div className="daily-card__card-face">
         <h2 className="daily-card__card-name">{card.nameFr}</h2>
@@ -23,7 +24,7 @@ function CardReveal({ card, label, message, period }: {
       </div>
       {message && <p className="daily-card__message">{message}</p>}
       <p className="daily-card__date">{label}</p>
-    </div>
+    </article>
   )
 }
 
@@ -49,8 +50,8 @@ export default function DailyCardPage() {
           <h1 className="daily-card__title">Tes cartes</h1>
         </div>
         <p className="daily-card__subtitle">
-          Basees sur la numerologie de la date, ces cartes t'accompagnent
-          au quotidien, ce mois-ci et tout au long de l'annee.
+          Basées sur la numérologie de la date, ces cartes t'accompagnent
+          au quotidien, ce mois-ci et tout au long de l'année.
         </p>
       </header>
 
@@ -60,18 +61,21 @@ export default function DailyCardPage() {
           label={formattedDate}
           message={message}
           period="Carte du jour"
+          variant="day"
         />
         <CardReveal
           card={monthly.card}
           label={monthly.label}
           message={monthlyMessage}
           period="Carte du mois"
+          variant="month"
         />
         <CardReveal
           card={yearly.card}
           label={yearly.label}
           message={yearlyMessage}
-          period="Carte de l'annee"
+          period="Carte de l'année"
+          variant="year"
         />
       </div>
 

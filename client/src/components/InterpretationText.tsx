@@ -73,10 +73,10 @@ function SpeakButton({ text }: { text: string }) {
       type="button"
       className="interpretation-text__speak"
       onClick={handleSpeak}
-      aria-label={speaking ? 'Arreter la lecture' : 'Ecouter'}
-      title={speaking ? 'Arreter' : 'Ecouter'}
+      aria-label={speaking ? 'Arrêter la lecture' : 'Écouter'}
+      title={speaking ? 'Arrêter' : 'Écouter'}
     >
-      {speaking ? '\u23F9' : '\u25B6'} {speaking ? 'Arreter' : 'Ecouter'}
+      {speaking ? '\u23F9' : '\u25B6'} {speaking ? 'Arrêter' : 'Écouter'}
     </button>
   )
 }

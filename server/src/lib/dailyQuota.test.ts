@@ -98,7 +98,7 @@ describe('createDailyAiQuotaMiddleware', () => {
     expect(third.nextCalled).toBe(false)
     expect(third.statusCode).toBe(429)
     expect(third.body).toEqual({
-      error: 'Quota journalier IA atteint. Reessaie demain.',
+      error: 'Quota journalier IA atteint. Réessaie demain.',
     })
   })
 

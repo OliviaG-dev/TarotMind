@@ -118,7 +118,7 @@ describe('interpret payload validation', () => {
 
     const shortQuestion = await request(app).post('/question').send({ question: 'ab' })
     expect(shortQuestion.status).toBe(400)
-    expect(shortQuestion.body.error).toContain('3 caracteres min')
+    expect(shortQuestion.body.error).toContain('3 caractères min')
 
     const missingDraws = await request(app).post('/history-insights').send({ draws: [] })
     expect(missingDraws.status).toBe(400)

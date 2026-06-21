@@ -70,7 +70,7 @@ describe('createRateLimiter', () => {
     expect(third.nextCalled).toBe(false)
     expect(third.statusCode).toBe(429)
     expect(third.body).toEqual({
-      error: 'Trop de requetes. Reessaie dans quelques minutes.',
+      error: 'Trop de requêtes. Réessaie dans quelques minutes.',
     })
   })
 

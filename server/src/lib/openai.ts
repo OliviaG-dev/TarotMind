@@ -45,10 +45,10 @@ export async function generateInterpretationDetailed(opts: {
     userPrompt: [
       opts.userPrompt,
       '',
-      'Ta premiere reponse etait trop courte.',
-      'Refais une lecture complete de 220 a 420 mots en respectant strictement les 4 sections demandees.',
+      'Ta première réponse était trop courte.',
+      'Refais une lecture complète de 220 à 420 mots en respectant strictement les 4 sections demandées.',
       '',
-      'Brouillon precedent:',
+      'Brouillon précédent:',
       first.text,
     ].join('\n'),
   })
@@ -92,7 +92,7 @@ async function requestOpenAi(opts: {
         usage?: { prompt_tokens?: number; completion_tokens?: number }
       }
       const text = data.choices?.[0]?.message?.content?.trim()
-      if (!text) throw new Error('OpenAI a renvoye une reponse vide')
+      if (!text) throw new Error('OpenAI a renvoyé une réponse vide')
       return {
         text,
         inputTokens: Math.max(0, data.usage?.prompt_tokens ?? 0),

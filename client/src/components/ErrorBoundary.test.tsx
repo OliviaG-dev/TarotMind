@@ -16,7 +16,7 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>,
     )
 
-    expect(screen.getByText('Oups, quelque chose s\'est mal passe')).toBeInTheDocument()
+    expect(screen.getByText('Oups, quelque chose s\'est mal passé')).toBeInTheDocument()
     expect(screen.getByText('Erreur composant test')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Recharger la page' })).toBeInTheDocument()
 

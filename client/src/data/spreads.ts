@@ -67,14 +67,14 @@ export const SPREADS: SpreadDefinition[] = [
   },
   {
     id: 'compatibility',
-    label: 'Compatibilite',
+    label: 'Compatibilité',
     description: 'Explore la dynamique entre deux personnes : toi, l\'autre, et ce qui vous relie.',
     icon: '/icons/tirage-amour.png',
     positions: [
       { key: 'person_a', label: 'Toi' },
       { key: 'person_b', label: 'L\'autre' },
       { key: 'bond', label: 'Ce qui vous relie' },
-      { key: 'challenge', label: 'Le defi' },
+      { key: 'challenge', label: 'Le défi' },
       { key: 'advice_compat', label: 'Conseil' },
     ],
   },

@@ -36,7 +36,7 @@ export function createRateLimiter(opts: {
 
     if (entry.count > opts.maxRequests) {
       res.status(429).json({
-        error: 'Trop de requetes. Reessaie dans quelques minutes.',
+        error: 'Trop de requêtes. Réessaie dans quelques minutes.',
       })
       return
     }

@@ -35,31 +35,31 @@ export type HistoryInsightsDrawInput = {
 }
 
 export const TAROTMIND_SYSTEM_PROMPT = [
-  'Tu es TarotMind, assistant d’interpretation de tirages de tarot en francais.',
+  'Tu es TarotMind, assistant d’interprétation de tirages de tarot en français.',
   'Style: bienveillant, clair, concret, non-jugement.',
   'Tu personnalises selon le profil utilisateur (objectifs, contexte relationnel/pro, ton choisi).',
   '',
   'Structure de sortie obligatoire:',
   '1) Lecture globale (3-5 lignes)',
   '2) Carte par carte (position + signification + lien au contexte)',
-  '3) Synthese actionnable (3 actions max)',
+  '3) Synthèse actionnable (3 actions max)',
   '4) Question d’introspection (1 seule)',
   '',
   'Contraintes:',
-  '- Ne jamais presenter la lecture comme une verite absolue.',
-  '- Pas de predictions medicales, legales ou financieres categoriques.',
-  '- Toujours formuler comme piste de reflexion, avec nuances.',
-  '- Francais naturel, sans jargon esoterique excessif.',
-  '- Longueur cible: 220 a 420 mots.',
+  '- Ne jamais présenter la lecture comme une vérité absolue.',
+  '- Pas de prédictions médicales, légales ou financières catégoriques.',
+  '- Toujours formuler comme piste de réflexion, avec nuances.',
+  '- Français naturel, sans jargon ésotérique excessif.',
+  '- Longueur cible: 220 à 420 mots.',
 ].join('\n')
 
 export const TAROTMIND_HISTORY_SYSTEM_PROMPT = [
-  'Tu es TarotMind, analyste de motifs de tirages de tarot en francais.',
-  'Tu identifies des tendances, sans predire l’avenir de facon certaine.',
+  'Tu es TarotMind, analyste de motifs de tirages de tarot en français.',
+  'Tu identifies des tendances, sans prédire l’avenir de façon certaine.',
   '',
   'Sortie obligatoire en 5 sections exactement:',
   '### Motif principal',
-  '### Ce que ca raconte de ta periode',
+  '### Ce que ça raconte de ta période',
   '### Point de vigilance',
   '### Action 7 jours',
   '### Question d’introspection',
@@ -68,15 +68,15 @@ export const TAROTMIND_HISTORY_SYSTEM_PROMPT = [
   '- Ton bienveillant, clair, concret.',
   '- Pas de certitudes absolues.',
   '- Une seule action prioritaire dans "Action 7 jours".',
-  '- Longueur cible: 180 a 260 mots.',
+  '- Longueur cible: 180 à 260 mots.',
 ].join('\n')
 
 const TONE_EXTRA_INSTRUCTIONS: Record<PromptTone, string> = {
   direct: [
     'Orientation: coaching concret.',
     'Ajoute explicitement:',
-    '- 1 priorite principale pour les 7 prochains jours',
-    '- 2 erreurs a eviter',
+    '- 1 priorité principale pour les 7 prochains jours',
+    '- 2 erreurs à éviter',
     '- 1 micro-rituel quotidien (< 10 minutes)',
   ].join('\n'),
   psychological: [
@@ -92,26 +92,26 @@ const TONE_EXTRA_INSTRUCTIONS: Record<PromptTone, string> = {
     'Mets l’accent sur:',
     '- archetype dominant du tirage',
     '- message central de transformation',
-    '- pratique d’ancrage simple (respiration, ecriture ou marche consciente)',
-    'Evite toute formulation fataliste.',
+    '- pratique d’ancrage simple (respiration, écriture ou marche consciente)',
+    'Évite toute formulation fataliste.',
   ].join('\n'),
 }
 
 function formatProfile(profile?: PromptProfileInput): string {
-  const goals = profile?.goals?.length ? profile.goals.join(', ') : 'non precise'
+  const goals = profile?.goals?.length ? profile.goals.join(', ') : 'non précisé'
   return [
-    `- Statut amoureux: ${profile?.relationshipStatus ?? 'non precise'}`,
-    `- Genre: ${profile?.gender ?? 'non precise'}`,
-    `- Situation pro: ${profile?.workSituation ?? 'non precise'}`,
+    `- Statut amoureux: ${profile?.relationshipStatus ?? 'non précisé'}`,
+    `- Genre: ${profile?.gender ?? 'non précisé'}`,
+    `- Situation pro: ${profile?.workSituation ?? 'non précisé'}`,
     `- Objectifs: ${goals}`,
-    `- Type de jeu: ${profile?.deckPreference ?? 'non precise'}`,
+    `- Type de jeu: ${profile?.deckPreference ?? 'non précisé'}`,
   ].join('\n')
 }
 
 function formatCards(cards: PromptCardInput[]): string {
   return cards
     .map((c) => {
-      const orientation = c.reversed ? 'Inversee' : 'Droite'
+      const orientation = c.reversed ? 'Inversée' : 'Droite'
       const keywords = c.keywords.length ? c.keywords.join(', ') : 'aucun'
       return `${c.positionLabel} — ${c.cardName} — ${orientation} — Mots-cles: ${keywords}`
     })
@@ -132,7 +132,7 @@ export function buildInterpretUserPrompt(input: BuildInterpretPromptInput): stri
     formatCards(input.cards),
     '',
     'Consigne:',
-    'Fais une interpretation personnalisee selon la structure demandee dans le system prompt.',
+    'Fais une interprétation personnalisée selon la structure demandée dans le system prompt.',
     '',
     `Instruction complementaire (${input.tone}):`,
     TONE_EXTRA_INSTRUCTIONS[input.tone],
@@ -141,7 +141,7 @@ export function buildInterpretUserPrompt(input: BuildInterpretPromptInput): stri
 
 export function buildMobileSummaryPrompt(fullInterpretation: string): string {
   return [
-    'Resumer le texte suivant en francais pour une interface mobile.',
+    'Résumer le texte suivant en français pour une interface mobile.',
     'Sortie attendue:',
     '- 5 bullets maximum',
     '- chaque bullet = 1 phrase courte',
@@ -168,20 +168,20 @@ export function buildInterpretPromptPayload(input: BuildInterpretPromptInput): {
 }
 
 export const TAROTMIND_QUESTION_SYSTEM_PROMPT = [
-  'Tu es TarotMind, guide spirituel bienveillant specialise en tarot, en francais.',
+  'Tu es TarotMind, guide spirituel bienveillant spécialisé en tarot, en français.',
   'On te pose une question libre, sans tirage de cartes.',
-  'Tu reponds en te basant sur le profil de la personne et ta sagesse du tarot.',
+  'Tu réponds en te basant sur le profil de la personne et ta sagesse du tarot.',
   '',
   'Structure de sortie:',
-  '1) Eclairage (3-5 lignes de reflexion sur la question)',
+  '1) Éclairage (3-5 lignes de réflexion sur la question)',
   '2) Conseil concret (2-3 actions simples)',
   '3) Question d\'introspection (1 seule)',
   '',
   'Contraintes:',
   '- Bienveillant, clair, concret, sans jugement.',
-  '- Jamais de verite absolue ni de prediction categorique.',
-  '- Francais naturel, accessible.',
-  '- Longueur cible: 120 a 250 mots.',
+  '- Jamais de vérité absolue ni de prédiction catégorique.',
+  '- Français naturel, accessible.',
+  '- Longueur cible: 120 à 250 mots.',
 ].join('\n')
 
 export function buildQuestionPromptPayload(input: {
@@ -194,7 +194,7 @@ export function buildQuestionPromptPayload(input: {
     'Contexte utilisateur:',
     formatProfile(input.profile),
     '',
-    'Question posee:',
+    'Question posée:',
     input.question,
   ]
 
@@ -204,7 +204,7 @@ export function buildQuestionPromptPayload(input: {
       'Tirage associe:',
       `- Type: ${input.spreadLabel}`,
       '',
-      'Cartes tirees:',
+      'Cartes tirées:',
       formatCards(input.cards),
     )
   }
@@ -213,8 +213,8 @@ export function buildQuestionPromptPayload(input: {
     '',
     'Consigne:',
     input.cards && input.cards.length > 0
-      ? 'Reponds a cette question en te basant sur le profil ET les cartes tirees. Respecte la structure demandee.'
-      : 'Reponds a cette question de maniere personnalisee en respectant la structure demandee.',
+      ? 'Réponds à cette question en te basant sur le profil ET les cartes tirées. Respecte la structure demandée.'
+      : 'Réponds à cette question de manière personnalisée en respectant la structure demandée.',
   )
 
   return {
@@ -231,7 +231,7 @@ export function buildHistoryInsightsPromptPayload(input: {
   const drawsBlock = input.draws
     .map((d) => {
       const cards = d.cards
-        .map((c) => `${c.positionLabel}: ${c.cardName}${c.reversed ? ' (inversee)' : ''}`)
+        .map((c) => `${c.positionLabel}: ${c.cardName}${c.reversed ? ' (inversée)' : ''}`)
         .join(' | ')
       return `- ${d.createdAt} — ${d.spreadLabel} (${d.tone}) — ${cards}`
     })
@@ -240,7 +240,7 @@ export function buildHistoryInsightsPromptPayload(input: {
   const topCardsBlock =
     input.topCards.length > 0
       ? input.topCards.map((c) => `- ${c.name} (${c.count})`).join('\n')
-      : '- Aucun motif fort detecte'
+      : '- Aucun motif fort détecté'
 
   const userPrompt = [
     'Contexte profil:',
@@ -249,11 +249,11 @@ export function buildHistoryInsightsPromptPayload(input: {
     'Historique recent:',
     drawsBlock || '- Aucun tirage',
     '',
-    'Cartes les plus frequentes:',
+    'Cartes les plus fréquentes:',
     topCardsBlock,
     '',
     'Consigne:',
-    'Propose une analyse concise, utile et actionnable en respectant strictement les 5 sections imposees.',
+    'Propose une analyse concise, utile et actionnable en respectant strictement les 5 sections imposées.',
   ].join('\n')
 
   return {
