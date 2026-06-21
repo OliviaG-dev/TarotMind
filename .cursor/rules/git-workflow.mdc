@@ -1,0 +1,22 @@
+---
+description: Git workflow — feature branch and pull request required before merge
+alwaysApply: true
+---
+
+# Git workflow (TarotMind)
+
+When the user asks to commit, push, or deliver code changes:
+
+1. **Never commit or push directly to `master` or `main`.**
+2. **Create a feature branch** before the first commit, e.g. `feat/short-description` or `fix/short-description`.
+3. Run `git status`, `git diff`, and `git log` before committing (as in commit rules).
+4. Commit on the feature branch with the emoji commit format (English, max 72 chars).
+5. Push with `git push -u origin HEAD` (feature branch only).
+6. **Open a pull request** with `gh pr create` (title + body per PR rules).
+7. Return the **PR URL** to the user.
+
+If the user only says "commit" without "push" or "PR", still use a feature branch; ask before pushing or opening a PR unless they also requested it.
+
+If changes were accidentally committed on `master`, do not push again on `master`. Propose revert on `master` + redo on a feature branch + PR, or ask the user how to proceed.
+
+Do not skip the branch/PR workflow because the user said "commit and push" in one sentence — interpret that as branch → commit → push branch → PR unless they explicitly forbid the PR.
