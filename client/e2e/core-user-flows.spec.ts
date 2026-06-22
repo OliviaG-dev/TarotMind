@@ -18,7 +18,7 @@ test('tirage complet puis visible dans historique', async ({ page }) => {
 
   await page.goto('/tirage')
   await page.locator('select.spread-schema__select').first().selectOption('0')
-  await page.getByRole('button', { name: /generer/i }).click()
+  await page.getByRole('button', { name: /générer/i }).click()
 
   await expect(page.getByText('Récapitulatif')).toBeVisible()
   await expect(page.getByText('Interpretation E2E de test.')).toBeVisible()
@@ -73,7 +73,7 @@ test('analyse historique affiche le resultat IA', async ({ page }) => {
 
   await page.goto('/tirage')
   await page.locator('select.spread-schema__select').first().selectOption('0')
-  await page.getByRole('button', { name: /generer/i }).click()
+  await page.getByRole('button', { name: /générer/i }).click()
   await expect(page.getByText('Récapitulatif')).toBeVisible()
 
   await page.goto('/historique')
