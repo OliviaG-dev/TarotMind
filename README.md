@@ -203,6 +203,8 @@ Pipeline **GitHub Actions** (`.github/workflows/ci.yml`) declenche sur chaque pu
 
 Badge CI en haut de page : statut du dernier run sur `master`.
 
+Sur `master`, le check **CI** doit etre vert avant merge (regle de protection de branche).
+
 **Pre-commit local (Husky)** : a chaque commit, ESLint corrige les fichiers stages (`lint-staged`) puis lance `npm test`. Les E2E restent executes uniquement en CI.
 
 **Dependabot** : mises a jour npm hebdomadaires (PRs groupees prod / dev) via `.github/dependabot.yml`.
