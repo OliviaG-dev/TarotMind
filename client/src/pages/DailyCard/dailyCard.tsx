@@ -49,17 +49,8 @@ function FeatureCardDeco({ theme }: { theme: FeatureTheme }) {
         )}
       </span>
       <span className="daily-card__deco-extra" aria-hidden="true">
-        {(theme === 'purple' || theme === 'pink' || theme === 'green') && (
-          <DecoSoftCloud className="daily-card__deco-cloud daily-card__deco-cloud--bl" />
-        )}
-        {(theme === 'purple' || theme === 'green') && (
-          <DecoSoftCloud className="daily-card__deco-cloud daily-card__deco-cloud--br" />
-        )}
         {theme === 'pink' && (
           <DecoSoftCloud className="daily-card__deco-cloud daily-card__deco-cloud--tr" />
-        )}
-        {(theme === 'purple' || theme === 'green') && (
-          <DecoSoftCrescentMoon className="daily-card__deco-moon" />
         )}
         <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--a" />
         <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--b" />

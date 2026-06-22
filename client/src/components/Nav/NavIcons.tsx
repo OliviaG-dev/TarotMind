@@ -148,13 +148,15 @@ export function NavIconBook({ className }: IconProps) {
 export function NavIconChart({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M5 19V11M10 19V7M15 19v-5M20 19V5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
+      <g transform="translate(0, -1)">
+        <path
+          d="M5 19V11M10 19V7M15 19v-5M20 19V5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+      </g>
     </svg>
   );
 }
@@ -209,6 +211,24 @@ export function SparkleIcon({ className }: IconProps) {
   return <DecoSoftSparkle className={className} />;
 }
 
+export function FeatureIconSparkle({ className }: IconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <g transform="translate(0, 1.5)">
+        <path
+          d="M12 2.2 13.4 9.1 20.3 10.5 13.4 11.9 12 18.8 10.6 11.9 3.7 10.5 10.6 9.1 12 2.2Z"
+          fill="currentColor"
+        />
+      </g>
+    </svg>
+  );
+}
+
 export function ArrowRightIcon({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
@@ -256,6 +276,7 @@ export function FeatureIconCardsStar({ className }: IconProps) {
         />
         {/* Premier plan : masque les traits intérieurs des cartes derrière */}
         <rect
+          className="feature-icon-cards-star__face"
           x="7"
           y="3"
           width="10"
@@ -349,19 +370,21 @@ export function FeatureIconQuestionBubble({ className }: IconProps) {
       fill="none"
       aria-hidden="true"
     >
-      <path
-        d="M12 3C6.48 3 2 6.81 2 11.5C2 13.74 3.02 15.78 4.72 17.31L4 21L7.54 19.11C8.91 19.68 10.42 20 12 20C17.52 20 22 16.19 22 11.5C22 6.81 17.52 3 12 3Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9.8 10C9.8 8.5 11 7.4 12.5 7.4C14 7.4 15.2 8.5 15.2 10C15.2 11 14.6 11.7 13.8 12.3C13 12.9 12.5 13.4 12.5 14.3"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <circle cx="12.5" cy="16.9" r="0.85" fill="currentColor" />
+      <g transform="translate(0, -0.5)">
+        <path
+          d="M12 3C6.48 3 2 6.81 2 11.5C2 13.74 3.02 15.78 4.72 17.31L4 21L7.54 19.11C8.91 19.68 10.42 20 12 20C17.52 20 22 16.19 22 11.5C22 6.81 17.52 3 12 3Z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M9.8 10C9.8 8.5 11 7.4 12.5 7.4C14 7.4 15.2 8.5 15.2 10C15.2 11 14.6 11.7 13.8 12.3C13 12.9 12.5 13.4 12.5 14.3"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <circle cx="12.5" cy="16.9" r="0.85" fill="currentColor" />
+      </g>
     </svg>
   );
 }

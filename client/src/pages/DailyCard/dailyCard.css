@@ -98,7 +98,6 @@
     opacity 0.32s ease;
 }
 
-.daily-card__reveal .daily-card__deco-moon,
 .daily-card__reveal .daily-card__deco-spark--right-mid-sm,
 .daily-card__reveal .home__feature-deco-soft-spark,
 .daily-card__reveal .home__feature-deco-spark {
@@ -128,10 +127,6 @@
   transform: translateY(-1px);
 }
 
-.daily-card__reveal:hover .daily-card__deco-moon {
-  transform: translateY(-2px);
-}
-
 .daily-card__reveal:hover .daily-card__deco-spark--right-mid-sm,
 .daily-card__reveal:hover .home__feature-deco-soft-spark--a,
 .daily-card__reveal:hover .home__feature-deco-spark--pink-a,
@@ -145,7 +140,6 @@
   .daily-card__message,
   .daily-card__card-face::before,
   .daily-card__card-face::after,
-  .daily-card__reveal .daily-card__deco-moon,
   .daily-card__reveal .daily-card__deco-spark--right-mid-sm,
   .daily-card__reveal .home__feature-deco-soft-spark,
   .daily-card__reveal .home__feature-deco-spark {
@@ -156,7 +150,6 @@
   .daily-card__reveal:hover .daily-card__card-face,
   .daily-card__reveal:hover .daily-card__message,
   .daily-card__reveal:hover .daily-card__card-face::after,
-  .daily-card__reveal:hover .daily-card__deco-moon,
   .daily-card__reveal:hover .daily-card__deco-spark--right-mid-sm,
   .daily-card__reveal:hover .home__feature-deco-soft-spark--a,
   .daily-card__reveal:hover .home__feature-deco-spark--pink-a,
@@ -204,17 +197,6 @@
   opacity: 0.55;
 }
 
-.daily-card__deco-cloud--bl {
-  bottom: 0;
-  left: -6%;
-}
-
-.daily-card__deco-cloud--br {
-  bottom: 0;
-  right: -8%;
-  transform: scaleX(-1);
-}
-
 .daily-card__deco-cloud--tr {
   top: 1%;
   left: -5%;
@@ -225,43 +207,8 @@
   transform: none;
 }
 
-.daily-card__reveal.home__feature-card--purple .daily-card__deco-cloud {
-  color: #ece4f6;
-}
-
 .daily-card__reveal.home__feature-card--pink .daily-card__deco-cloud {
   color: #f5dde4;
-}
-
-.daily-card__reveal.home__feature-card--green .daily-card__deco-cloud {
-  color: #c8ebe0;
-}
-
-.daily-card__deco-moon {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  opacity: 0.52;
-}
-
-.daily-card__reveal.home__feature-card--purple .daily-card__deco-moon {
-  top: auto;
-  bottom: 15%;
-  right: 12%;
-  left: auto;
-  width: 34px;
-  height: 34px;
-  color: #e8dff5;
-}
-
-.daily-card__reveal.home__feature-card--green .daily-card__deco-moon {
-  top: auto;
-  bottom: 12%;
-  left: 8%;
-  right: auto;
-  width: 34px;
-  height: 34px;
-  color: #d4efe6;
 }
 
 .daily-card__deco-spark {
@@ -377,7 +324,7 @@
   left: auto;
 }
 
-/* Violet — nuage haut-gauche, étoiles haut-droite, lune bas-droite */
+/* Violet — nuage haut-gauche, étoiles haut-droite */
 .daily-card__reveal.home__feature-card--purple .home__feature-deco-soft-spark--a {
   top: 4%;
   right: 4%;
@@ -419,7 +366,7 @@
   right: 6%;
 }
 
-/* Rose — lune haut-droite, nuage haut-gauche, nuage bas-gauche */
+/* Rose — lune haut-droite, nuage haut-gauche */
 .daily-card__reveal.home__feature-card--pink .home__feature-deco-moon {
   top: 5%;
   right: 6%;
@@ -468,7 +415,7 @@
   right: 4%;
 }
 
-/* Vert — nuages haut, lune bas-gauche, étoiles entre les zones */
+/* Vert — nuages haut, étoiles entre les zones */
 .daily-card__reveal.home__feature-card--green .home__feature-deco-spark--green-left-cloud {
   top: 20%;
   left: 5%;
@@ -518,27 +465,9 @@
   display: block;
 }
 
-:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-cloud {
-  color: rgba(195, 180, 225, 0.34);
-  opacity: 1;
-}
-
 :root[data-theme='dark'] .daily-card__reveal.home__feature-card--pink .daily-card__deco-cloud {
   color: rgba(205, 135, 158, 0.34);
   opacity: 1;
-}
-
-:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-cloud {
-  color: rgba(120, 200, 180, 0.34);
-  opacity: 1;
-}
-
-:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-moon {
-  color: rgba(195, 180, 225, 0.38);
-}
-
-:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-moon {
-  color: rgba(138, 205, 188, 0.4);
 }
 
 :root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-spark {
