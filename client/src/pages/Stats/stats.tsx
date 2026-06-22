@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import type { ComponentType } from 'react'
+import type { ComponentType, CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import {
   DecoSoftCloud,
@@ -11,8 +11,13 @@ import {
   NavIconChart,
   NavIconClock,
 } from '../../components/Nav/NavIcons'
-import { SPREADS } from '../../data/spreads'
 import { useHistory } from '../../context/HistoryContext'
+import {
+  STATS_PERIOD_OPTIONS,
+  computeStats,
+  filterDrawsByPeriod,
+  type StatsPeriod,
+} from '../../lib/stats'
 import type { DrawRecord } from '../../types/tarot'
 import '../Home/home.css'
 import './stats.css'
@@ -35,60 +40,24 @@ const KPI_CONFIG: {
   { id: 'weeksActive', label: 'Semaines actives', theme: 'purple', Icon: NavIconClock },
 ]
 
-function computeStats(draws: DrawRecord[]) {
-  const total = draws.length
-  const questions = draws.filter((d) => d.question).length
-  const favorites = draws.filter((d) => d.favorite).length
-
-  const cardCounts = new Map<string, number>()
-  for (const d of draws) {
-    for (const c of d.cards) {
-      cardCounts.set(c.card.nameFr, (cardCounts.get(c.card.nameFr) ?? 0) + 1)
-    }
-  }
-  const topCards = [...cardCounts.entries()].sort((a, b) => b[1] - a[1])
-
-  const spreadCounts = new Map<string, number>()
-  for (const d of draws) {
-    spreadCounts.set(d.spreadLabel, (spreadCounts.get(d.spreadLabel) ?? 0) + 1)
-  }
-  const spreads = SPREADS.map((spread) => ({
-    label: spread.label,
-    count: spreadCounts.get(spread.label) ?? 0,
-    icon: spread.icon,
-  }))
-  for (const [label, count] of spreadCounts) {
-    if (!SPREADS.some((spread) => spread.label === label)) {
-      spreads.push({ label, count })
-    }
-  }
-
-  const weekMap = new Map<string, number>()
-  for (const d of draws) {
-    const date = new Date(d.createdAt)
-    const weekStart = new Date(date)
-    weekStart.setDate(date.getDate() - date.getDay())
-    const key = weekStart.toISOString().slice(0, 10)
-    weekMap.set(key, (weekMap.get(key) ?? 0) + 1)
-  }
-  const weeksActive = weekMap.size
-
-  return { total, questions, favorites, topCards, spreads, weeksActive }
-}
-
 function StatsCardDeco({
   theme,
   variant = 'default',
 }: {
   theme: FeatureTheme
-  variant?: 'default' | 'cards-section' | 'spreads-section'
+  variant?: 'default' | 'cards-section' | 'spreads-section' | 'tones-section' | 'activity-section'
 }) {
   return (
     <span className="home__feature-deco stats-page__deco" aria-hidden="true">
-      {(theme === 'purple' || theme === 'green') && variant !== 'cards-section' && (
-        <DecoSoftCloud className="home__feature-deco-soft-cloud" />
-      )}
-      {theme === 'green' && (
+      {(theme === 'purple' || theme === 'green') &&
+        variant !== 'cards-section' &&
+        variant !== 'activity-section' &&
+        variant !== 'tones-section' && (
+          <DecoSoftCloud className="home__feature-deco-soft-cloud" />
+        )}
+      {theme === 'green' &&
+        variant !== 'activity-section' &&
+        variant !== 'tones-section' && (
         <>
           <DecoSoftCloud className="home__feature-deco-soft-cloud home__feature-deco-soft-cloud--right" />
           <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-cloud" />
@@ -123,6 +92,28 @@ function StatsCardDeco({
           <DecoSoftSparkle className="stats-page__section-pink-spark stats-page__section-pink-spark--f" />
         </>
       )}
+      {theme === 'green' && variant === 'tones-section' && (
+        <>
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--a" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--b" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--c" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--d" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--e" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--f" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--l-a" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--l-b" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--l-c" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--l-d" />
+          <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--l-e" />
+        </>
+      )}
+      {theme === 'green' && variant === 'activity-section' && (
+        <>
+          <DecoSoftSparkle className="stats-page__section-green-spark stats-page__section-green-spark--a" />
+          <DecoSoftSparkle className="stats-page__section-green-spark stats-page__section-green-spark--b" />
+          <DecoSoftSparkle className="stats-page__section-green-spark stats-page__section-green-spark--c" />
+        </>
+      )}
       {theme === 'pink' && variant === 'default' && (
         <>
           <DecoSoftCrescentMoon className="home__feature-deco-moon" />
@@ -134,7 +125,22 @@ function StatsCardDeco({
   )
 }
 
-function StatsIntro() {
+function StatsIntro({
+  period,
+  onPeriodChange,
+  filteredCount,
+  totalCount,
+}: {
+  period: StatsPeriod
+  onPeriodChange: (period: StatsPeriod) => void
+  filteredCount?: number
+  totalCount?: number
+}) {
+  const periodHint =
+    period !== 'all' && filteredCount !== undefined && totalCount !== undefined
+      ? `${filteredCount} tirage${filteredCount > 1 ? 's' : ''} sur ${totalCount} au total.`
+      : null
+
   return (
     <header className="stats-page__intro">
       <div className="page-heading stats-page__heading">
@@ -144,19 +150,42 @@ function StatsIntro() {
         <h1 className="stats-page__title">Statistiques</h1>
       </div>
       <p className="stats-page__subtitle">
-        Un aperçu doux et clair de ton parcours avec le tarot.
+        Un aperçu doux et clair de ton parcours avec le tarot, basé sur ton
+        historique local.
       </p>
+      <div
+        className="stats-page__period"
+        role="group"
+        aria-label="Période affichée"
+      >
+        {STATS_PERIOD_OPTIONS.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            className={`stats-page__period-btn${period === option.value ? ' stats-page__period-btn--on' : ''}`}
+            aria-pressed={period === option.value}
+            onClick={() => onPeriodChange(option.value)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+      {periodHint && <p className="stats-page__period-hint">{periodHint}</p>}
     </header>
   )
 }
 
-export default function StatsPage() {
-  const { draws } = useHistory()
-  const stats = useMemo(() => computeStats(draws), [draws])
+function StatsContent({
+  draws,
+  period,
+}: {
+  draws: DrawRecord[]
+  period: StatsPeriod
+}) {
+  const stats = useMemo(() => computeStats(draws, period), [draws, period])
   const topCardsLength = stats.topCards.length
   const [pageState, setPageState] = useState({ anchor: topCardsLength, page: 0 })
 
-  const maxCardCount = stats.topCards.length > 0 ? stats.topCards[0]![1] : 1
   const totalCardPages = Math.max(
     1,
     Math.ceil(stats.topCards.length / TOP_CARDS_PAGE_SIZE),
@@ -182,33 +211,12 @@ export default function StatsPage() {
     cardsPage * TOP_CARDS_PAGE_SIZE + TOP_CARDS_PAGE_SIZE,
   )
 
-  if (draws.length === 0) {
-    return (
-      <div className="stats-page">
-        <StatsIntro />
-        <article className="stats-page__empty-panel home__feature-card home__feature-card--purple">
-          <StatsCardDeco theme="purple" />
-          <span className="home__feature-icon-wrap">
-            <NavIconChart className="home__feature-icon" />
-          </span>
-          <p className="stats-page__empty">
-            Aucun tirage enregistré. Fais ton premier tirage pour voir tes stats
-            apparaître ici.
-          </p>
-          <div className="stats-page__empty-cta cta-nav">
-            <Link to="/tirage" className="cta-nav__link">
-              Faire un tirage &rarr;
-            </Link>
-          </div>
-        </article>
-      </div>
-    )
-  }
+  const activityMax = Math.max(1, ...stats.activity.map((bucket) => bucket.count))
+  const activityTitle =
+    period === '7d' ? 'Activité des 7 derniers jours' : 'Activité par semaine'
 
   return (
-    <div className="stats-page">
-      <StatsIntro />
-
+    <>
       <div className="stats-page__grid">
         {KPI_CONFIG.map(({ id, label, theme, Icon }, index) => (
           <article
@@ -229,6 +237,27 @@ export default function StatsPage() {
       </div>
 
       <section
+        className="stats-page__section home__feature-card home__feature-card--green"
+        aria-labelledby="stats-tones-h"
+      >
+        <StatsCardDeco theme="green" variant="tones-section" />
+        <h2 id="stats-tones-h" className="stats-page__h2">
+          Répartition par ton
+        </h2>
+        <ul className="stats-page__tone-grid">
+          {stats.tones.map((toneStat) => (
+            <li
+              key={toneStat.tone}
+              className={`stats-page__tone-item${toneStat.count === 0 ? ' stats-page__tone-item--empty' : ''}`}
+            >
+              <span className="stats-page__tone-count">{toneStat.count}</span>
+              <span className="stats-page__tone-name">{toneStat.label}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section
         className="stats-page__section home__feature-card home__feature-card--purple"
         aria-labelledby="stats-cards-h"
       >
@@ -236,19 +265,35 @@ export default function StatsPage() {
         <h2 id="stats-cards-h" className="stats-page__h2">
           Cartes les plus fréquentes
         </h2>
-        <ul className="stats-page__bar-list">
-          {visibleTopCards.map(([name, count]) => (
-            <li key={name} className="stats-page__bar-item">
-              <span className="stats-page__bar-label">{name}</span>
-              <div className="stats-page__bar-track">
-                <div
-                  className="stats-page__bar-fill"
-                  style={{ width: `${(count / maxCardCount) * 100}%` }}
-                />
-              </div>
-              <span className="stats-page__bar-count">{count}</span>
-            </li>
-          ))}
+        <ul className="stats-page__top-list">
+          {visibleTopCards.map((cardStat, index) => {
+            const rank = cardsPage * TOP_CARDS_PAGE_SIZE + index + 1
+
+            return (
+              <li
+                key={cardStat.cardId}
+                className={`stats-page__top-item${rank === 1 ? ' stats-page__top-item--lead' : ''}`}
+                style={{ '--top-index': index } as CSSProperties}
+              >
+                <span className="stats-page__top-rank" aria-hidden="true">
+                  {String(rank).padStart(2, '0')}
+                </span>
+                <Link
+                  to={`/encyclopedie?carte=${encodeURIComponent(cardStat.cardId)}`}
+                  className="stats-page__top-name stats-page__top-link"
+                >
+                  {cardStat.nameFr}
+                </Link>
+                <span
+                  className="stats-page__top-count"
+                  aria-label={`${cardStat.count} apparition${cardStat.count > 1 ? 's' : ''}`}
+                >
+                  <span className="stats-page__top-count-value">{cardStat.count}</span>
+                  <span className="stats-page__top-count-times">×</span>
+                </span>
+              </li>
+            )
+          })}
         </ul>
         {stats.topCards.length > TOP_CARDS_PAGE_SIZE && (
           <nav
@@ -287,30 +332,147 @@ export default function StatsPage() {
           Répartition par type de tirage
         </h2>
         <ul className="stats-page__spread-grid">
-          {stats.spreads.map((spread) => (
-            <li
-              key={spread.label}
-              className={`stats-page__spread-item${spread.count === 0 ? ' stats-page__spread-item--empty' : ''}`}
-            >
-              {spread.icon && (
-                <span className="stats-page__spread-icon-wrap">
-                  <img
-                    src={spread.icon}
-                    alt=""
-                    className="stats-page__spread-icon"
-                    width={28}
-                    height={28}
-                    decoding="async"
-                    aria-hidden
-                  />
-                </span>
-              )}
-              <span className="stats-page__spread-count">{spread.count}</span>
-              <span className="stats-page__spread-name">{spread.label}</span>
-            </li>
-          ))}
+          {stats.spreads.map((spread) => {
+            const content = (
+              <>
+                {spread.icon && (
+                  <span className="stats-page__spread-icon-wrap">
+                    <img
+                      src={spread.icon}
+                      alt=""
+                      className="stats-page__spread-icon"
+                      width={28}
+                      height={28}
+                      decoding="async"
+                      aria-hidden
+                    />
+                  </span>
+                )}
+                <span className="stats-page__spread-count">{spread.count}</span>
+                <span className="stats-page__spread-name">{spread.label}</span>
+              </>
+            )
+
+            return (
+              <li
+                key={spread.label}
+                className={`stats-page__spread-item${spread.count === 0 ? ' stats-page__spread-item--empty' : ''}`}
+              >
+                {spread.spreadId && spread.count > 0 ? (
+                  <Link
+                    to={`/historique?spread=${encodeURIComponent(spread.spreadId)}`}
+                    className="stats-page__spread-link"
+                  >
+                    {content}
+                  </Link>
+                ) : (
+                  content
+                )}
+              </li>
+            )
+          })}
         </ul>
       </section>
+
+      <section
+        className="stats-page__section home__feature-card home__feature-card--green"
+        aria-labelledby="stats-activity-h"
+      >
+        <StatsCardDeco theme="green" variant="activity-section" />
+        <h2 id="stats-activity-h" className="stats-page__h2">
+          {activityTitle}
+        </h2>
+        <ul className="stats-page__activity">
+          {stats.activity.map((bucket) => {
+            const heightPct = Math.round((bucket.count / activityMax) * 100)
+
+            return (
+              <li key={bucket.key} className="stats-page__activity-item">
+                <div className="stats-page__activity-bar-wrap" aria-hidden="true">
+                  <div
+                    className="stats-page__activity-bar"
+                    style={{ height: `${Math.max(heightPct, bucket.count > 0 ? 8 : 0)}%` }}
+                  />
+                </div>
+                <span className="stats-page__activity-count">{bucket.count}</span>
+                <span className="stats-page__activity-label">{bucket.label}</span>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
+    </>
+  )
+}
+
+export default function StatsPage() {
+  const { draws } = useHistory()
+  const [period, setPeriod] = useState<StatsPeriod>('all')
+  const filteredDraws = useMemo(
+    () => filterDrawsByPeriod(draws, period),
+    [draws, period],
+  )
+
+  const periodLabel =
+    STATS_PERIOD_OPTIONS.find((option) => option.value === period)?.label ?? ''
+
+  if (draws.length === 0) {
+    return (
+      <div className="stats-page">
+        <StatsIntro period={period} onPeriodChange={setPeriod} />
+        <article className="stats-page__empty-panel home__feature-card home__feature-card--purple">
+          <StatsCardDeco theme="purple" />
+          <span className="home__feature-icon-wrap">
+            <NavIconChart className="home__feature-icon" />
+          </span>
+          <p className="stats-page__empty">
+            Aucun tirage enregistré. Fais ton premier tirage pour voir tes stats
+            apparaître ici.
+          </p>
+          <div className="stats-page__empty-cta cta-nav">
+            <Link to="/tirage" className="cta-nav__link">
+              Faire un tirage &rarr;
+            </Link>
+          </div>
+        </article>
+      </div>
+    )
+  }
+
+  if (filteredDraws.length === 0) {
+    return (
+      <div className="stats-page">
+        <StatsIntro
+          period={period}
+          onPeriodChange={setPeriod}
+          filteredCount={0}
+          totalCount={draws.length}
+        />
+        <article className="stats-page__empty-panel home__feature-card home__feature-card--purple">
+          <StatsCardDeco theme="purple" />
+          <p className="stats-page__empty">
+            Aucun tirage sur la période « {periodLabel} ». Essaie une autre
+            période ou fais un nouveau tirage.
+          </p>
+          <div className="stats-page__empty-cta cta-nav">
+            <Link to="/tirage" className="cta-nav__link">
+              Faire un tirage &rarr;
+            </Link>
+          </div>
+        </article>
+      </div>
+    )
+  }
+
+  return (
+    <div className="stats-page">
+      <StatsIntro
+        period={period}
+        onPeriodChange={setPeriod}
+        filteredCount={filteredDraws.length}
+        totalCount={draws.length}
+      />
+      <StatsContent draws={filteredDraws} period={period} />
     </div>
   )
 }

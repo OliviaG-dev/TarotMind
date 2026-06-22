@@ -276,6 +276,7 @@ export function FeatureIconCardsStar({ className }: IconProps) {
         />
         {/* Premier plan : masque les traits intérieurs des cartes derrière */}
         <rect
+          className="feature-icon-cards-star__face"
           x="7"
           y="3"
           width="10"

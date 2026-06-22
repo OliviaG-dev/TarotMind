@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { MAJOR_ARCANA, MINOR_ARCANA, isMajorArcanum } from '../../data/tarotDeck'
 import type { TarotCard } from '../../types/tarot'
 import './encyclopedia.css'
@@ -47,14 +48,35 @@ function getMeaning(card: TarotCard): { upright: string; reversed: string } | nu
 }
 
 export default function EncyclopediaPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [filter, setFilter] = useState<Filter>('all')
   const [search, setSearch] = useState('')
   const [expandedId, setExpandedId] = useState<string | null>(null)
 
+  const deepLinkCardId = useMemo(() => {
+    const cardId = searchParams.get('carte')
+    if (!cardId || !ALL_CARDS.some((card) => card.id === cardId)) return null
+    return cardId
+  }, [searchParams])
+
+  const activeExpandedId = expandedId ?? deepLinkCardId
+
+  useEffect(() => {
+    if (!deepLinkCardId) return
+    requestAnimationFrame(() => {
+      document
+        .getElementById(`encyclopedia-card-${deepLinkCardId}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
+  }, [deepLinkCardId])
+
   const filtered = useMemo(() => {
     let cards = ALL_CARDS
-    if (filter === 'major') cards = MAJOR_ARCANA
-    else if (filter !== 'all') cards = MINOR_ARCANA.filter((c) => c.id.includes(filter))
+    const effectiveFilter = deepLinkCardId ? 'all' : filter
+    if (effectiveFilter === 'major') cards = MAJOR_ARCANA
+    else if (effectiveFilter !== 'all') {
+      cards = MINOR_ARCANA.filter((c) => c.id.includes(effectiveFilter))
+    }
 
     if (search.trim()) {
       const q = search.trim().toLowerCase()
@@ -65,7 +87,7 @@ export default function EncyclopediaPage() {
       )
     }
     return cards
-  }, [filter, search])
+  }, [filter, search, deepLinkCardId])
 
   return (
     <div className="encyclopedia">
@@ -104,13 +126,18 @@ export default function EncyclopediaPage() {
       ) : (
         <ul className="encyclopedia__grid">
           {filtered.map((card) => {
-            const expanded = expandedId === card.id
+            const expanded = activeExpandedId === card.id
             const meaning = getMeaning(card)
             return (
               <li
                 key={card.id}
+                id={`encyclopedia-card-${card.id}`}
                 className={`encyclopedia__card ${expanded ? 'encyclopedia__card--expanded' : ''}`}
-                onClick={() => setExpandedId(expanded ? null : card.id)}
+                onClick={() => {
+                  const nextExpanded = expanded ? null : card.id
+                  setExpandedId(nextExpanded)
+                  if (deepLinkCardId) setSearchParams({})
+                }}
               >
                 <div className="encyclopedia__card-header">
                   <span className="encyclopedia__card-name">{card.nameFr}</span>

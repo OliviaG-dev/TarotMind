@@ -1,11 +1,12 @@
 import { useRef, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { InterpretationText } from '../../components/InterpretationText'
 import { useHistory } from '../../context/HistoryContext'
 import { useProfile } from '../../context/ProfileContext'
+import { getSpread } from '../../data/spreads'
 import { requestHistoryInsights } from '../../lib/historyInsightsApi'
 import { buildHistoryInsights } from '../../lib/historyInsights'
-import type { DrawRecord, Tone } from '../../types/tarot'
+import type { DrawRecord, SpreadId, Tone } from '../../types/tarot'
 import './history.css'
 
 function toneLabel(t: Tone) {
@@ -63,6 +64,13 @@ function NoteForm({ drawId, currentNote, onSave }: {
 export default function HistoryPage() {
   const { profile } = useProfile()
   const { draws, clearHistory, toggleFavorite, updateNote } = useHistory()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const spreadFilter = searchParams.get('spread') as SpreadId | null
+  const spreadFilterDef = spreadFilter ? getSpread(spreadFilter) : undefined
+  const timelineDraws = useMemo(() => {
+    if (!spreadFilterDef) return draws
+    return draws.filter((draw) => draw.spreadId === spreadFilterDef.id)
+  }, [draws, spreadFilterDef])
   const [compareA, setCompareA] = useState<string>('')
   const [compareB, setCompareB] = useState<string>('')
   const [expandedId, setExpandedId] = useState<string | null>(null)
@@ -261,11 +269,28 @@ export default function HistoryPage() {
             </button>
           )}
         </div>
+        {spreadFilterDef && (
+          <p className="history-page__filter-banner">
+            Filtre actif : {spreadFilterDef.label}
+            {' · '}
+            <button
+              type="button"
+              className="history-page__filter-clear"
+              onClick={() => setSearchParams({})}
+            >
+              Afficher tout
+            </button>
+          </p>
+        )}
         {draws.length === 0 ? (
           <p className="history-page__empty">Aucun tirage enregistré.</p>
+        ) : timelineDraws.length === 0 ? (
+          <p className="history-page__empty">
+            Aucun tirage de type « {spreadFilterDef?.label ?? 'sélectionné'} ».
+          </p>
         ) : (
           <ol className="history-page__timeline">
-            {draws.map((d) => (
+            {timelineDraws.map((d) => (
               <li key={d.id} className="history-page__event">
                 <button
                   type="button"
