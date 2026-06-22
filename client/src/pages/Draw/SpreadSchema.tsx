@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { getCardById, isMajorArcanum } from '../../data/tarotDeck'
 import { SPREAD_LAYOUT } from '../../data/spreadLayouts'
 import type { SpreadDefinition, SpreadId, TarotCard } from '../../types/tarot'
@@ -5,45 +6,97 @@ import './SpreadSchema.css'
 
 export type SlotState = { cardId: string | null; reversed: boolean }
 
+type CardSuit = 'major' | 'coupes' | 'batons' | 'epees' | 'deniers'
+
+const MINOR_SUIT_ORDER: Exclude<CardSuit, 'major'>[] = [
+  'batons',
+  'coupes',
+  'epees',
+  'deniers',
+]
+
+const SUIT_LABELS: Record<Exclude<CardSuit, 'major'>, string> = {
+  batons: 'Bâtons',
+  coupes: 'Coupes',
+  epees: 'Épées',
+  deniers: 'Deniers',
+}
+
+function getCardSuit(card: TarotCard): CardSuit {
+  if (isMajorArcanum(card)) return 'major'
+  const match = card.id.match(/^minor-(coupes|batons|epees|deniers)-/)
+  if (match) return match[1] as Exclude<CardSuit, 'major'>
+  if (card.nameFr.includes('Bâton')) return 'batons'
+  if (card.nameFr.includes('Coupe')) return 'coupes'
+  if (card.nameFr.includes('Épée') || card.nameFr.includes('Epée')) return 'epees'
+  if (card.nameFr.includes('Denier')) return 'deniers'
+  return 'major'
+}
+
+function CardOption({ card }: { card: TarotCard }) {
+  const suit = getCardSuit(card)
+  return (
+    <option
+      key={card.id}
+      value={card.id}
+      className={`spread-schema__select-option spread-schema__select-option--${suit}`}
+    >
+      {card.nameFr}
+    </option>
+  )
+}
+
+function SuitGroup({
+  suit,
+  label,
+  cards,
+}: {
+  suit: CardSuit
+  label: string
+  cards: TarotCard[]
+}) {
+  if (cards.length === 0) return null
+  return (
+    <Fragment>
+      <option
+        disabled
+        value={`__heading-${suit}`}
+        className={`spread-schema__select-group spread-schema__select-group--${suit}`}
+      >
+        {label}
+      </option>
+      {cards.map((c) => (
+        <CardOption key={c.id} card={c} />
+      ))}
+    </Fragment>
+  )
+}
+
+function CardOptions({ cards }: { cards: TarotCard[] }) {
+  const majors = cards.filter((c) => isMajorArcanum(c))
+  const minors = cards.filter((c) => !isMajorArcanum(c))
+
+  return (
+    <>
+      <SuitGroup suit="major" label="Arcanes majeurs" cards={majors} />
+      {MINOR_SUIT_ORDER.map((suit) => (
+        <SuitGroup
+          key={suit}
+          suit={suit}
+          label={SUIT_LABELS[suit]}
+          cards={minors.filter((c) => getCardSuit(c) === suit)}
+        />
+      ))}
+    </>
+  )
+}
+
 type Props = {
   spreadId: SpreadId
   spread: SpreadDefinition
   deckCards: TarotCard[]
   slots: Record<string, SlotState>
   onSlotChange: (positionKey: string, next: SlotState) => void
-}
-
-function CardOptions({ cards }: { cards: TarotCard[] }) {
-  const majors = cards.filter((c) => isMajorArcanum(c))
-  const minors = cards.filter((c) => !isMajorArcanum(c))
-  const both = majors.length > 0 && minors.length > 0
-
-  if (both) {
-    return (
-      <>
-        <optgroup label="Arcanes majeurs">
-          {majors.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.nameFr}
-            </option>
-          ))}
-        </optgroup>
-        <optgroup label="Arcanes mineurs">
-          {minors.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.nameFr}
-            </option>
-          ))}
-        </optgroup>
-      </>
-    )
-  }
-
-  return cards.map((c) => (
-    <option key={c.id} value={c.id}>
-      {c.nameFr}
-    </option>
-  ))
 }
 
 function SchemaSlot({
@@ -60,12 +113,13 @@ function SchemaSlot({
   onChange: (next: SlotState) => void
 }) {
   const card = state.cardId ? getCardById(state.cardId) : undefined
+  const suitClass = card ? `spread-schema__face--${getCardSuit(card)}` : ''
 
   return (
     <div className="spread-schema__slot">
       <span className="spread-schema__pos">{positionLabel}</span>
       <div
-        className={`spread-schema__face ${state.reversed ? 'spread-schema__face--rev' : ''}`}
+        className={`spread-schema__face ${suitClass} ${state.reversed ? 'spread-schema__face--rev' : ''}`.trim()}
         aria-hidden
       >
         {card ? (

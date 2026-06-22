@@ -1,73 +1,73 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import type {
   DeckPreference,
   Gender,
   GoalId,
   RelationshipStatus,
   WorkSituation,
-} from '../../types/tarot'
-import { useProfile } from '../../context/ProfileContext'
-import './profile.css'
+} from "../../types/tarot";
+import { useProfile } from "../../context/ProfileContext";
+import "./profile.css";
 
 const RELATIONSHIP: { value: RelationshipStatus; label: string }[] = [
-  { value: 'single', label: 'Célibataire' },
-  { value: 'couple', label: 'En couple' },
-  { value: 'complicated', label: 'Situation complexe' },
-  { value: 'separation', label: 'En séparation' },
-  { value: 'prefer_not', label: 'Je préfère ne pas préciser' },
-]
+  { value: "single", label: "Célibataire" },
+  { value: "couple", label: "En couple" },
+  { value: "complicated", label: "Situation complexe" },
+  { value: "separation", label: "En séparation" },
+  { value: "prefer_not", label: "Je préfère ne pas préciser" },
+];
 
 const GENDER: { value: Gender; label: string }[] = [
-  { value: 'female', label: 'Femme' },
-  { value: 'male', label: 'Homme' },
-  { value: 'non_binary', label: 'Non binaire' },
-  { value: 'other', label: 'Autre' },
-  { value: 'prefer_not', label: 'Je préfère ne pas préciser' },
-]
+  { value: "female", label: "Femme" },
+  { value: "male", label: "Homme" },
+  { value: "non_binary", label: "Non binaire" },
+  { value: "other", label: "Autre" },
+  { value: "prefer_not", label: "Je préfère ne pas préciser" },
+];
 
 const WORK: { value: WorkSituation; label: string }[] = [
-  { value: 'student', label: 'Étudiant·e' },
-  { value: 'employed', label: 'Salarié·e' },
-  { value: 'freelance', label: 'Indépendant·e' },
-  { value: 'seeking', label: 'En recherche d’emploi' },
-  { value: 'retired', label: 'Retraité·e' },
-  { value: 'other', label: 'Autre / en transition' },
-]
+  { value: "student", label: "Étudiant·e" },
+  { value: "employed", label: "Salarié·e" },
+  { value: "freelance", label: "Indépendant·e" },
+  { value: "seeking", label: "En recherche d’emploi" },
+  { value: "retired", label: "Retraité·e" },
+  { value: "other", label: "Autre / en transition" },
+];
 
 const GOALS: { id: GoalId; label: string; icon: string }[] = [
-  { id: 'love', label: 'Amour', icon: '/icons/amour.png' },
-  { id: 'money', label: 'Argent', icon: '/icons/argent.png' },
-  { id: 'wellbeing', label: 'Bien-être', icon: '/icons/bien-etre.png' },
-]
+  { id: "love", label: "Amour", icon: "/icons/amour.png" },
+  { id: "money", label: "Argent", icon: "/icons/argent.png" },
+  { id: "wellbeing", label: "Bien-être", icon: "/icons/bien-etre.png" },
+];
 
 const DECK: { value: DeckPreference; label: string; hint: string }[] = [
   {
-    value: 'majors_only',
-    label: 'Arcanes majeurs seulement',
-    hint: 'Les 22 lames du chemin initiatique (Mat → Monde).',
+    value: "majors_only",
+    label: "Arcanes majeurs seulement",
+    hint: "Les 22 lames du chemin initiatique (Mat → Monde).",
   },
   {
-    value: 'majors_and_minors',
-    label: 'Majeurs + mineurs',
-    hint: 'Jeu complet : grands archétypes et cartes du quotidien.',
+    value: "majors_and_minors",
+    label: "Majeurs + mineurs",
+    hint: "Jeu complet : grands archétypes et cartes du quotidien.",
   },
   {
-    value: 'minors_only',
-    label: 'Arcanes mineurs seulement',
-    hint: 'Coupes, Bâtons, Épées, Deniers : situations concrètes.',
+    value: "minors_only",
+    label: "Arcanes mineurs seulement",
+    hint: "Coupes, Bâtons, Épées, Deniers : situations concrètes.",
   },
-]
+];
 
 export default function ProfilePage() {
-  const { profile, updateProfile } = useProfile()
+  const { profile, updateProfile } = useProfile();
 
   function toggleGoal(id: GoalId) {
-    const has = profile.goals.includes(id)
+    const has = profile.goals.includes(id);
     updateProfile({
       goals: has
         ? profile.goals.filter((g) => g !== id)
         : [...profile.goals, id],
-    })
+    });
   }
 
   return (
@@ -78,23 +78,20 @@ export default function ProfilePage() {
             src="/img/profil.png"
             alt=""
             className="page-heading__icon"
-            width={56}
-            height={56}
+            width={80}
+            height={80}
             decoding="async"
           />
           <h1 className="profile-page__title">Profil utilisateur</h1>
         </div>
         <p className="profile-page__subtitle">
-          Ces informations servent à personnaliser les interprétations (ex. :
-          « En tant que personne en séparation… »). Tout est stocké localement
+          Ces informations servent à personnaliser les interprétations (ex. : «
+          En tant que personne en séparation… »). Tout est stocké localement
           dans ton navigateur.
         </p>
       </header>
 
-      <form
-        className="profile-page__form"
-        onSubmit={(e) => e.preventDefault()}
-      >
+      <form className="profile-page__form" onSubmit={(e) => e.preventDefault()}>
         <fieldset className="profile-page__field profile-page__field--compact">
           <legend>Statut amoureux</legend>
           <select
@@ -159,16 +156,14 @@ export default function ProfilePage() {
             {DECK.map((d) => (
               <label
                 key={d.value}
-                className={`profile-page__deck-option ${profile.deckPreference === d.value ? 'profile-page__deck-option--on' : ''}`}
+                className={`profile-page__deck-option ${profile.deckPreference === d.value ? "profile-page__deck-option--on" : ""}`}
               >
                 <input
                   type="radio"
                   name="deck"
                   value={d.value}
                   checked={profile.deckPreference === d.value}
-                  onChange={() =>
-                    updateProfile({ deckPreference: d.value })
-                  }
+                  onChange={() => updateProfile({ deckPreference: d.value })}
                 />
                 <span className="profile-page__deck-label">{d.label}</span>
                 <span className="profile-page__deck-hint">{d.hint}</span>
@@ -211,5 +206,5 @@ export default function ProfilePage() {
         </Link>
       </div>
     </div>
-  )
+  );
 }

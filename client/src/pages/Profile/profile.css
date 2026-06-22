@@ -12,6 +12,27 @@
   margin-bottom: 10px;
 }
 
+.profile-page__heading .page-heading__icon {
+  width: clamp(56px, 12vw, 80px);
+  height: clamp(56px, 12vw, 80px);
+  filter:
+    brightness(1.06)
+    saturate(1.2)
+    contrast(1.02)
+    drop-shadow(0 4px 12px rgba(139, 92, 246, 0.34))
+    drop-shadow(0 10px 22px rgba(120, 90, 170, 0.18))
+    drop-shadow(0 0 16px rgba(196, 165, 245, 0.24));
+}
+
+:root[data-theme="dark"] .profile-page__heading .page-heading__icon {
+  filter:
+    brightness(1.1)
+    saturate(1.12)
+    contrast(1.04)
+    drop-shadow(0 4px 14px rgba(167, 127, 240, 0.42))
+    drop-shadow(0 0 20px rgba(196, 165, 245, 0.32));
+}
+
 .profile-page__heading .profile-page__title {
   margin: 0;
 }
@@ -72,18 +93,9 @@
 .profile-page__field select {
   width: 100%;
   max-width: 100%;
-  font-family: var(--sans);
   font-size: 1rem;
-  padding: 10px 12px;
+  padding: 10px 40px 10px 12px;
   border-radius: 12px;
-  border: 1px solid var(--border);
-  background: var(--bg-elev);
-  color: var(--text-h);
-}
-
-.profile-page__field select:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
 }
 
 .profile-page__hint {

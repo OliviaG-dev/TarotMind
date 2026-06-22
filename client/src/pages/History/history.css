@@ -155,13 +155,11 @@
 }
 
 .history-page__select-label select {
-  font-family: var(--sans);
+  width: 100%;
+  box-sizing: border-box;
   font-size: 0.95rem;
-  padding: 10px 12px;
+  padding: 10px 40px 10px 12px;
   border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-h);
 }
 
 .history-page__compare-grid {
