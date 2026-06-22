@@ -1,3 +1,5 @@
+import { useId } from 'react'
+
 type IconProps = { className?: string };
 
 export function NavIconHome({ className }: IconProps) {
@@ -299,6 +301,10 @@ export function DecoSoftCloud({ className }: IconProps) {
 }
 
 export function DecoSoftCrescentMoon({ className }: IconProps) {
+  const id = useId()
+  const maskId = `${id}-deco-soft-crescent-moon-mask`
+  const filterId = `${id}-deco-soft-crescent-moon-blur`
+
   return (
     <svg
       className={className}
@@ -307,12 +313,12 @@ export function DecoSoftCrescentMoon({ className }: IconProps) {
       aria-hidden="true"
     >
       <defs>
-        <mask id="deco-soft-crescent-moon-mask">
+        <mask id={maskId}>
           <rect width="80" height="80" fill="white" />
           <circle cx="36" cy="39.5" r="25.5" fill="black" />
         </mask>
         <filter
-          id="deco-soft-crescent-moon-blur"
+          id={filterId}
           x="-40%"
           y="-40%"
           width="180%"
@@ -327,8 +333,8 @@ export function DecoSoftCrescentMoon({ className }: IconProps) {
           cy="40"
           r="28"
           fill="currentColor"
-          mask="url(#deco-soft-crescent-moon-mask)"
-          filter="url(#deco-soft-crescent-moon-blur)"
+          mask={`url(#${maskId})`}
+          filter={`url(#${filterId})`}
         />
       </g>
     </svg>

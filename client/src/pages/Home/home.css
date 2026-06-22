@@ -639,14 +639,13 @@
   text-decoration: none;
   color: inherit;
   overflow: hidden;
-  backdrop-filter: blur(10px) saturate(1.15);
-  -webkit-backdrop-filter: blur(10px) saturate(1.15);
   box-shadow:
     0 16px 40px -12px rgba(80, 55, 130, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.32s ease;
 }
 
 .home__feature-card--purple {
@@ -689,25 +688,29 @@
 }
 
 .home__feature-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 1);
 }
 
 .home__feature-card--purple:hover {
   box-shadow:
-    0 22px 48px -10px rgba(120, 80, 160, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 20px 44px -14px rgba(120, 80, 160, 0.17),
+    0 6px 16px -8px rgba(120, 80, 160, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
 }
 
 .home__feature-card--pink:hover {
   box-shadow:
-    0 22px 48px -10px rgba(107, 29, 66, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 20px 44px -14px rgba(107, 29, 66, 0.16),
+    0 6px 16px -8px rgba(107, 29, 66, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
 }
 
 .home__feature-card--green:hover {
   box-shadow:
-    0 22px 48px -10px rgba(26, 94, 84, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 20px 44px -14px rgba(26, 94, 84, 0.16),
+    0 6px 16px -8px rgba(26, 94, 84, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
 }
 
 .home__feature-card:focus-visible {
@@ -1265,6 +1268,31 @@
 
 :root[data-theme="dark"] .home__feature-card {
   border: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+:root[data-theme="dark"] .home__feature-card:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+:root[data-theme="dark"] .home__feature-card--purple:hover {
+  box-shadow:
+    0 20px 44px -14px rgba(0, 0, 0, 0.45),
+    0 6px 18px -8px rgba(100, 70, 140, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] .home__feature-card--pink:hover {
+  box-shadow:
+    0 20px 44px -14px rgba(0, 0, 0, 0.45),
+    0 6px 18px -8px rgba(120, 50, 80, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] .home__feature-card--green:hover {
+  box-shadow:
+    0 20px 44px -14px rgba(0, 0, 0, 0.45),
+    0 6px 18px -8px rgba(40, 100, 90, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 :root[data-theme="dark"] .home__feature-card--purple {
