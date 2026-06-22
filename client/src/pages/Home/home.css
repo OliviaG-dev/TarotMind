@@ -877,11 +877,11 @@
   --feature-icon-card-face: #fff;
   position: relative;
   z-index: 1;
-  display: grid;
-  place-items: center;
   width: 88px;
   height: 88px;
   border-radius: 50%;
+  line-height: 0;
+  flex-shrink: 0;
   background: linear-gradient(145deg, #fff 0%, #fcfaff 100%);
   border: none;
   box-shadow:
@@ -917,8 +917,14 @@
 }
 
 .home__feature-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
   width: 67px;
   height: 67px;
+  margin: 0;
+  transform: translate(-50%, -50%);
 }
 
 .home__feature-icon :is(circle, path, rect) {

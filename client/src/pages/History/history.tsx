@@ -276,7 +276,12 @@ export default function HistoryPage() {
                   <time dateTime={d.createdAt}>{formatWhen(d.createdAt)}</time>
                   <span className="history-page__event-spread">
                     {d.question ? 'Question' : 'Tirage'} · {d.spreadLabel}
-                    {d.favorite && <span className="history-page__star" aria-label="favori"> &#9733;</span>}
+                    {d.favorite && (
+                      <span className="history-page__star" aria-label="favori">
+                        {' '}
+                        ★
+                      </span>
+                    )}
                   </span>
                   {d.question && (
                     <span className="history-page__event-question">
@@ -298,7 +303,7 @@ export default function HistoryPage() {
                         className="history-page__fav-btn"
                         onClick={() => toggleFavorite(d.id)}
                       >
-                        {d.favorite ? '&#9733; Retirer des favoris' : '&#9734; Ajouter aux favoris'}
+                        {d.favorite ? '★ Retirer des favoris' : '☆ Ajouter aux favoris'}
                       </button>
                       <button
                         type="button"
