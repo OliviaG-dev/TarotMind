@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
-import type { ComponentType, CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
+import { useMemo, useState } from "react";
+import type { ComponentType, CSSProperties } from "react";
+import { Link } from "react-router-dom";
 import {
   DecoSoftCloud,
   DecoSoftCrescentMoon,
@@ -10,67 +10,92 @@ import {
   FeatureIconSparkle,
   NavIconChart,
   NavIconClock,
-} from '../../components/Nav/NavIcons'
-import { useHistory } from '../../context/HistoryContext'
+} from "../../components/Nav/NavIcons";
+import { useHistory } from "../../context/HistoryContext";
 import {
   STATS_PERIOD_OPTIONS,
   computeStats,
   filterDrawsByPeriod,
   type StatsPeriod,
-} from '../../lib/stats'
-import type { DrawRecord } from '../../types/tarot'
-import '../Home/home.css'
-import './stats.css'
+} from "../../lib/stats";
+import type { DrawRecord } from "../../types/tarot";
+import "../Home/home.css";
+import "./stats.css";
 
-type FeatureTheme = 'purple' | 'pink' | 'green'
+type FeatureTheme = "purple" | "pink" | "green";
 
-type IconProps = { className?: string }
+type IconProps = { className?: string };
 
-const TOP_CARDS_PAGE_SIZE = 5
+const TOP_CARDS_PAGE_SIZE = 5;
 
 const KPI_CONFIG: {
-  id: 'total' | 'questions' | 'favorites' | 'weeksActive'
-  label: string
-  theme: FeatureTheme
-  Icon: ComponentType<IconProps>
+  id: "total" | "questions" | "favorites" | "weeksActive";
+  label: string;
+  theme: FeatureTheme;
+  Icon: ComponentType<IconProps>;
 }[] = [
-  { id: 'total', label: 'Tirages au total', theme: 'purple', Icon: FeatureIconCardsStar },
-  { id: 'questions', label: 'Questions posées', theme: 'pink', Icon: FeatureIconQuestionBubble },
-  { id: 'favorites', label: 'Favoris', theme: 'green', Icon: FeatureIconSparkle },
-  { id: 'weeksActive', label: 'Semaines actives', theme: 'purple', Icon: NavIconClock },
-]
+  {
+    id: "total",
+    label: "Tirages au total",
+    theme: "purple",
+    Icon: FeatureIconCardsStar,
+  },
+  {
+    id: "questions",
+    label: "Questions posées",
+    theme: "pink",
+    Icon: FeatureIconQuestionBubble,
+  },
+  {
+    id: "favorites",
+    label: "Favoris",
+    theme: "green",
+    Icon: FeatureIconSparkle,
+  },
+  {
+    id: "weeksActive",
+    label: "Semaines actives",
+    theme: "purple",
+    Icon: NavIconClock,
+  },
+];
 
 function StatsCardDeco({
   theme,
-  variant = 'default',
+  variant = "default",
 }: {
-  theme: FeatureTheme
-  variant?: 'default' | 'cards-section' | 'spreads-section' | 'tones-section' | 'activity-section'
+  theme: FeatureTheme;
+  variant?:
+    | "default"
+    | "cards-section"
+    | "spreads-section"
+    | "tones-section"
+    | "activity-section";
 }) {
   return (
     <span className="home__feature-deco stats-page__deco" aria-hidden="true">
-      {(theme === 'purple' || theme === 'green') &&
-        variant !== 'cards-section' &&
-        variant !== 'activity-section' &&
-        variant !== 'tones-section' && (
+      {(theme === "purple" || theme === "green") &&
+        variant !== "cards-section" &&
+        variant !== "activity-section" &&
+        variant !== "tones-section" && (
           <DecoSoftCloud className="home__feature-deco-soft-cloud" />
         )}
-      {theme === 'green' &&
-        variant !== 'activity-section' &&
-        variant !== 'tones-section' && (
-        <>
-          <DecoSoftCloud className="home__feature-deco-soft-cloud home__feature-deco-soft-cloud--right" />
-          <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-cloud" />
-        </>
-      )}
-      {theme === 'purple' && variant === 'default' && (
+      {theme === "green" &&
+        variant !== "activity-section" &&
+        variant !== "tones-section" && (
+          <>
+            <DecoSoftCloud className="home__feature-deco-soft-cloud home__feature-deco-soft-cloud--right" />
+            <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-cloud" />
+          </>
+        )}
+      {theme === "purple" && variant === "default" && (
         <>
           <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--a" />
           <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--b" />
           <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--c" />
         </>
       )}
-      {theme === 'purple' && variant === 'cards-section' && (
+      {theme === "purple" && variant === "cards-section" && (
         <>
           <DecoSoftSparkle className="stats-page__section-spark stats-page__section-spark--a" />
           <DecoSoftSparkle className="stats-page__section-spark stats-page__section-spark--b" />
@@ -81,7 +106,7 @@ function StatsCardDeco({
           <DecoSoftSparkle className="stats-page__section-spark stats-page__section-spark--g" />
         </>
       )}
-      {theme === 'pink' && variant === 'spreads-section' && (
+      {theme === "pink" && variant === "spreads-section" && (
         <>
           <DecoSoftCrescentMoon className="stats-page__section-pink-moon" />
           <DecoSoftSparkle className="stats-page__section-pink-spark stats-page__section-pink-spark--a" />
@@ -92,7 +117,7 @@ function StatsCardDeco({
           <DecoSoftSparkle className="stats-page__section-pink-spark stats-page__section-pink-spark--f" />
         </>
       )}
-      {theme === 'green' && variant === 'tones-section' && (
+      {theme === "green" && variant === "tones-section" && (
         <>
           <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--a" />
           <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--b" />
@@ -107,14 +132,14 @@ function StatsCardDeco({
           <DecoSoftSparkle className="stats-page__section-tone-spark stats-page__section-tone-spark--l-e" />
         </>
       )}
-      {theme === 'green' && variant === 'activity-section' && (
+      {theme === "green" && variant === "activity-section" && (
         <>
           <DecoSoftSparkle className="stats-page__section-green-spark stats-page__section-green-spark--a" />
           <DecoSoftSparkle className="stats-page__section-green-spark stats-page__section-green-spark--b" />
           <DecoSoftSparkle className="stats-page__section-green-spark stats-page__section-green-spark--c" />
         </>
       )}
-      {theme === 'pink' && variant === 'default' && (
+      {theme === "pink" && variant === "default" && (
         <>
           <DecoSoftCrescentMoon className="home__feature-deco-moon" />
           <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--pink-moon" />
@@ -122,7 +147,7 @@ function StatsCardDeco({
         </>
       )}
     </span>
-  )
+  );
 }
 
 function StatsIntro({
@@ -131,15 +156,15 @@ function StatsIntro({
   filteredCount,
   totalCount,
 }: {
-  period: StatsPeriod
-  onPeriodChange: (period: StatsPeriod) => void
-  filteredCount?: number
-  totalCount?: number
+  period: StatsPeriod;
+  onPeriodChange: (period: StatsPeriod) => void;
+  filteredCount?: number;
+  totalCount?: number;
 }) {
   const periodHint =
-    period !== 'all' && filteredCount !== undefined && totalCount !== undefined
-      ? `${filteredCount} tirage${filteredCount > 1 ? 's' : ''} sur ${totalCount} au total.`
-      : null
+    period !== "all" && filteredCount !== undefined && totalCount !== undefined
+      ? `${filteredCount} tirage${filteredCount > 1 ? "s" : ""} sur ${totalCount} au total.`
+      : null;
 
   return (
     <header className="stats-page__intro">
@@ -162,7 +187,7 @@ function StatsIntro({
           <button
             key={option.value}
             type="button"
-            className={`stats-page__period-btn${period === option.value ? ' stats-page__period-btn--on' : ''}`}
+            className={`stats-page__period-btn${period === option.value ? " stats-page__period-btn--on" : ""}`}
             aria-pressed={period === option.value}
             onClick={() => onPeriodChange(option.value)}
           >
@@ -172,48 +197,53 @@ function StatsIntro({
       </div>
       {periodHint && <p className="stats-page__period-hint">{periodHint}</p>}
     </header>
-  )
+  );
 }
 
 function StatsContent({
   draws,
   period,
 }: {
-  draws: DrawRecord[]
-  period: StatsPeriod
+  draws: DrawRecord[];
+  period: StatsPeriod;
 }) {
-  const stats = useMemo(() => computeStats(draws, period), [draws, period])
-  const topCardsLength = stats.topCards.length
-  const [pageState, setPageState] = useState({ anchor: topCardsLength, page: 0 })
+  const stats = useMemo(() => computeStats(draws, period), [draws, period]);
+  const topCardsLength = stats.topCards.length;
+  const [pageState, setPageState] = useState({
+    anchor: topCardsLength,
+    page: 0,
+  });
 
   const totalCardPages = Math.max(
     1,
     Math.ceil(stats.topCards.length / TOP_CARDS_PAGE_SIZE),
-  )
+  );
   const cardsPage =
     pageState.anchor === topCardsLength
       ? Math.min(Math.max(0, pageState.page), totalCardPages - 1)
-      : 0
+      : 0;
   const setCardsPage = (nextPage: number | ((page: number) => number)) => {
     setPageState((current) => {
-      const basePage =
-        current.anchor === topCardsLength ? current.page : 0
+      const basePage = current.anchor === topCardsLength ? current.page : 0;
       const resolvedPage =
-        typeof nextPage === 'function' ? nextPage(basePage) : nextPage
+        typeof nextPage === "function" ? nextPage(basePage) : nextPage;
       return {
         anchor: topCardsLength,
         page: Math.min(Math.max(0, resolvedPage), totalCardPages - 1),
-      }
-    })
-  }
+      };
+    });
+  };
   const visibleTopCards = stats.topCards.slice(
     cardsPage * TOP_CARDS_PAGE_SIZE,
     cardsPage * TOP_CARDS_PAGE_SIZE + TOP_CARDS_PAGE_SIZE,
-  )
+  );
 
-  const activityMax = Math.max(1, ...stats.activity.map((bucket) => bucket.count))
+  const activityMax = Math.max(
+    1,
+    ...stats.activity.map((bucket) => bucket.count),
+  );
   const activityTitle =
-    period === '7d' ? 'Activité des 7 derniers jours' : 'Activité par semaine'
+    period === "7d" ? "Activité des 7 derniers jours" : "Activité par semaine";
 
   return (
     <>
@@ -230,7 +260,9 @@ function StatsContent({
             </span>
             <span className="stats-page__kpi-body home__feature-body">
               <span className="stats-page__kpi-value">{stats[id]}</span>
-              <span className="stats-page__kpi-label home__feature-text">{label}</span>
+              <span className="stats-page__kpi-label home__feature-text">
+                {label}
+              </span>
             </span>
           </article>
         ))}
@@ -248,7 +280,7 @@ function StatsContent({
           {stats.tones.map((toneStat) => (
             <li
               key={toneStat.tone}
-              className={`stats-page__tone-item${toneStat.count === 0 ? ' stats-page__tone-item--empty' : ''}`}
+              className={`stats-page__tone-item${toneStat.count === 0 ? " stats-page__tone-item--empty" : ""}`}
             >
               <span className="stats-page__tone-count">{toneStat.count}</span>
               <span className="stats-page__tone-name">{toneStat.label}</span>
@@ -267,16 +299,16 @@ function StatsContent({
         </h2>
         <ul className="stats-page__top-list">
           {visibleTopCards.map((cardStat, index) => {
-            const rank = cardsPage * TOP_CARDS_PAGE_SIZE + index + 1
+            const rank = cardsPage * TOP_CARDS_PAGE_SIZE + index + 1;
 
             return (
               <li
                 key={cardStat.cardId}
-                className={`stats-page__top-item${rank === 1 ? ' stats-page__top-item--lead' : ''}`}
-                style={{ '--top-index': index } as CSSProperties}
+                className={`stats-page__top-item${rank === 1 ? " stats-page__top-item--lead" : ""}`}
+                style={{ "--top-index": index } as CSSProperties}
               >
                 <span className="stats-page__top-rank" aria-hidden="true">
-                  {String(rank).padStart(2, '0')}
+                  {String(rank).padStart(2, "0")}
                 </span>
                 <Link
                   to={`/encyclopedie?carte=${encodeURIComponent(cardStat.cardId)}`}
@@ -286,13 +318,15 @@ function StatsContent({
                 </Link>
                 <span
                   className="stats-page__top-count"
-                  aria-label={`${cardStat.count} apparition${cardStat.count > 1 ? 's' : ''}`}
+                  aria-label={`${cardStat.count} apparition${cardStat.count > 1 ? "s" : ""}`}
                 >
-                  <span className="stats-page__top-count-value">{cardStat.count}</span>
+                  <span className="stats-page__top-count-value">
+                    {cardStat.count}
+                  </span>
                   <span className="stats-page__top-count-times">×</span>
                 </span>
               </li>
-            )
+            );
           })}
         </ul>
         {stats.topCards.length > TOP_CARDS_PAGE_SIZE && (
@@ -351,12 +385,12 @@ function StatsContent({
                 <span className="stats-page__spread-count">{spread.count}</span>
                 <span className="stats-page__spread-name">{spread.label}</span>
               </>
-            )
+            );
 
             return (
               <li
                 key={spread.label}
-                className={`stats-page__spread-item${spread.count === 0 ? ' stats-page__spread-item--empty' : ''}`}
+                className={`stats-page__spread-item${spread.count === 0 ? " stats-page__spread-item--empty" : ""}`}
               >
                 {spread.spreadId && spread.count > 0 ? (
                   <Link
@@ -369,7 +403,7 @@ function StatsContent({
                   content
                 )}
               </li>
-            )
+            );
           })}
         </ul>
       </section>
@@ -384,37 +418,46 @@ function StatsContent({
         </h2>
         <ul className="stats-page__activity">
           {stats.activity.map((bucket) => {
-            const heightPct = Math.round((bucket.count / activityMax) * 100)
+            const heightPct = Math.round((bucket.count / activityMax) * 100);
 
             return (
               <li key={bucket.key} className="stats-page__activity-item">
-                <div className="stats-page__activity-bar-wrap" aria-hidden="true">
+                <div
+                  className="stats-page__activity-bar-wrap"
+                  aria-hidden="true"
+                >
                   <div
                     className="stats-page__activity-bar"
-                    style={{ height: `${Math.max(heightPct, bucket.count > 0 ? 8 : 0)}%` }}
+                    style={{
+                      height: `${Math.max(heightPct, bucket.count > 0 ? 8 : 0)}%`,
+                    }}
                   />
                 </div>
-                <span className="stats-page__activity-count">{bucket.count}</span>
-                <span className="stats-page__activity-label">{bucket.label}</span>
+                <span className="stats-page__activity-count">
+                  {bucket.count}
+                </span>
+                <span className="stats-page__activity-label">
+                  {bucket.label}
+                </span>
               </li>
-            )
+            );
           })}
         </ul>
       </section>
     </>
-  )
+  );
 }
 
 export default function StatsPage() {
-  const { draws } = useHistory()
-  const [period, setPeriod] = useState<StatsPeriod>('all')
+  const { draws } = useHistory();
+  const [period, setPeriod] = useState<StatsPeriod>("all");
   const filteredDraws = useMemo(
     () => filterDrawsByPeriod(draws, period),
     [draws, period],
-  )
+  );
 
   const periodLabel =
-    STATS_PERIOD_OPTIONS.find((option) => option.value === period)?.label ?? ''
+    STATS_PERIOD_OPTIONS.find((option) => option.value === period)?.label ?? "";
 
   if (draws.length === 0) {
     return (
@@ -436,7 +479,7 @@ export default function StatsPage() {
           </div>
         </article>
       </div>
-    )
+    );
   }
 
   if (filteredDraws.length === 0) {
@@ -461,7 +504,7 @@ export default function StatsPage() {
           </div>
         </article>
       </div>
-    )
+    );
   }
 
   return (
@@ -474,5 +517,5 @@ export default function StatsPage() {
       />
       <StatsContent draws={filteredDraws} period={period} />
     </div>
-  )
+  );
 }
