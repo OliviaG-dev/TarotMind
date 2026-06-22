@@ -41,27 +41,22 @@
 .daily-card__reveal {
   --reveal-glow: rgba(139, 92, 246, 0.14);
   --reveal-accent: var(--accent-strong);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 28px 24px 22px;
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  text-align: center;
+  width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  isolation: isolate;
+  min-height: 0;
+  padding: 32px 24px 28px;
+  cursor: default;
   animation: dailyRevealIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
-  box-shadow:
-    0 18px 42px -18px rgba(80, 55, 130, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75);
-  transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
+}
+
+.daily-card__reveal.home__feature-card--pink {
+  --reveal-glow: rgba(217, 139, 182, 0.16);
+  --reveal-accent: #b84a8a;
+}
+
+.daily-card__reveal.home__feature-card--green {
+  --reveal-glow: rgba(143, 208, 189, 0.18);
+  --reveal-accent: #3d8f7a;
 }
 
 .daily-card__grid > .daily-card__reveal:nth-child(1) {
@@ -76,71 +71,6 @@
   animation-delay: 0.25s;
 }
 
-.daily-card__reveal::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: var(--grad-border);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.85;
-  pointer-events: none;
-}
-
-.daily-card__reveal::after {
-  content: '';
-  position: absolute;
-  inset: -20% -10% auto;
-  height: 55%;
-  background: radial-gradient(ellipse 80% 70% at 50% 0%, var(--reveal-glow), transparent 72%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.daily-card__reveal--day {
-  background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.1) 100%),
-    linear-gradient(155deg, #f3ebf9 0%, #ebe0f5 52%, #e0d2f0 100%);
-}
-
-.daily-card__reveal--month {
-  --reveal-glow: rgba(217, 139, 182, 0.16);
-  --reveal-accent: #b84a8a;
-  background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.08) 100%),
-    linear-gradient(155deg, #f8e8ee 0%, #f3dde8 52%, #ecd2e0 100%);
-}
-
-.daily-card__reveal--year {
-  --reveal-glow: rgba(143, 208, 189, 0.18);
-  --reveal-accent: #3d8f7a;
-  background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.08) 100%),
-    linear-gradient(155deg, #ecf1ef 0%, #e2ebe7 52%, #d6e4de 100%);
-}
-
-.daily-card__reveal:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.95);
-  box-shadow:
-    0 26px 50px -16px rgba(80, 55, 130, 0.28),
-    0 0 0 1px rgba(139, 92, 246, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.daily-card__reveal:hover::after {
-  opacity: 1;
-  transform: scale(1.04);
-}
-
 @keyframes dailyRevealIn {
   from {
     opacity: 0;
@@ -150,6 +80,89 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+/* Hover — micro-animations (comme home feature cards) */
+.daily-card__period,
+.daily-card__card-face,
+.daily-card__message {
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.daily-card__card-face::before,
+.daily-card__card-face::after {
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s ease,
+    opacity 0.32s ease;
+}
+
+.daily-card__reveal .daily-card__deco-moon,
+.daily-card__reveal .daily-card__deco-spark--right-mid-sm,
+.daily-card__reveal .home__feature-deco-soft-spark,
+.daily-card__reveal .home__feature-deco-spark {
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.daily-card__reveal:hover .daily-card__period {
+  transform: translateY(-2px);
+}
+
+.daily-card__reveal:hover .daily-card__card-face {
+  transform: translateY(-3px) scale(1.018);
+}
+
+.daily-card__reveal:hover .daily-card__card-face::after {
+  transform: translateX(-50%) translateY(-2px) scale(1.15);
+  opacity: 0.72;
+}
+
+.daily-card__reveal:hover .daily-card__card-face::before {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    0 8px 20px -14px var(--reveal-glow);
+}
+
+.daily-card__reveal:hover .daily-card__message {
+  transform: translateY(-1px);
+}
+
+.daily-card__reveal:hover .daily-card__deco-moon {
+  transform: translateY(-2px);
+}
+
+.daily-card__reveal:hover .daily-card__deco-spark--right-mid-sm,
+.daily-card__reveal:hover .home__feature-deco-soft-spark--a,
+.daily-card__reveal:hover .home__feature-deco-spark--pink-a,
+.daily-card__reveal:hover .home__feature-deco-spark--green-cloud {
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .daily-card__period,
+  .daily-card__card-face,
+  .daily-card__message,
+  .daily-card__card-face::before,
+  .daily-card__card-face::after,
+  .daily-card__reveal .daily-card__deco-moon,
+  .daily-card__reveal .daily-card__deco-spark--right-mid-sm,
+  .daily-card__reveal .home__feature-deco-soft-spark,
+  .daily-card__reveal .home__feature-deco-spark {
+    transition: none;
+  }
+
+  .daily-card__reveal:hover .daily-card__period,
+  .daily-card__reveal:hover .daily-card__card-face,
+  .daily-card__reveal:hover .daily-card__message,
+  .daily-card__reveal:hover .daily-card__card-face::after,
+  .daily-card__reveal:hover .daily-card__deco-moon,
+  .daily-card__reveal:hover .daily-card__deco-spark--right-mid-sm,
+  .daily-card__reveal:hover .home__feature-deco-soft-spark--a,
+  .daily-card__reveal:hover .home__feature-deco-spark--pink-a,
+  .daily-card__reveal:hover .home__feature-deco-spark--green-cloud {
+    transform: none;
+    opacity: inherit;
   }
 }
 
@@ -168,9 +181,397 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
-.daily-card__reveal > * {
+.daily-card__reveal > *:not(.home__feature-deco):not(.daily-card__deco-extra) {
   position: relative;
   z-index: 1;
+}
+
+.daily-card__deco-extra {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.daily-card__deco-extra .deco-soft-cloud__unified {
+  display: none;
+}
+
+.daily-card__deco-cloud {
+  position: absolute;
+  width: 72px;
+  height: 40px;
+  opacity: 0.55;
+}
+
+.daily-card__deco-cloud--bl {
+  bottom: 0;
+  left: -6%;
+}
+
+.daily-card__deco-cloud--br {
+  bottom: 0;
+  right: -8%;
+  transform: scaleX(-1);
+}
+
+.daily-card__deco-cloud--tr {
+  top: 1%;
+  left: -5%;
+  right: auto;
+  width: 58px;
+  height: 32px;
+  opacity: 0.42;
+  transform: none;
+}
+
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-cloud {
+  color: #ece4f6;
+}
+
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-cloud {
+  color: #f5dde4;
+}
+
+.daily-card__reveal.home__feature-card--green .daily-card__deco-cloud {
+  color: #c8ebe0;
+}
+
+.daily-card__deco-moon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  opacity: 0.52;
+}
+
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-moon {
+  top: auto;
+  bottom: 15%;
+  right: 12%;
+  left: auto;
+  width: 34px;
+  height: 34px;
+  color: #e8dff5;
+}
+
+.daily-card__reveal.home__feature-card--green .daily-card__deco-moon {
+  top: auto;
+  bottom: 12%;
+  left: 8%;
+  right: auto;
+  width: 34px;
+  height: 34px;
+  color: #d4efe6;
+}
+
+.daily-card__deco-spark {
+  position: absolute;
+}
+
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark {
+  color: #dbd0ea;
+}
+
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark {
+  color: rgba(215, 138, 162, 0.62);
+}
+
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark {
+  color: #aed5cb;
+}
+
+.daily-card__deco-spark--a {
+  top: 3%;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  opacity: 0.5;
+}
+
+.daily-card__deco-spark--b {
+  bottom: 3%;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  opacity: 0.42;
+}
+
+.daily-card__deco-spark--c {
+  top: 3%;
+  right: 0;
+  width: 17px;
+  height: 17px;
+  opacity: 0.48;
+}
+
+.daily-card__deco-spark--d {
+  bottom: 3%;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  opacity: 0.38;
+}
+
+.daily-card__deco-spark--left-mid {
+  left: 2%;
+  top: 38%;
+  width: 21px;
+  height: 21px;
+  opacity: 0.46;
+}
+
+.daily-card__deco-spark--left-mid-sm {
+  left: 1%;
+  top: 52%;
+  width: 7px;
+  height: 7px;
+  opacity: 0.34;
+}
+
+.daily-card__deco-spark--right-mid {
+  right: 2%;
+  top: 36%;
+  width: 13px;
+  height: 13px;
+  opacity: 0.42;
+}
+
+.daily-card__deco-spark--right-mid-sm {
+  right: 1%;
+  top: 54%;
+  width: 18px;
+  height: 18px;
+  opacity: 0.28;
+}
+
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--left-mid,
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--left-mid-sm,
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--right-mid,
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--right-mid-sm {
+  color: #a890c4;
+}
+
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--left-mid,
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--left-mid-sm,
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--right-mid,
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--right-mid-sm {
+  color: rgba(188, 112, 132, 0.58);
+}
+
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark--left-mid,
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark--left-mid-sm,
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark--right-mid,
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark--right-mid-sm {
+  color: #86b5a6;
+}
+
+/* Home décor — zones séparées par thème (sans chevauchement) */
+.daily-card__reveal .home__feature-deco-soft-cloud {
+  top: 2%;
+  left: -6%;
+}
+
+.daily-card__reveal.home__feature-card--green .home__feature-deco-soft-cloud--right {
+  top: 2%;
+  right: -14%;
+  left: auto;
+}
+
+/* Violet — nuage haut-gauche, étoiles haut-droite, lune bas-droite */
+.daily-card__reveal.home__feature-card--purple .home__feature-deco-soft-spark--a {
+  top: 4%;
+  right: 4%;
+  width: 24px;
+  height: 24px;
+}
+
+.daily-card__reveal.home__feature-card--purple .home__feature-deco-soft-spark--b {
+  top: 15%;
+  right: 8%;
+  width: 11px;
+  height: 11px;
+}
+
+.daily-card__reveal.home__feature-card--purple .home__feature-deco-soft-spark--c {
+  top: 9%;
+  right: 20%;
+  width: 8px;
+  height: 8px;
+}
+
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--a {
+  top: 22%;
+  left: 4%;
+}
+
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--b {
+  bottom: 20%;
+  left: 10%;
+}
+
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--c {
+  top: 6%;
+  right: 24%;
+}
+
+.daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--d {
+  bottom: 24%;
+  right: 6%;
+}
+
+/* Rose — lune haut-droite, nuage haut-gauche, nuage bas-gauche */
+.daily-card__reveal.home__feature-card--pink .home__feature-deco-moon {
+  top: 5%;
+  right: 6%;
+  width: 38px;
+  height: 38px;
+}
+
+.daily-card__reveal.home__feature-card--pink .home__feature-deco-spark--pink-moon {
+  top: 22%;
+  right: 22%;
+  width: 9px;
+  height: 9px;
+}
+
+.daily-card__reveal.home__feature-card--pink .home__feature-deco-spark--pink-a {
+  bottom: 18%;
+  left: 6%;
+  width: 22px;
+  height: 22px;
+}
+
+.daily-card__reveal.home__feature-card--pink .home__feature-deco-spark--pink-b {
+  bottom: 11%;
+  left: 24%;
+  width: 17px;
+  height: 17px;
+}
+
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--a {
+  top: 16%;
+  left: 3%;
+}
+
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--b {
+  bottom: 22%;
+  left: 4%;
+}
+
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--c {
+  top: 5%;
+  right: 2%;
+}
+
+.daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--d {
+  bottom: 5%;
+  right: 4%;
+}
+
+/* Vert — nuages haut, lune bas-gauche, étoiles entre les zones */
+.daily-card__reveal.home__feature-card--green .home__feature-deco-spark--green-left-cloud {
+  top: 20%;
+  left: 5%;
+  width: 25px;
+  height: 25px;
+}
+
+.daily-card__reveal.home__feature-card--green .home__feature-deco-spark--green-left-cloud-sm {
+  top: 28%;
+  left: 1%;
+  width: 8px;
+  height: 8px;
+}
+
+.daily-card__reveal.home__feature-card--green .home__feature-deco-spark--green-cloud {
+  bottom: 20%;
+  right: 8%;
+  width: 15px;
+  height: 15px;
+}
+
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark--a {
+  top: 24%;
+  left: 3%;
+}
+
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark--b {
+  bottom: 30%;
+  left: 2%;
+}
+
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark--c {
+  top: 20%;
+  right: 4%;
+}
+
+.daily-card__reveal.home__feature-card--green .daily-card__deco-spark--d {
+  bottom: 24%;
+  right: 5%;
+}
+
+:root[data-theme='dark'] .daily-card__deco-extra .deco-soft-cloud__blobs {
+  display: none;
+}
+
+:root[data-theme='dark'] .daily-card__deco-extra .deco-soft-cloud__unified {
+  display: block;
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-cloud {
+  color: rgba(195, 180, 225, 0.34);
+  opacity: 1;
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--pink .daily-card__deco-cloud {
+  color: rgba(205, 135, 158, 0.34);
+  opacity: 1;
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-cloud {
+  color: rgba(120, 200, 180, 0.34);
+  opacity: 1;
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-moon {
+  color: rgba(195, 180, 225, 0.38);
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-moon {
+  color: rgba(138, 205, 188, 0.4);
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-spark {
+  color: rgba(195, 175, 228, 0.42);
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--pink .daily-card__deco-spark {
+  color: rgba(205, 135, 158, 0.38);
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-spark {
+  color: rgba(138, 205, 188, 0.45);
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--left-mid,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--left-mid-sm,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--right-mid,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--purple .daily-card__deco-spark--right-mid-sm {
+  color: rgba(172, 148, 215, 0.48);
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--left-mid,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--left-mid-sm,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--right-mid,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--pink .daily-card__deco-spark--right-mid-sm {
+  color: rgba(200, 128, 150, 0.44);
+}
+
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-spark--left-mid,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-spark--left-mid-sm,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-spark--right-mid,
+:root[data-theme='dark'] .daily-card__reveal.home__feature-card--green .daily-card__deco-spark--right-mid-sm {
+  color: rgba(122, 180, 162, 0.46);
 }
 
 .daily-card__card-face {
@@ -304,12 +705,12 @@
 @keyframes dailyKeywordIn {
   from {
     opacity: 0;
-    filter: blur(4px);
+    transform: translateY(6px);
   }
 
   to {
     opacity: 0.9;
-    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
@@ -349,39 +750,6 @@
   padding-top: 14px;
   width: 100%;
   border-top: 1px solid rgba(120, 90, 170, 0.12);
-}
-
-:root[data-theme='dark'] .daily-card__reveal {
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow:
-    0 20px 44px -18px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-:root[data-theme='dark'] .daily-card__reveal--day {
-  background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%),
-    linear-gradient(155deg, rgba(48, 36, 72, 0.95) 0%, rgba(36, 28, 58, 0.98) 100%);
-}
-
-:root[data-theme='dark'] .daily-card__reveal--month {
-  background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%),
-    linear-gradient(155deg, rgba(58, 32, 48, 0.95) 0%, rgba(44, 26, 40, 0.98) 100%);
-}
-
-:root[data-theme='dark'] .daily-card__reveal--year {
-  background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%),
-    linear-gradient(155deg, rgba(28, 44, 40, 0.95) 0%, rgba(22, 36, 34, 0.98) 100%);
-}
-
-:root[data-theme='dark'] .daily-card__reveal:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow:
-    0 24px 48px -14px rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(196, 165, 245, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 :root[data-theme='dark'] .daily-card__period {

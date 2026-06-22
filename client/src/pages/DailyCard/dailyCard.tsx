@@ -1,18 +1,91 @@
 import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import {
+  DecoSoftCloud,
+  DecoSoftCrescentMoon,
+  DecoSoftSparkle,
+} from '../../components/Nav/NavIcons'
 import { getDailyCard, getDailyMessage, getMonthlyCard, getMonthlyMessage, getYearlyCard, getYearlyMessage } from '../../lib/dailyCard'
 import type { TarotCard } from '../../types/tarot'
+import '../Home/home.css'
 import './dailyCard.css'
+
+const FEATURE_THEME = {
+  day: 'purple',
+  month: 'pink',
+  year: 'green',
+} as const
+
+type FeatureTheme = (typeof FEATURE_THEME)[keyof typeof FEATURE_THEME]
+
+function FeatureCardDeco({ theme }: { theme: FeatureTheme }) {
+  return (
+    <>
+      <span className="home__feature-deco" aria-hidden="true">
+        {(theme === 'purple' || theme === 'green') && (
+          <DecoSoftCloud className="home__feature-deco-soft-cloud" />
+        )}
+        {theme === 'green' && (
+          <>
+            <DecoSoftCloud className="home__feature-deco-soft-cloud home__feature-deco-soft-cloud--right" />
+            <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-left-cloud" />
+            <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-left-cloud-sm" />
+            <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-cloud" />
+          </>
+        )}
+        {theme === 'purple' && (
+          <>
+            <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--a" />
+            <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--b" />
+            <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--c" />
+          </>
+        )}
+        {theme === 'pink' && (
+          <>
+            <DecoSoftCrescentMoon className="home__feature-deco-moon" />
+            <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--pink-moon" />
+            <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--pink-a" />
+            <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--pink-b" />
+          </>
+        )}
+      </span>
+      <span className="daily-card__deco-extra" aria-hidden="true">
+        {(theme === 'purple' || theme === 'pink' || theme === 'green') && (
+          <DecoSoftCloud className="daily-card__deco-cloud daily-card__deco-cloud--bl" />
+        )}
+        {(theme === 'purple' || theme === 'green') && (
+          <DecoSoftCloud className="daily-card__deco-cloud daily-card__deco-cloud--br" />
+        )}
+        {theme === 'pink' && (
+          <DecoSoftCloud className="daily-card__deco-cloud daily-card__deco-cloud--tr" />
+        )}
+        {(theme === 'purple' || theme === 'green') && (
+          <DecoSoftCrescentMoon className="daily-card__deco-moon" />
+        )}
+        <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--a" />
+        <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--b" />
+        <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--c" />
+        <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--d" />
+        <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--left-mid" />
+        <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--left-mid-sm" />
+        <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--right-mid" />
+        <DecoSoftSparkle className="daily-card__deco-spark daily-card__deco-spark--right-mid-sm" />
+      </span>
+    </>
+  )
+}
 
 function CardReveal({ card, label, message, period, variant }: {
   card: TarotCard
   label: string
   message?: string
   period: string
-  variant: 'day' | 'month' | 'year'
+  variant: keyof typeof FEATURE_THEME
 }) {
+  const theme = FEATURE_THEME[variant]
+
   return (
-    <article className={`daily-card__reveal daily-card__reveal--${variant}`}>
+    <article className={`daily-card__reveal home__feature-card home__feature-card--${theme}`}>
+      <FeatureCardDeco theme={theme} />
       <span className="daily-card__period">{period}</span>
       <div className="daily-card__card-face">
         <h2 className="daily-card__card-name">{card.nameFr}</h2>
@@ -77,12 +150,6 @@ export default function DailyCardPage() {
           period="Carte de l'année"
           variant="year"
         />
-      </div>
-
-      <div className="cta-nav">
-        <Link to="/tirage" className="cta-nav__link">
-          Faire un tirage &rarr;
-        </Link>
       </div>
     </div>
   )
