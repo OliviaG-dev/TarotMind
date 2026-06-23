@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { InterpretationText } from '../../components/InterpretationText'
+import {
+  DecoSoftCloud,
+  DecoSoftCrescentMoon,
+  DecoSoftSparkle,
+  FeatureIconQuestionBubble,
+} from '../../components/Nav/NavIcons'
 import { useHistory } from '../../context/HistoryContext'
 import { useProfile } from '../../context/ProfileContext'
 import { SPREADS, getSpread } from '../../data/spreads'
@@ -8,7 +13,85 @@ import { getCardById, getDeckCards } from '../../data/tarotDeck'
 import { requestQuestion } from '../../lib/questionApi'
 import type { DrawRecord, PlacedCard, SpreadDefinition, SpreadId } from '../../types/tarot'
 import { SpreadSchema, type SlotState } from '../Draw/SpreadSchema'
+import '../Home/home.css'
 import './question.css'
+
+const QUESTION_SPREADS = SPREADS.filter(
+  (spread) =>
+    spread.id !== 'love' &&
+    spread.id !== 'career' &&
+    spread.id !== 'decision' &&
+    spread.id !== 'compatibility',
+)
+
+const PRESET_QUESTIONS = [
+  'Quel message veux-tu me transmettre aujourd\'hui ?',
+  'Quel message veux-tu me transmettre cette semaine ?',
+  'Quel message veux-tu me transmettre ce mois-ci ?',
+  'Que dois-je savoir sur ma situation actuelle ?',
+  'Comment avancer dans ma vie amoureuse en ce moment ?',
+  'Quelle direction prendre dans ma carrière professionnelle ?',
+  'Comment retrouver plus de sérénité et d\'équilibre ?',
+  'Quel est le principal obstacle que je dois dépasser ?',
+  'Dois-je saisir cette opportunité qui se présente à moi ?',
+  'Comment améliorer ma relation avec moi-même ?',
+] as const
+
+type PanelTheme = 'purple' | 'pink' | 'green'
+
+function QuestionPanelDeco({
+  theme,
+  variant = 'default',
+}: {
+  theme: PanelTheme
+  variant?: 'default' | 'question' | 'spreads' | 'schema'
+}) {
+  return (
+    <span className="home__feature-deco question-page__deco" aria-hidden="true">
+      {(theme === 'purple' || theme === 'green') &&
+        variant !== 'schema' &&
+        variant !== 'question' && (
+          <DecoSoftCloud className="home__feature-deco-soft-cloud" />
+        )}
+      {theme === 'green' && variant === 'question' && (
+        <>
+          <DecoSoftCloud className="home__feature-deco-soft-cloud" />
+          <DecoSoftCloud className="home__feature-deco-soft-cloud home__feature-deco-soft-cloud--right" />
+          <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-left-cloud" />
+          <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-left-cloud-sm" />
+          <DecoSoftSparkle className="home__feature-deco-spark home__feature-deco-spark--green-cloud" />
+          <DecoSoftSparkle className="question-page__green-spark question-page__green-spark--a" />
+          <DecoSoftSparkle className="question-page__green-spark question-page__green-spark--b" />
+        </>
+      )}
+      {theme === 'purple' && variant === 'default' && (
+        <>
+          <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--a" />
+          <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--b" />
+          <DecoSoftSparkle className="home__feature-deco-soft-spark home__feature-deco-soft-spark--c" />
+        </>
+      )}
+      {theme === 'purple' && variant === 'schema' && (
+        <>
+          <DecoSoftSparkle className="question-page__purple-spark question-page__purple-spark--a" />
+          <DecoSoftSparkle className="question-page__purple-spark question-page__purple-spark--b" />
+          <DecoSoftSparkle className="question-page__purple-spark question-page__purple-spark--c" />
+          <DecoSoftSparkle className="question-page__purple-spark question-page__purple-spark--d" />
+          <DecoSoftSparkle className="question-page__purple-spark question-page__purple-spark--e" />
+        </>
+      )}
+      {theme === 'pink' && variant === 'spreads' && (
+        <>
+          <DecoSoftCrescentMoon className="question-page__pink-moon" />
+          <DecoSoftSparkle className="question-page__pink-spark question-page__pink-spark--a" />
+          <DecoSoftSparkle className="question-page__pink-spark question-page__pink-spark--b" />
+          <DecoSoftSparkle className="question-page__pink-spark question-page__pink-spark--c" />
+          <DecoSoftSparkle className="question-page__pink-spark question-page__pink-spark--d" />
+        </>
+      )}
+    </span>
+  )
+}
 
 function emptySlots(def: SpreadDefinition): Record<string, SlotState> {
   const o: Record<string, SlotState> = {}
@@ -50,6 +133,7 @@ export default function QuestionPage() {
   const [answer, setAnswer] = useState<string | null>(null)
   const [apiHint, setApiHint] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [showPresets, setShowPresets] = useState(false)
 
   const spread = useMemo(() => getSpread(spreadId), [spreadId])
 
@@ -75,6 +159,12 @@ export default function QuestionPage() {
 
   function setSlot(key: string, next: SlotState) {
     setSlots((prev) => ({ ...prev, [key]: next }))
+    setAnswer(null)
+    setApiHint(null)
+  }
+
+  function selectPreset(text: string) {
+    setQuestion(text)
     setAnswer(null)
     setApiHint(null)
   }
@@ -132,17 +222,26 @@ export default function QuestionPage() {
     <div className="question-page">
       <header className="question-page__intro">
         <div className="page-heading question-page__heading">
+          <span className="question-page__heading-icon home__feature-icon-wrap">
+            <FeatureIconQuestionBubble className="home__feature-icon" />
+          </span>
           <h1 className="question-page__title">Pose ta question</h1>
         </div>
         <p className="question-page__subtitle">
-          Écris ta question, choisis un tirage et place tes cartes.
-          L'IA te repondra en s'appuyant sur ton profil et tes cartes.
+          Écris ta question, choisis un tirage et place tes cartes. L&apos;IA te
+          répondra en s&apos;appuyant sur ton profil et tes cartes.
         </p>
       </header>
 
       <form className="question-page__form" onSubmit={handleSubmit}>
-        <fieldset className="question-page__field">
-          <legend>Ta question</legend>
+        <section
+          className="question-page__panel home__feature-card home__feature-card--green"
+          aria-labelledby="q-question-heading"
+        >
+          <QuestionPanelDeco theme="green" variant="question" />
+          <h2 id="q-question-heading" className="question-page__h2">
+            Ta question
+          </h2>
           <textarea
             className="question-page__textarea"
             value={question}
@@ -151,14 +250,50 @@ export default function QuestionPage() {
             rows={4}
             aria-label="Ta question"
           />
-        </fieldset>
+          <div className="question-page__presets">
+            <div className="question-page__presets-head">
+              <p className="question-page__presets-label">Questions fréquentes</p>
+              <button
+                type="button"
+                className="question-page__presets-toggle"
+                aria-expanded={showPresets}
+                aria-controls="question-presets-list"
+                onClick={() => setShowPresets((visible) => !visible)}
+              >
+                {showPresets ? 'Masquer' : 'Afficher'}
+              </button>
+            </div>
+            {showPresets && (
+              <ul
+                id="question-presets-list"
+                className="question-page__presets-list"
+              >
+                {PRESET_QUESTIONS.map((preset) => (
+                  <li key={preset}>
+                    <button
+                      type="button"
+                      className={`question-page__preset${question === preset ? ' question-page__preset--on' : ''}`}
+                      onClick={() => selectPreset(preset)}
+                    >
+                      {preset}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
 
-        <section className="question-page__panel" aria-labelledby="q-spread-heading">
+        <section
+          className="question-page__panel home__feature-card home__feature-card--pink"
+          aria-labelledby="q-spread-heading"
+        >
+          <QuestionPanelDeco theme="pink" variant="spreads" />
           <h2 id="q-spread-heading" className="question-page__h2">
             Type de tirage
           </h2>
           <ul className="question-page__spread-list">
-            {SPREADS.filter((s) => s.id !== 'love' && s.id !== 'career' && s.id !== 'decision' && s.id !== 'compatibility').map((s) => (
+            {QUESTION_SPREADS.map((s) => (
               <li key={s.id}>
                 <label
                   className={`question-page__spread-option ${spreadId === s.id ? 'question-page__spread-option--on' : ''}`}
@@ -178,15 +313,17 @@ export default function QuestionPage() {
                       }
                     }}
                   />
-                  <img
-                    className="question-page__spread-icon"
-                    src={s.icon}
-                    alt=""
-                    width={30}
-                    height={30}
-                    decoding="async"
-                    aria-hidden
-                  />
+                  <span className="question-page__spread-icon-wrap">
+                    <img
+                      className="question-page__spread-icon"
+                      src={s.icon}
+                      alt=""
+                      width={28}
+                      height={28}
+                      decoding="async"
+                      aria-hidden
+                    />
+                  </span>
                   <span className="question-page__spread-text">
                     <span className="question-page__spread-label">{s.label}</span>
                     <span className="question-page__spread-desc">{s.description}</span>
@@ -198,7 +335,11 @@ export default function QuestionPage() {
         </section>
 
         {spread && (
-          <section className="question-page__panel" aria-labelledby="q-schema-heading">
+          <section
+            className="question-page__panel home__feature-card home__feature-card--purple"
+            aria-labelledby="q-schema-heading"
+          >
+            <QuestionPanelDeco theme="purple" variant="schema" />
             <h2 id="q-schema-heading" className="question-page__h2">
               Schéma du tirage
             </h2>
@@ -229,7 +370,11 @@ export default function QuestionPage() {
       </form>
 
       {answer && (
-        <section className="question-page__result" aria-live="polite">
+        <section
+          className="question-page__result home__feature-card home__feature-card--purple"
+          aria-live="polite"
+        >
+          <QuestionPanelDeco theme="purple" variant="default" />
           <h2 className="question-page__h2">Réponse</h2>
           <div className="question-page__answer">
             <InterpretationText text={answer} />
@@ -237,15 +382,7 @@ export default function QuestionPage() {
         </section>
       )}
 
-      {apiHint && (
-        <p className="question-page__hint">{apiHint}</p>
-      )}
-
-      <div className="cta-nav">
-        <Link to="/historique" className="cta-nav__link">
-          Continuer &rarr;
-        </Link>
-      </div>
+      {apiHint && <p className="question-page__hint">{apiHint}</p>}
     </div>
   )
 }

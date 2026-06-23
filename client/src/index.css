@@ -188,7 +188,6 @@ p {
 }
 
 /* —— Selects (partagé) —— */
-.profile-page__field select,
 .history-page__select-label select,
 .spread-schema__select {
   font-family: var(--sans);
@@ -208,14 +207,12 @@ p {
     box-shadow 0.15s ease;
 }
 
-.profile-page__field select:focus-visible,
 .history-page__select-label select:focus-visible,
 .spread-schema__select:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-:root[data-theme="dark"] .profile-page__field select,
 :root[data-theme="dark"] .history-page__select-label select,
 :root[data-theme="dark"] .spread-schema__select {
   color-scheme: dark;
@@ -227,21 +224,18 @@ p {
     0 2px 8px rgba(0, 0, 0, 0.18);
 }
 
-:root[data-theme="dark"] .profile-page__field select:hover,
 :root[data-theme="dark"] .history-page__select-label select:hover,
 :root[data-theme="dark"] .spread-schema__select:hover {
   border-color: var(--accent-border);
   background-color: rgba(196, 165, 245, 0.12);
 }
 
-:root[data-theme="dark"] .profile-page__field select:focus-visible,
 :root[data-theme="dark"] .history-page__select-label select:focus-visible,
 :root[data-theme="dark"] .spread-schema__select:focus-visible {
   border-color: var(--accent);
   box-shadow: var(--glow-soft);
 }
 
-:root[data-theme="dark"] .profile-page__field select option,
 :root[data-theme="dark"] .history-page__select-label select option,
 :root[data-theme="dark"] .spread-schema__select option {
   background-color: #2a2148;
@@ -275,7 +269,7 @@ code {
 .draw__interpretation,
 .question-page__panel,
 .question-page__result,
-.profile-page__field,
+.profile-page__panel,
 .history-page__section,
 .history-page__compare-col,
 .history-page__detail,
@@ -412,6 +406,7 @@ code {
 /* —— Filet pastel anime sous les titres de section —— */
 .draw__h2,
 .question-page__h2,
+.profile-page__h2,
 .history-page__h2,
 .stats-page__h2 {
   position: relative;
@@ -420,6 +415,7 @@ code {
 
 .draw__h2::after,
 .question-page__h2::after,
+.profile-page__h2::after,
 .history-page__h2::after,
 .stats-page__h2::after {
   content: "";

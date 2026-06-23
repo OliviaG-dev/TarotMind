@@ -91,7 +91,7 @@ export default function DrawPage() {
     if (!spread || !placedPreview) return
     setIsGenerating(true)
     setApiHint(null)
-    let interpretation = ''
+    let interpretation: string
     try {
       const res = await requestInterpretation({
         tone,

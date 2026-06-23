@@ -36,17 +36,12 @@ export function buildMockInterpretation(opts: {
     ? '\n\nOn sent ici un fil du **changement** ou de la **transformation** : l’IA pourra, avec un vrai modèle, relier ça à ton historique de tirages.'
     : ''
 
-  let closing = ''
-  if (opts.tone === 'direct') {
-    closing =
-      '\n\n**Conseil** : note une action concrète pour cette semaine (un appel, une limite posée, un rendez-vous avec toi-même).'
-  } else if (opts.tone === 'psychological') {
-    closing =
-      '\n\n**Piste** : quelle émotion ce tirage fait-il monter ? Donne-lui un nom — c’est déjà un pas vers la clarté.'
-  } else {
-    closing =
-      '\n\n**Invitation** : un rituel simple (journal, marche, tirage suivant dans 7 jours) peut ancrer ce message.'
-  }
+  const closing =
+    opts.tone === 'direct'
+      ? '\n\n**Conseil** : note une action concrète pour cette semaine (un appel, une limite posée, un rendez-vous avec toi-même).'
+      : opts.tone === 'psychological'
+        ? '\n\n**Piste** : quelle émotion ce tirage fait-il monter ? Donne-lui un nom — c’est déjà un pas vers la clarté.'
+        : '\n\n**Invitation** : un rituel simple (journal, marche, tirage suivant dans 7 jours) peut ancrer ce message.'
 
   return [
     `*${open}*`,
