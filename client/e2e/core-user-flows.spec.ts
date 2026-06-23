@@ -43,7 +43,7 @@ test('carte du jour stable apres rechargement', async ({ page }) => {
 test('profil persiste apres reload', async ({ page }) => {
   await page.goto('/profil')
 
-  const status = page.getByLabel('Statut amoureux')
+  const status = page.getByRole('combobox', { name: 'Statut amoureux' })
   await status.selectOption('single')
   await page.reload()
   await expect(status).toHaveValue('single')

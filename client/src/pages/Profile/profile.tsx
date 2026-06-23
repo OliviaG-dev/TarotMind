@@ -148,7 +148,6 @@ export default function ProfilePage() {
       <form className="profile-page__form" onSubmit={(e) => e.preventDefault()}>
         <section
           className="profile-page__panel profile-page__panel--compact home__feature-card home__feature-card--pink"
-          aria-labelledby="profile-relationship-heading"
         >
           <ProfilePanelDeco theme="pink" variant="compact" />
           <h2 id="profile-relationship-heading" className="profile-page__h2">
@@ -162,7 +161,7 @@ export default function ProfilePage() {
                 relationshipStatus: e.target.value as RelationshipStatus,
               })
             }
-            aria-label="Statut amoureux"
+            aria-labelledby="profile-relationship-heading"
           >
             {RELATIONSHIP.map((o) => (
               <option key={o.value} value={o.value}>
@@ -174,7 +173,6 @@ export default function ProfilePage() {
 
         <section
           className="profile-page__panel profile-page__panel--compact home__feature-card home__feature-card--purple"
-          aria-labelledby="profile-gender-heading"
         >
           <ProfilePanelDeco theme="purple" variant="default" />
           <h2 id="profile-gender-heading" className="profile-page__h2">
@@ -186,7 +184,7 @@ export default function ProfilePage() {
             onChange={(e) =>
               updateProfile({ gender: e.target.value as Gender })
             }
-            aria-label="Sexe ou genre"
+            aria-labelledby="profile-gender-heading"
           >
             {GENDER.map((o) => (
               <option key={o.value} value={o.value}>
@@ -198,7 +196,6 @@ export default function ProfilePage() {
 
         <section
           className="profile-page__panel profile-page__panel--compact home__feature-card home__feature-card--green"
-          aria-labelledby="profile-work-heading"
         >
           <ProfilePanelDeco theme="green" variant="compact" />
           <h2 id="profile-work-heading" className="profile-page__h2">
@@ -212,7 +209,7 @@ export default function ProfilePage() {
                 workSituation: e.target.value as WorkSituation,
               })
             }
-            aria-label="Situation professionnelle"
+            aria-labelledby="profile-work-heading"
           >
             {WORK.map((o) => (
               <option key={o.value} value={o.value}>
