@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { InterpretationText } from '../../components/InterpretationText'
 import {
   DecoSoftCloud,
@@ -384,12 +383,6 @@ export default function QuestionPage() {
       )}
 
       {apiHint && <p className="question-page__hint">{apiHint}</p>}
-
-      <div className="cta-nav">
-        <Link to="/historique" className="cta-nav__link">
-          Continuer &rarr;
-        </Link>
-      </div>
     </div>
   )
 }
