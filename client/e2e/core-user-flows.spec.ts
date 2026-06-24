@@ -24,7 +24,9 @@ test('tirage complet puis visible dans historique', async ({ page }) => {
   await expect(page.getByText('Interpretation E2E de test.')).toBeVisible()
 
   await page.goto('/historique')
-  await expect(page.getByText(/Tirage · 1 carte/)).toBeVisible()
+  await expect(
+    page.locator('.history-page__event-label').filter({ hasText: '1 carte' }),
+  ).toBeVisible()
 })
 
 test('carte du jour stable apres rechargement', async ({ page }) => {

@@ -264,13 +264,13 @@ code {
 .home__features,
 .home__feature-card,
 .home__footer,
-.draw__panel,
-.draw__result,
-.draw__interpretation,
+.draw-page__panel,
+.draw-page__result,
+.draw-page__interpretation,
 .question-page__panel,
 .question-page__result,
 .profile-page__panel,
-.history-page__section,
+.history-page__panel,
 .history-page__compare-col,
 .history-page__detail,
 .stats-page__section,
@@ -357,10 +357,11 @@ code {
 }
 
 .home,
-.draw,
+.draw-page,
 .question-page,
 .daily-card,
 .encyclopedia,
+.encyclopedia-page,
 .stats-page,
 .history-page,
 .profile-page {
@@ -378,7 +379,7 @@ code {
   }
 }
 
-.draw__result,
+.draw-page__result,
 .question-page__result,
 .history-page__detail-interp {
   animation: interpretReveal 0.45s ease both;
@@ -404,7 +405,7 @@ code {
 }
 
 /* —— Filet pastel anime sous les titres de section —— */
-.draw__h2,
+.draw-page__h2,
 .question-page__h2,
 .profile-page__h2,
 .history-page__h2,
@@ -413,7 +414,7 @@ code {
   padding-bottom: 12px;
 }
 
-.draw__h2::after,
+.draw-page__h2::after,
 .question-page__h2::after,
 .profile-page__h2::after,
 .history-page__h2::after,

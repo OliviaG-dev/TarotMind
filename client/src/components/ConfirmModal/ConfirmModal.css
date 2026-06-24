@@ -1,0 +1,283 @@
+.confirm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(58, 40, 104, 0.28);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  animation: confirmModalFadeIn 0.22s ease both;
+}
+
+.confirm-modal__dialog {
+  width: min(100%, 440px);
+  min-height: 0;
+  padding: 28px 26px 24px;
+  border-radius: 32px;
+  text-align: left;
+  align-items: stretch;
+  gap: 0;
+  animation: confirmModalSlideIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.confirm-modal__dialog.home__feature-card--pink .home__feature-deco-soft-cloud--right {
+  top: 6%;
+  right: -10%;
+  width: min(62%, 220px);
+  height: 52px;
+  opacity: 0.58;
+  color: #f5dce6;
+}
+
+.confirm-modal__moon {
+  position: absolute;
+  top: 8%;
+  right: 8%;
+  width: 40px;
+  height: 40px;
+  color: #f9d8de;
+  pointer-events: none;
+}
+
+.confirm-modal__spark {
+  position: absolute;
+  pointer-events: none;
+  color: rgba(215, 138, 162, 0.62);
+}
+
+.confirm-modal__spark--a {
+  top: 6%;
+  right: 24%;
+  width: 20px;
+  height: 20px;
+  opacity: 0.58;
+}
+
+.confirm-modal__spark--b {
+  top: 12%;
+  right: 32%;
+  width: 16px;
+  height: 16px;
+  opacity: 0.5;
+}
+
+.confirm-modal__spark--c {
+  top: 18%;
+  left: 10%;
+  width: 18px;
+  height: 18px;
+  opacity: 0.46;
+}
+
+.confirm-modal__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.confirm-modal__title {
+  position: relative;
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  font-family: var(--heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #6b1d42;
+}
+
+.confirm-modal__title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(208, 149, 174, 0.95),
+    rgba(217, 139, 182, 0.45) 70%,
+    transparent
+  );
+}
+
+.confirm-modal__message {
+  margin: 0 0 24px;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: rgba(107, 29, 66, 0.78);
+}
+
+.confirm-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.confirm-modal__cancel {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.38);
+  color: #6b1d42;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.confirm-modal__cancel:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.confirm-modal__cancel:focus-visible {
+  outline: 2px solid rgba(208, 149, 174, 0.85);
+  outline-offset: 2px;
+}
+
+.confirm-modal__confirm.home__cta-btn {
+  font-size: 0.82rem;
+  padding: 9px 22px;
+  cursor: pointer;
+}
+
+.confirm-modal__confirm--danger.home__cta-btn {
+  background: linear-gradient(100deg, #e89898 0%, #d06868 42%, #c05050 100%);
+  background-size: 180% 100%;
+  box-shadow:
+    0 14px 32px -12px rgba(139, 48, 48, 0.38),
+    0 6px 16px -10px rgba(160, 60, 60, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.confirm-modal__confirm--danger.home__cta-btn:hover {
+  filter: brightness(1.04) saturate(1.04);
+  box-shadow:
+    0 18px 40px -10px rgba(139, 48, 48, 0.45),
+    0 8px 20px -10px rgba(160, 60, 60, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.confirm-modal__confirm--danger .home__cta-label {
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.35),
+    0 1px 2px rgba(120, 40, 40, 0.25);
+}
+
+@keyframes confirmModalFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes confirmModalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+:root[data-theme='dark'] .confirm-modal {
+  background: rgba(8, 6, 16, 0.68);
+}
+
+:root[data-theme='dark'] .confirm-modal__title {
+  color: #f0b4cc;
+}
+
+:root[data-theme='dark'] .confirm-modal__title::after {
+  background: linear-gradient(
+    90deg,
+    rgba(232, 160, 190, 0.75),
+    rgba(232, 160, 190, 0.28) 70%,
+    transparent
+  );
+}
+
+:root[data-theme='dark'] .confirm-modal__message {
+  color: rgba(232, 160, 190, 0.78);
+}
+
+:root[data-theme='dark'] .confirm-modal__moon {
+  color: rgba(249, 216, 222, 0.72);
+}
+
+:root[data-theme='dark'] .confirm-modal__spark {
+  color: rgba(232, 160, 190, 0.55);
+}
+
+:root[data-theme='dark'] .confirm-modal__cancel {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f0b4cc;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme='dark'] .confirm-modal__cancel:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme='dark'] .confirm-modal__confirm--danger.home__cta-btn {
+  border-color: rgba(255, 200, 200, 0.28);
+  background: linear-gradient(100deg, #b85858 0%, #983838 42%, #802828 100%);
+  box-shadow:
+    0 16px 40px -12px rgba(0, 0, 0, 0.5),
+    0 0 28px -10px rgba(180, 60, 60, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+:root[data-theme='dark'] .confirm-modal__confirm--danger.home__cta-btn:hover {
+  filter: brightness(1.07) saturate(1.05);
+}
+
+@media (max-width: 480px) {
+  .confirm-modal__dialog {
+    padding: 24px 20px 20px;
+  }
+
+  .confirm-modal__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .confirm-modal__cancel,
+  .confirm-modal__confirm.home__cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confirm-modal,
+  .confirm-modal__dialog {
+    animation: none;
+  }
+
+  .confirm-modal__confirm.home__cta-btn:hover::after {
+    animation: none;
+    opacity: 0;
+  }
+}

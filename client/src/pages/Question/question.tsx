@@ -292,14 +292,18 @@ export default function QuestionPage() {
           <h2 id="q-spread-heading" className="question-page__h2">
             Type de tirage
           </h2>
+          <p className="question-page__spread-hint">
+            Choisis un seul type de tirage pour ta question.
+          </p>
           <ul className="question-page__spread-list">
             {QUESTION_SPREADS.map((s) => (
               <li key={s.id}>
                 <label
-                  className={`question-page__spread-option ${spreadId === s.id ? 'question-page__spread-option--on' : ''}`}
+                  className={`question-page__spread-option${spreadId === s.id ? ' question-page__spread-option--on' : ''}`}
                 >
                   <input
                     type="radio"
+                    className="question-page__spread-input"
                     name="q-spread"
                     value={s.id}
                     checked={spreadId === s.id}
@@ -313,6 +317,7 @@ export default function QuestionPage() {
                       }
                     }}
                   />
+                  <span className="question-page__spread-radio" aria-hidden="true" />
                   <span className="question-page__spread-icon-wrap">
                     <img
                       className="question-page__spread-icon"
