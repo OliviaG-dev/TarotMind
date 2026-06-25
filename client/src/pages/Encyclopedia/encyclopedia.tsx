@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { PageIntro } from "../../components/PageIntro/PageIntro";
 import {
   ArrowRightIcon,
   DecoSoftCloud,
   DecoSoftSparkle,
-  NavIconBook,
 } from "../../components/Nav/NavIcons";
 import {
   MAJOR_ARCANA,
@@ -409,18 +409,12 @@ export default function EncyclopediaPage() {
 
   return (
     <div className="encyclopedia-page">
-      <header className="encyclopedia-page__intro">
-        <div className="page-heading encyclopedia-page__heading">
-          <span className="encyclopedia-page__heading-icon home__feature-icon-wrap">
-            <NavIconBook className="home__feature-icon" />
-          </span>
-          <h1 className="encyclopedia-page__title">Encyclopédie du Tarot</h1>
-        </div>
-        <p className="encyclopedia-page__subtitle">
-          Explore les 78 cartes du tarot, leurs mots-clés et leurs
-          significations.
-        </p>
-      </header>
+      <PageIntro title="Encyclopédie du Tarot">
+          <p>
+            Explore les 78 cartes du tarot, leurs mots-clés et leurs
+            significations.
+          </p>
+        </PageIntro>
 
       <section
         className="encyclopedia-page__toolbar home__feature-card home__feature-card--purple"

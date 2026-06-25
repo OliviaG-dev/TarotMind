@@ -3,8 +3,8 @@ import {
   DecoSoftCloud,
   DecoSoftCrescentMoon,
   DecoSoftSparkle,
-  NavIconSun,
 } from '../../components/Nav/NavIcons'
+import { PageIntro } from '../../components/PageIntro/PageIntro'
 import { getDailyCard, getDailyMessage, getMonthlyCard, getMonthlyMessage, getYearlyCard, getYearlyMessage } from '../../lib/dailyCard'
 import type { TarotCard } from '../../types/tarot'
 import '../Home/home.css'
@@ -110,18 +110,12 @@ export default function DailyCardPage() {
 
   return (
     <div className="daily-card">
-      <header className="daily-card__intro">
-        <div className="page-heading daily-card__heading">
-          <span className="daily-card__heading-icon home__feature-icon-wrap">
-            <NavIconSun className="home__feature-icon" />
-          </span>
-          <h1 className="daily-card__title">Tes cartes</h1>
-        </div>
-        <p className="daily-card__subtitle">
-          Basées sur la numérologie de la date, ces cartes t'accompagnent
-          au quotidien, ce mois-ci et tout au long de l'année.
-        </p>
-      </header>
+      <PageIntro title="Tes cartes">
+          <p>
+            Basées sur la numérologie de la date, ces cartes t&apos;accompagnent
+            au quotidien, ce mois-ci et tout au long de l&apos;année.
+          </p>
+        </PageIntro>
 
       <div className="daily-card__grid">
         <CardReveal

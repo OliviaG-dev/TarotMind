@@ -4,58 +4,9 @@
   padding-top: 12px;
 }
 
-.encyclopedia-page__intro {
+.encyclopedia-page .page-intro {
   position: relative;
   z-index: 2;
-  margin-bottom: 28px;
-}
-
-.encyclopedia-page__heading {
-  margin-bottom: 10px;
-}
-
-.encyclopedia-page__heading .encyclopedia-page__title {
-  margin: 0;
-  flex: 1;
-  min-width: 0;
-}
-
-.encyclopedia-page__heading-icon.home__feature-icon-wrap {
-  width: clamp(56px, 12vw, 72px);
-  height: clamp(56px, 12vw, 72px);
-  flex-shrink: 0;
-  overflow: hidden;
-  background: linear-gradient(145deg, #fefcff 0%, #f5eefb 100%);
-  box-shadow:
-    0 3px 7px -1px rgba(120, 80, 160, 0.24),
-    inset 0 0 0 1.5px rgba(164, 143, 204, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-}
-
-.encyclopedia-page__heading-icon .home__feature-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 36px;
-  height: 36px;
-  transform: translate(-50%, -50%);
-  color: #4a2c6a;
-}
-
-.encyclopedia-page__title {
-  font-family: var(--heading);
-  font-size: clamp(1.85rem, 4vw, 2.4rem);
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  line-height: 1.1;
-  color: #4a2c6a;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
-}
-
-.encyclopedia-page__subtitle {
-  margin: 0;
-  line-height: 1.55;
-  color: var(--text);
 }
 
 /* —— Toolbar —— */
@@ -1097,28 +1048,6 @@
 }
 
 /* —— Mode sombre —— */
-
-:root[data-theme="dark"]
-  .encyclopedia-page__heading-icon.home__feature-icon-wrap {
-  background: linear-gradient(
-    145deg,
-    rgba(230, 215, 250, 0.14) 0%,
-    rgba(200, 175, 235, 0.08) 100%
-  );
-  box-shadow:
-    0 2px 6px -1px rgba(100, 70, 150, 0.38),
-    inset 0 0 0 1.5px rgba(192, 163, 232, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-:root[data-theme="dark"] .encyclopedia-page__heading-icon .home__feature-icon {
-  color: #c0a3e8;
-}
-
-:root[data-theme="dark"] .encyclopedia-page__title {
-  color: #e8dcfa;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-}
 
 :root[data-theme="dark"] .encyclopedia-page__toolbar-head {
   border-bottom-color: rgba(192, 163, 232, 0.18);

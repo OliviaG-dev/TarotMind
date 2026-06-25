@@ -6,8 +6,8 @@ import {
   DecoSoftCloud,
   DecoSoftCrescentMoon,
   DecoSoftSparkle,
-  NavIconClock,
 } from "../../components/Nav/NavIcons";
+import { PageIntro } from "../../components/PageIntro/PageIntro";
 import { useHistory } from "../../context/HistoryContext";
 import { useProfile } from "../../context/ProfileContext";
 import { getSpread } from "../../data/spreads";
@@ -323,18 +323,12 @@ export default function HistoryPage() {
 
   return (
     <div className="history-page">
-      <header className="history-page__intro">
-        <div className="page-heading history-page__heading">
-          <span className="history-page__heading-icon home__feature-icon-wrap">
-            <NavIconClock className="home__feature-icon" />
-          </span>
-          <h1 className="history-page__title">Historique &amp; évolution</h1>
-        </div>
-        <p className="history-page__subtitle">
-          Timeline de tes tirages, comparaison rapide et aperçu d&apos;analyse
-          sur ton historique local.
-        </p>
-      </header>
+      <PageIntro title="Historique & évolution">
+          <p>
+            Timeline de tes tirages, comparaison rapide et aperçu d&apos;analyse
+            sur ton historique local.
+          </p>
+        </PageIntro>
 
       <div className="history-page__flow">
         <section

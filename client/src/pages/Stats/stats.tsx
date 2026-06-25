@@ -11,6 +11,7 @@ import {
   NavIconChart,
   NavIconClock,
 } from "../../components/Nav/NavIcons";
+import { PageIntro } from "../../components/PageIntro/PageIntro";
 import { useHistory } from "../../context/HistoryContext";
 import {
   STATS_PERIOD_OPTIONS,
@@ -167,17 +168,13 @@ function StatsIntro({
       : null;
 
   return (
-    <header className="stats-page__intro">
-      <div className="page-heading stats-page__heading">
-        <span className="stats-page__heading-icon home__feature-icon-wrap">
-          <NavIconChart className="home__feature-icon" />
-        </span>
-        <h1 className="stats-page__title">Statistiques</h1>
-      </div>
-      <p className="stats-page__subtitle">
-        Un aperçu doux et clair de ton parcours avec le tarot, basé sur ton
-        historique local.
-      </p>
+    <div className="stats-page__intro">
+      <PageIntro title="Statistiques">
+        <p>
+          Un aperçu doux et clair de ton parcours avec le tarot, basé sur ton
+          historique local.
+        </p>
+      </PageIntro>
       <div
         className="stats-page__period"
         role="group"
@@ -196,7 +193,7 @@ function StatsIntro({
         ))}
       </div>
       {periodHint && <p className="stats-page__period-hint">{periodHint}</p>}
-    </header>
+    </div>
   );
 }
 
