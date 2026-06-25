@@ -165,28 +165,6 @@ p {
   margin: 0;
 }
 
-/* —— Titre de page + pictogramme —— */
-.page-heading {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.page-heading h1 {
-  font-weight: 800;
-  color: var(--text-h);
-  letter-spacing: 0.01em;
-}
-
-.page-heading__icon {
-  width: clamp(44px, 10vw, 56px);
-  height: clamp(44px, 10vw, 56px);
-  object-fit: contain;
-  flex-shrink: 0;
-  filter: drop-shadow(0 6px 16px rgba(139, 92, 246, 0.35));
-}
-
 /* —— Selects (partagé) —— */
 .history-page__select-label select,
 .spread-schema__select {

@@ -4,46 +4,6 @@
   padding-top: 12px;
 }
 
-.daily-card__intro {
-  margin-bottom: 28px;
-}
-
-.daily-card__heading {
-  margin-bottom: 10px;
-}
-
-.daily-card__heading .daily-card__title {
-  margin: 0;
-}
-
-.daily-card__heading-icon.home__feature-icon-wrap {
-  width: clamp(56px, 12vw, 72px);
-  height: clamp(56px, 12vw, 72px);
-  background: linear-gradient(145deg, #fefcff 0%, #f5eefb 100%);
-  box-shadow:
-    0 3px 7px -1px rgba(120, 80, 160, 0.24),
-    inset 0 0 0 1.5px rgba(164, 143, 204, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.92);
-}
-
-.daily-card__heading-icon .home__feature-icon {
-  width: 36px;
-  height: 36px;
-  color: #4a2c6a;
-}
-
-.daily-card__title {
-  font-size: clamp(1.85rem, 4vw, 2.4rem);
-  letter-spacing: 0.01em;
-  line-height: 1.1;
-}
-
-.daily-card__subtitle {
-  margin: 0;
-  line-height: 1.55;
-  color: var(--text);
-}
-
 .daily-card__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -491,23 +451,6 @@
 .daily-card__reveal.home__feature-card--green .daily-card__deco-spark--d {
   bottom: 24%;
   right: 5%;
-}
-
-:root[data-theme="dark"] .daily-card__heading-icon.home__feature-icon-wrap {
-  --feature-icon-card-face: #5a4d78;
-  background: linear-gradient(
-    145deg,
-    rgba(195, 180, 225, 0.14) 0%,
-    rgba(140, 110, 180, 0.08) 100%
-  );
-  box-shadow:
-    0 2px 6px -1px rgba(80, 55, 120, 0.38),
-    inset 0 0 0 1.5px rgba(196, 165, 245, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-:root[data-theme="dark"] .daily-card__heading-icon .home__feature-icon {
-  color: #d4b8f0;
 }
 
 :root[data-theme="dark"] .daily-card__deco-extra .deco-soft-cloud__blobs {

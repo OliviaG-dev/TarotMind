@@ -4,8 +4,8 @@ import {
   DecoSoftCloud,
   DecoSoftCrescentMoon,
   DecoSoftSparkle,
-  FeatureIconQuestionBubble,
 } from '../../components/Nav/NavIcons'
+import { PageIntro } from '../../components/PageIntro/PageIntro'
 import { useHistory } from '../../context/HistoryContext'
 import { useProfile } from '../../context/ProfileContext'
 import { SPREADS, getSpread } from '../../data/spreads'
@@ -220,18 +220,12 @@ export default function QuestionPage() {
 
   return (
     <div className="question-page">
-      <header className="question-page__intro">
-        <div className="page-heading question-page__heading">
-          <span className="question-page__heading-icon home__feature-icon-wrap">
-            <FeatureIconQuestionBubble className="home__feature-icon" />
-          </span>
-          <h1 className="question-page__title">Pose ta question</h1>
-        </div>
-        <p className="question-page__subtitle">
-          Écris ta question, choisis un tirage et place tes cartes. L&apos;IA te
-          répondra en s&apos;appuyant sur ton profil et tes cartes.
-        </p>
-      </header>
+      <PageIntro title="Pose ta question">
+          <p>
+            Écris ta question, choisis un tirage et place tes cartes. L&apos;IA te
+            répondra en s&apos;appuyant sur ton profil et tes cartes.
+          </p>
+        </PageIntro>
 
       <form className="question-page__form" onSubmit={handleSubmit}>
         <section

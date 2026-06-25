@@ -2,7 +2,7 @@
 
 # TarotMind
 
-**Application web de tirage et d'interpretation de tarot** - experience elegante, profil personnalisable, historique local et generation IA via API.
+**Application web de tirage et d'interpretation de tarot** — experience elegante, profil personnalisable, historique local et generation IA via API.
 
 <br />
 
@@ -23,32 +23,72 @@
 
 ---
 
-## Présentation
+## Presentation
 
-TarotMind propose une experience de **consultation guidee** : choix du tirage, saisie des cartes tirees, interpretation personnalisee par ton (spirituel, psychologique, direct) et suivi dans le temps.
+TarotMind propose une experience de **consultation guidee** : tu tires tes cartes physiquement (ou comme tu en as l'habitude), tu les saisis dans le **schema visuel** du tirage, puis l'**IA** interprete la combinaison selon ton profil et le ton choisi (spirituel, psychologique, direct).
 
 Le **profil** et l'**historique** sont stockes localement dans le navigateur pour une utilisation immediate. L'API Express expose des endpoints d'interpretation (`POST /interpret`, `POST /question`, `POST /history-insights`) et reste simple a faire evoluer.
 
-## Fonctionnalités
+> Journal detaille des evolutions : voir [`CHANGELOG.md`](CHANGELOG.md).
+
+## Fonctionnalites
+
+### Parcours utilisateur
 
 - Interface **responsive** (accueil, tirage, profil, question, historique, stats, encyclopedie).
-- **Carte du jour** deterministe avec message quotidien et animation.
-- **Profil** : preferences utilisateur + rappels navigateur (notifications optionnelles).
-- **Interpretation IA** via OpenAI (`/interpret`, `/question`, `/history-insights`) avec fallback local.
+- **En-tetes de page unifies** (`PageIntro`) : titre, texte d'introduction et animations sur chaque section principale.
+- **Carte du jour** deterministe avec message quotidien et animation de revelation.
+- **7 types de tirage** avec icones dediees et schema interactif (saisie manuelle des arcanes).
+- **Question orientee** : meme logique de tirage, avec une question explicite transmise a l'IA.
+- **Profil** : preferences utilisateur (statut, objectifs, jeu de cartes) + rappels navigateur optionnels.
+- **Historique local** : timeline, detail depliable, notes personnelles, favoris et copie partageable.
+- **Analyse de l'historique** via `POST /history-insights` (synthese IA de ton parcours).
+- **Statistiques personnelles** : KPIs, cartes frequentes, repartition par type de tirage.
+- **Encyclopedie du tarot** : 78 cartes, filtres, recherche, significations des arcanes majeurs.
+
+### Experience & technique
+
+- **Mode sombre/clair** (toggle header, persistance localStorage, preference systeme).
+- **Transitions de page** et animations de revelation (interpretations, detail historique, carte du jour).
+- **Lecture vocale** des interpretations (Web Speech API, `fr-FR`).
+- **Lazy loading** des pages (`React.lazy` + `Suspense`) et **ErrorBoundary** global.
+- **Interpretation IA** via OpenAI avec fallback local si l'API est indisponible ou desactivee.
 - **Observabilite IA** via `GET /ai-usage` (volume, fallback rate, estimation cout USD, tokens).
-- **Quota journalier IA** par utilisateur (header `X-User-Id`, fallback IP) pour limiter les abus.
-- **Historique local** des tirages avec detail complet, favoris, notes personnelles et copie partageable.
-- **Statistiques personnelles** (KPIs, cartes frequentes, repartition par type de tirage).
-- **Encyclopedie du tarot** (filtres, recherche, details des arcanes majeurs).
-- **Mode sombre/clair**, transitions de page et lecture vocale (Web Speech API).
+- **Quota journalier IA** par utilisateur (header `X-User-Id`, fallback IP) et **rate limiting** (30 req/min/IP).
+
+## Types de tirage
+
+| Tirage | Positions | Usage |
+|--------|-----------|-------|
+| **1 carte** | Message du moment | Reponse rapide |
+| **3 cartes** | Passe / Present / Futur | Ligne du temps |
+| **Croix** | 5 positions (situation, obstacle, fondations, objectif, conseil) | Vue d'ensemble |
+| **Amour** | Coeur, dynamique, conseil | Relations |
+| **Carriere** | Contexte, tension, opportunite | Vie professionnelle |
+| **Decision** | Question, piste A, piste B | Choix a eclairer |
+| **Compatibilite** | Toi, l'autre, lien, defi, conseil | Dynamique a deux |
+
+Les schemas sont definis dans `client/src/data/spreads.ts` et rendus par `SpreadSchema`.
 
 ## Architecture
 
-| Dossier | Rôle |
+| Dossier | Role |
 |--------|------|
 | `client/` | SPA **React** + **React Router**, build **Vite**, typage **TypeScript**. |
-| `server/` | **Express**, `GET /health`, endpoints IA (`POST /interpret`, `POST /question`, `POST /history-insights`), `GET /ai-usage`, rate limiting, quota journalier et flags d'execution IA. |
-| `packages/shared/` | Types et modules **TypeScript** partagés entre client et serveur. |
+| `server/` | **Express**, `GET /health`, endpoints IA, rate limiting, quota journalier et flags d'execution IA. |
+| `packages/shared/` | Types et modules **TypeScript** partages entre client et serveur. |
+
+### Structure client (extrait)
+
+```
+client/src/
+  pages/          # Une page par route (Draw, Question, History, …)
+  components/     # Composants reutilisables (Nav, PageIntro, …)
+  context/        # Profil, historique, theme
+  data/           # Jeu de cartes, tirages, layouts
+  lib/            # Appels API, stats, helpers
+  hooks/          # Hooks UI (ex. tilt pointeur)
+```
 
 En developpement, le client Vite **proxy** le prefixe `/api` vers `http://localhost:4000` (voir `client/vite.config.ts`).
 
@@ -81,7 +121,7 @@ npm run dev
 | `npm run preview` | Previsualisation du build statique du client |
 | `npm run lint` | Analyse ESLint |
 | `npm test` | Tests unitaires client + integration serveur |
-| `npm run test:coverage` | Couverture Vitest sur `src/lib/` (seuil 40 %) |
+| `npm run test:coverage` | Couverture Vitest (seuil 40 % sur `src/lib/`) |
 | `npm run test:server` | Tests d'integration API serveur (Vitest + Supertest) |
 | `npm run test:e2e` | Tests E2E client (Playwright) |
 
@@ -142,16 +182,17 @@ Les routes principales exposees par le serveur :
 
 ## Navigation
 
-La barre de navigation inclut :
-
-- `Accueil` (`/`)
-- `Carte du jour` (`/carte-du-jour`)
-- `Profil` (`/profil`)
-- `Tirage` (`/tirage`)
-- `Question` (`/question`)
-- `Historique` (`/historique`)
-- `Encyclopedie` (`/encyclopedie`)
-- `Stats` (`/statistiques`)
+| Lien | Route |
+|------|-------|
+| Accueil | `/` |
+| Carte du jour | `/carte-du-jour` |
+| Profil | `/profil` |
+| Tirage | `/tirage` |
+| Question | `/question` |
+| Historique | `/historique` |
+| Encyclopedie | `/encyclopedie` |
+| Stats | `/statistiques` |
+| Toggle theme | bouton lune/soleil (header) |
 
 ## Build et execution
 
@@ -170,6 +211,8 @@ cd client
 npm test
 ```
 
+Fichiers couverts notamment : `tarotDeck`, `dailyCard`, `historyInsights`, `stats`, `encyclopediaSearch`, services API.
+
 Tests integration API serveur (Vitest + Supertest) :
 
 ```bash
@@ -182,7 +225,12 @@ Tests E2E (Playwright) :
 npm run test:e2e
 ```
 
-Les E2E demarrent un client dedie (`5174`) et une API Express (`4010`, `AI_DISABLED=1`) pour eviter les conflits avec le dev local. Un scenario (`real-api-flow`) valide le flux client ↔ serveur sans mock reseau Playwright.
+Les E2E demarrent un client dedie (`5174`) et une API Express (`4010`, `AI_DISABLED=1`) pour eviter les conflits avec le dev local.
+
+| Fichier | Scenarios |
+|---------|-----------|
+| `core-user-flows.spec.ts` | Tirage complet, carte du jour stable, profil persistant, analyse historique |
+| `real-api-flow.spec.ts` | Flux client ↔ serveur sans mock reseau Playwright |
 
 Au premier lancement E2E, installer le navigateur Playwright :
 
@@ -209,7 +257,7 @@ Sur `master`, le check **CI** doit etre vert avant merge (regle de protection de
 
 **Dependabot** : mises a jour npm hebdomadaires (PRs groupees prod / dev) via `.github/dependabot.yml`.
 
-Aucun secret GitHub requis pour la CI actuelle (tests en mode mock, E2E avec interception API).
+Aucun secret GitHub requis pour la CI actuelle (tests en mode mock, E2E avec interception API ou stub serveur).
 
 ## Quota et cout IA
 

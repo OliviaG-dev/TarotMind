@@ -10,8 +10,8 @@ import {
   DecoSoftCloud,
   DecoSoftCrescentMoon,
   DecoSoftSparkle,
-  NavIconProfile,
 } from "../../components/Nav/NavIcons";
+import { PageIntro } from "../../components/PageIntro/PageIntro";
 import { useProfile } from "../../context/ProfileContext";
 import "../Home/home.css";
 import "./profile.css";
@@ -131,19 +131,13 @@ export default function ProfilePage() {
 
   return (
     <div className="profile-page">
-      <header className="profile-page__intro">
-        <div className="page-heading profile-page__heading">
-          <span className="profile-page__heading-icon home__feature-icon-wrap">
-            <NavIconProfile className="home__feature-icon" />
-          </span>
-          <h1 className="profile-page__title">Mon profil</h1>
-        </div>
-        <p className="profile-page__subtitle">
-          Ces informations servent à personnaliser les interprétations (ex. : «
-          En tant que personne en séparation… »). Tout est stocké localement
-          dans ton navigateur.
-        </p>
-      </header>
+      <PageIntro title="Mon profil">
+          <p>
+            Ces informations servent à personnaliser les interprétations (ex. : «
+            En tant que personne en séparation… »). Tout est stocké localement
+            dans ton navigateur.
+          </p>
+        </PageIntro>
 
       <form className="profile-page__form" onSubmit={(e) => e.preventDefault()}>
         <section
